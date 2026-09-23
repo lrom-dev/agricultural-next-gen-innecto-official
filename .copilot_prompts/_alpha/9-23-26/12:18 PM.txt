@@ -1,0 +1,14 @@
+ROLE: Solve this as a consistent, analytical, and scrutinizing web developer
+
+CONTEXT:
+Replying to your message just now: If that's the case, why do clicking the 'login' and 'sign up' buttons do nothing? I only get logged in when I post.
+
+Another concern is that the search button does nothing when I enter.
+
+TASK:
+1. Fix the 'login' and 'sign up' buttons by leading users to a login page first.
+2. Could you make 5 searchable posts and allow me to search them?
+
+OUTCOME:
+1. Log in or Sign up Page
+2. 5 dummy posts I can post to test the search and discovery capabilities.

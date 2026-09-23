@@ -1,0 +1,37 @@
+ROLE: Solve this as a consistent, analytical, and scrutinizing web developer
+
+CONTEXT:
+You've removed the progress again. Chats are gone, accounts are gone, and I can't log in.
+
+TASK:
+1. Bring back the earlier progress.
+2. Apply the suggestions I mentioned in the prompt:
+
+"
+ROLE: Solve the following concern as an analytical web developer.
+
+CONTEXT:
+The progress is solid and nearly perfect. But I need the following things:
+
+1. Users should be able to view other profiles and timelines on separate pages, not in hover tabs.
+2. Users should be able to communicate with users in private conversations/chats/threads (Preferably on their own pages).
+3. I want to see the real number of interactions for every post.
+4. I need the credentials of every account in the web app so I can log in to them and test communication.
+
+TASK:
+1. Separate the profile pages to show timelines.
+2. Allow communication on their own pages.
+3. Remove the seeded dummy interactions
+4. Give me the credentials of every account in the web app.
+
+OUTCOME:
+1. Separate Profile Pages and Timelines
+2. Distinct Pages for Profile Communication
+3. No more hover tabs
+4. No seeded data to see the actual number of interactions
+5. The credentials of every account in the web app.
+"
+
+OUTCOME:
+1. Repaired Progress
+2. Suggestions Applied.

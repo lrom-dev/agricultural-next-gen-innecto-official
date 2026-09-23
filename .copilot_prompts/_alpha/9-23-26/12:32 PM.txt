@@ -1,0 +1,27 @@
+ROLE: Solve this as a consistent, analytical, and scrutinizing web developer
+
+
+CONCERN:
+While the Search works, I can't see any of your posts. The reason I know is that my post showed up when I searched for "irrigation".
+
+Profiles should be searchable too and should appear on the feed.
+
+Another concern: when I click on the platform's logo, it doesn't send me to the homepage. How are mobile users supposed to navigate through this app?
+
+You didn't create a Log in or Sign up page, which should be the first thing you see on the site if you haven't logged in yet or didn't check "keep me signed in".
+
+Also, I can't delete or edit posts.
+
+
+TASK:
+1. Create a Log in or Sign up page.
+2. Improve profile and post searchability
+3. Make the logo interactive and add a navigation bar
+4. Allow posts to be edited and deleted
+
+
+OUTCOME:
+1. 'Log in or Sign up' page
+2. Improved profile and post searchability
+3. Interactive logo and navigation bar for mobile users
+4. Post edit and delete features

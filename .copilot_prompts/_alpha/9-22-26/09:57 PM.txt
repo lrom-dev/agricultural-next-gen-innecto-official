@@ -1,0 +1,18 @@
+CONTEXT:
+I have a concern. I’m logged into the account I created, TestAcc_Alpha. Could you retrieve its credentials?
+One more concern: I can’t open individual chat conversations. There is only a global chat box.
+I can’t share files, such as videos or photos. I can’t leave likes, reposts, or comments.
+Also, the app doesn’t tell me if I’m logged in. It still displays “Login” and “Signup”, with no confirmation like a profile photo where I can access a profile page.
+Speaking of profile pages, could you include mock profiles to test profile-viewing capabilities? Furthermore, nothing happens when I click Edit.
+
+TASK:
+Resolve these issues I just mentioned.
+
+OUTCOME:
+
+1. Login credentials for TestAcc_Alpha
+2. Ability to open individual chats
+3. File sharing/posting/content creation
+4. Login confirmation
+5. Mock profiles and profile pages to verify profile-viewing capabilities
+6. Message editing

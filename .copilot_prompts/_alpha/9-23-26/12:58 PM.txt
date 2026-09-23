@@ -1,0 +1,19 @@
+ROLE: Solve this as a consistent, analytical, and scrutinizing web developer
+
+CONCERN:
+The Log in and Sign up buttons still do nothing. I still have to post to see the feed. No confirmation that I'm logged in, unless I click Profile. But my profile status should have been in the top right corner to verify that I'm logged in.
+
+Furthermore, I should have been met with the "Log in or Sign up" landing page, but I wasn't. When I click around the navigation bar, I realized the highlight doesn't move; it stays on Home even if I click Profile or Discover.
+
+
+TASK:
+1. Create a Log in and Sign up page.
+- Additional note: There is potential to put an advertisement or a photo on the landing page. Create a space for it so I can put the logo (preferably half the screen).
+2. For logged-in users, create log out capabilities and, in the top right corner, the status of their accounts.
+3. Fix the movement of the highlight in the navigation bar to follow where the user wants to go.
+
+
+OUTCOME
+1. 'Log in or Sign up' landing page.
+2. Log out capabilities and account statuses to verify if the user is logged in or not
+3. Fixed navigation bar movement to follow the user's intent

@@ -1,0 +1,37 @@
+<svg width="820" height="640" viewBox="0 0 820 640" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="820" height="640" rx="36" fill="#F5F8F0"/>
+  <circle cx="670" cy="110" r="62" fill="#DDECCB"/>
+  <circle cx="156" cy="78" r="42" fill="#E8F2D5"/>
+  <path d="M0 428C89 382 130 373 202 392C288 415 314 465 395 476C491 489 546 435 614 430C687 425 765 472 820 448V640H0V428Z" fill="#9DCB6B"/>
+  <path d="M0 507C85 474 140 462 224 480C310 499 358 541 434 543C527 545 578 501 658 489C724 479 772 493 820 512V640H0V507Z" fill="#79AC4A"/>
+  <g filter="url(#shadow)">
+    <rect x="130" y="168" width="246" height="228" rx="26" fill="#F9FBF6"/>
+  </g>
+  <rect x="164" y="212" width="177" height="16" rx="8" fill="#DCE9C7"/>
+  <rect x="164" y="246" width="143" height="12" rx="6" fill="#E9F1D7"/>
+  <rect x="164" y="284" width="118" height="12" rx="6" fill="#E9F1D7"/>
+  <rect x="164" y="320" width="164" height="12" rx="6" fill="#E9F1D7"/>
+  <path d="M482 176C521 147 575 168 613 201C653 236 664 286 630 315C598 343 537 347 495 318C450 287 439 212 482 176Z" fill="#F6C968"/>
+  <path d="M484 183C528 186 571 208 598 244C624 280 614 321 579 339C548 355 449 340 440 282C432 232 452 192 484 183Z" fill="#FFF0BE"/>
+  <path d="M569 215L603 278L556 349H516L541 275L506 219H569V215Z" fill="#7AA24B"/>
+  <path d="M540 210L565 180L587 214L556 216L540 210Z" fill="#7AA24B"/>
+  <path d="M447 237L484 265L474 343H420L407 267L447 237Z" fill="#6B8D3D"/>
+  <circle cx="532" cy="163" r="34" fill="#FFCE63"/>
+  <circle cx="532" cy="163" r="10" fill="#F9A93B"/>
+  <g>
+    <circle cx="612" cy="493" r="30" fill="#F7B84B"/>
+    <circle cx="682" cy="483" r="25" fill="#D2E7A7"/>
+    <circle cx="730" cy="524" r="20" fill="#B7D46D"/>
+    <circle cx="564" cy="520" r="20" fill="#D2E7A7"/>
+  </g>
+  <g>
+    <circle cx="332" cy="118" r="16" fill="#E7F0D9"/>
+    <circle cx="376" cy="106" r="12" fill="#DDECCB"/>
+    <circle cx="294" cy="130" r="12" fill="#DDECCB"/>
+  </g>
+  <defs>
+    <filter id="shadow" x="0%" y="0%" width="100%" height="120%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#C6D8B2" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+</svg>

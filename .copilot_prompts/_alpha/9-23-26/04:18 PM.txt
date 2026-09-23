@@ -1,0 +1,12 @@
+ROLE: Respond as a consistent, analytical, and scrutinizing web developer
+
+CONCERN:
+How can I test communication with two accounts? Do I have to publish it or create a public port?
+
+TASK
+1. Provide a solution to test communication with two accounts
+2. Define the specific steps to do it.
+
+OUTCOME:
+1. The Solution
+2. The Steps

@@ -1,0 +1,49 @@
+ROLE: You will diagnose and solve the problem as a web developer.
+
+CONTEXT:
+Thank you for informing me of these missing requirements:
+
+1. real user authentication with secure password hashing
+2. a real database
+3. real-time messaging
+4. server-side search/discovery
+5. persistence across multiple users/devices
+I have tried the messaging feature, and I’m glad to see I can send messages. However, I can’t edit my messages or access a chat.
+
+TASK:
+I want to take things a step further.
+Can we create a database? Include mock data. Can the database also have its own folder so I can access it separately? I have more concerns before I begin testing, since this phase hasn’t checked everything on my list.
+Can you also prepare a test account? I want to try talking to myself to test whether the messaging features work with two people.
+
+Additional concerns:
+
+1. “Join the community” and “Explore Feed” buttons don’t do anything;
+2. Search input goes nowhere;
+3. Share button only clears the text from the content input box;
+
+To remind you of my list:
+Objectives:
+
+1. Is the web application’s minimum, maximum, mean, and median Largest Contentful Paint (LCP) for the following devices ≤ 2.5s:
+2. 1. PC;
+2. tablet;
+3. and phone?
+3. Is the web application’s Speed Index for mobile devices ≤ 3.4s and ≤ 1.3s for PCs?
+4. Is the web application’s total byte weight for all three devices ≤ 1.6 Megabytes (MB)?
+5. Is the web application’s main thread activity breakdown < 10% when active for 5 minutes?
+
+Web App Features
+
+1. User Profiles (Login and Signup)
+2. Content Creation and Sharing (User and Anonymous)
+3. Central Feed /
+4. Interactivity
+5. Messaging
+6. Search and Discovery
+
+OUTCOME:
+
+1. Complete Frontend
+2. Complete Backend
+3. Complete Database (With mock data and a test account)
+4. Must be able to create accounts and log in

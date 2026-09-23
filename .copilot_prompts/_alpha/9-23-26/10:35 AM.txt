@@ -1,0 +1,53 @@
+CONTEXT:
+
+Out of these features:
+
+a. Accessing profiles (self and other users);
+b. Messaging;
+c. Posting;
+d. Interactivity;
+e. File Sharing;
+f. Dynamic Feeds and Content,
+
+Everything is incomplete.
+
+
+Another concern: interactivity is locked except for reposting. I only asked to limit likes to one per person. However, you locked the interactivity mechanism, preventing new likes and comments.
+
+Also, every user is linked to a global chat and can't privately connect with other users (ideally through chat heads or profiles).
+
+
+To remind you of my objectives:
+
+1. Is the web application’s minimum, maximum, mean, and median Largest Contentful Paint (LCP) for the following devices ≤ 2.5s:
+  1.1 PC;
+  1.2 tablet;
+  1.3 and phone?
+2. Is the web application’s Speed Index for mobile devices ≤ 3.4s and ≤ 1.3s for PCs?
+3. Is the web application’s total byte weight for all three devices ≤ 1.6 Megabytes (MB)?
+4. Is the web application’s main thread activity breakdown < 10% when active for 5 minutes?
+
+
+TASK:
+
+1. Separate the profile pages since this is a social media app. Accessing my profile in its current state feels incomplete because I can't see my own details or my post history.
+
+2. Accessing the mock profiles is just as incomplete since I can only access them through my profile bar, with no back button or autonomy. Users should be able to view other profiles by clicking on profile pictures.
+
+3. Enable message editing and individual chat conversations with individual users. Include chat heads.
+
+4. Improve post sharing. When I posted a photo, I didn't get a file preview to confirm whether I was posting it.
+
+5. Unlock the interactivity mechanism, limit likes to one per person, and allow unliking.
+
+6. Add more distinct profiles. The total number of mock profiles I should test is 5. This helps understand if the profile mechanics work.
+
+
+OUTCOME:
+1. Separate profile pages
+2. Post history in profiles
+3. Enabled message editing
+4. Chat heads and individual, private chat conversations
+5. File previews when posting files
+6. Unlocked liking, set like limits to 1 per person, and enabled unliking
+7. A total of 5 mock profiles to test profile mechanics

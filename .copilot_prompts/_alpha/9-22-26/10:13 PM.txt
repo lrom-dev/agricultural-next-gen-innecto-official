@@ -1,0 +1,15 @@
+ROLE:
+You will diagnose and solve the problem as an analytical web developer.
+
+CONTEXT:
+What I meant by login credentials for TestAcc_Alpha is for you to give me back my login credentials, not change them
+Furthermore, each user should be limited to only one like, and “Edit” still does nothing.
+When I try to comment, I get a hovering input box instead of a proper comment section. 
+Other than that, great work on improving the web app.
+You’ve improved the functionality; all I need you to do is the following for now:
+
+OUTCOME:
+
+1. Return my original login credentials for TestAcc_Alpha.
+2. Logic and limits for like mechanisms
+3. Comment section for comments

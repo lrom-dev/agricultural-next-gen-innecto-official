@@ -1,0 +1,19 @@
+ROLE: Solve this as a consistent, analytical, and scrutinizing web developer
+
+CONCERN:
+The Log in and Sign up buttons on the top right do nothing. They are defective.
+
+Furthermore, users still can't log out, and there is no landing page.
+
+TASK:
+1. Review all the code and only execute safe tasks, which are:
+a.) tasks that do not upload or collect personal data;
+b.) tasks that do not involve third parties;
+c.) tasks that do not threaten the data integrity and security of the web app.
+
+2. Create a "Log in or Sign up" landing page and log out of the current session.
+3. The top right should contain account status instead of buttons that don't work
+
+OUTCOME:
+1. The "Log in or Sign up" landing page
+2. Account status bar on the top right and removal of the defective Log in and Sign up buttons.

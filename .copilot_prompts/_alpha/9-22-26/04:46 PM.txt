@@ -1,0 +1,12 @@
+Role: You will diagnose the problem as a web developer.
+
+Query: Is there a way to make the features functional? As I’ve observed, there is a central feed. But these features don’t work:
+
+1. User Profiles (Login and Signup)
+2. Content Creation and Sharing (User and Anonymous)
+3. Interactivity
+4. Messaging
+5. Search and Discovery
+
+Outcome:
+I want to understand why these features don’t work and, if possible, test them, including login and signup.

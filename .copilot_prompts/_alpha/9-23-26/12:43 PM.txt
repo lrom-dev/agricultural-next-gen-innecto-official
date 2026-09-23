@@ -1,0 +1,11 @@
+ROLE: Solve this as a consistent, analytical, and scrutinizing web developer
+
+CONCERN:
+If I'm actually signed in, then why doesn't the app say so anymore? Instead, it still shows the Log in and Sign up buttons, which is very misleading.
+
+TASK:
+1. Create a 'Log in and Sign up' page.
+2. My profile should appear at the top if I'm logged in.
+
+OUTCOME:
+1. A 'Log in and Sign up' page

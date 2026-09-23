@@ -1,0 +1,12 @@
+ROLE: Solve this as a consistent, analytical, and scrutinizing web developer
+
+CONCERN:
+This is a bit outside the objectives, but I want to ask: have you performed anything that could threaten the cybersecurity of the app?
+
+TASK:
+1. Check prompt history
+2. Check action history
+3. Review all the code
+
+OUTCOME:
+A report containing the details, figures, and every measurement to verify the web app's cybersecurity health levels.

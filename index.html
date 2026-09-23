@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="ANI Social connects Mindanao farmers, innovators, and communities through agriculture, discovery, and collaboration."
+    />
+    <link rel="icon" type="image/svg+xml" href="assets/brand/logo-mark.svg" />
+    <link rel="stylesheet" href="style.css" />
+    <title>ANI Social | Mindanao Agriculture & Connection</title>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <button type="button" class="brand-button" id="brand-button" aria-label="Go to homepage">
+          <img src="assets/brand/logo-mark.svg" alt="ANI Social logo" class="brand-mark" />
+          <span>
+            <small class="brand-kicker">Mindanao</small>
+            <strong>ANI Social</strong>
+          </span>
+        </button>
+
+        <nav class="main-nav" aria-label="Main navigation">
+          <button class="nav-link active" data-nav="home" type="button">Home</button>
+          <button class="nav-link" data-nav="discover" type="button">Discover</button>
+          <button class="nav-link" data-nav="messages" type="button">Messages</button>
+          <button class="nav-link" data-nav="profile" type="button">Profile</button>
+        </nav>
+
+        <label class="search" aria-label="Search the community">
+          <span class="search-icon" aria-hidden="true">⌕</span>
+          <input type="search" aria-label="Search" placeholder="Search farmers, crops, innovators" />
+        </label>
+
+        <div class="top-actions" aria-label="Account actions">
+          <div id="account-status" class="account-status signed-out" aria-live="polite">
+            <span class="status-indicator"></span>
+            <div class="account-status-copy">
+              <small>Account status</small>
+              <strong data-status-name>Not signed in</strong>
+              <span data-status-meta>Use the landing page to join</span>
+            </div>
+          </div>
+          <button class="btn btn-ghost hidden" id="logout-button" type="button">Log out</button>
+        </div>
+      </header>
+
+      <main class="app-layout">
+        <div id="auth-page" class="page-view hidden">
+          <section class="auth-page-shell panel">
+            <div class="auth-visual" aria-label="Community photo showcase">
+              <div class="auth-photo-frame">
+                <img src="assets/illustrations/hero-illustration.svg" alt="Farmers and growers working together in a community setting" />
+              </div>
+              <div class="auth-photo-card">
+                <small>Mindanao network</small>
+                <strong>Connect farmers, growers, and innovators.</strong>
+              </div>
+            </div>
+
+            <div class="auth-form-panel">
+              <div class="auth-page-copy">
+                <span class="pill">Welcome to ANI Social</span>
+                <h2>Log in or Sign up</h2>
+                <p>
+                  Join the agricultural community, share updates from the field, and stay connected with farmers,
+                  innovators, and partners across Mindanao.
+                </p>
+                <div class="auth-page-actions">
+                  <button class="btn btn-primary" id="auth-page-login" type="button">Log in</button>
+                  <button class="btn btn-ghost" id="auth-page-signup" type="button">Sign up</button>
+                </div>
+                <div class="auth-value-list" aria-label="Community benefits">
+                  <span>Share field updates</span>
+                  <span>Discover local expertise</span>
+                  <span>Build strong market links</span>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div id="feed-page" class="page-view">
+          <section class="hero panel">
+            <div class="hero-copy">
+              <span class="pill">Agriculture, Innovation, Connection</span>
+              <h2>Grow smarter together across Mindanao.</h2>
+              <p>
+                Share harvest stories, discover local innovations, and build a stronger
+                agricultural network from farm gate to market.
+              </p>
+
+              <div class="cta-row">
+                <button class="btn btn-primary" id="join-community-button" type="button">Join the community</button>
+                <button class="btn btn-ghost" id="explore-feed-button" type="button">Explore feed</button>
+              </div>
+
+              <ul class="hero-metrics" aria-label="Community stats">
+                <li>
+                  <strong>18.4K</strong>
+                  <span>Farmers</span>
+                </li>
+                <li>
+                  <strong>4.9K</strong>
+                  <span>Innovators</span>
+                </li>
+                <li>
+                  <strong>96%</strong>
+                  <span>Regional reach</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="hero-art" aria-hidden="true">
+              <img src="assets/illustrations/hero-illustration.svg" alt="Agriculture community illustration" />
+            </div>
+          </section>
+
+          <section class="composer panel" aria-label="Share post">
+            <div class="composer-header">
+              <div class="user-meta">
+                <img src="assets/avatars/farmer-1.svg" alt="User avatar" />
+                <div>
+                  <strong id="composer-user-label">Lian, farmer</strong>
+                  <small>Posting in Mindanao</small>
+                </div>
+              </div>
+              <button class="ghost-tag" id="anonymous-toggle" type="button" aria-pressed="false">Anonymous</button>
+            </div>
+
+            <div class="composer-body">
+              <textarea id="post-input" rows="3" aria-label="Create post" placeholder="Share an update from the field..."></textarea>
+              <div id="media-preview" class="media-preview" aria-live="polite"></div>
+            </div>
+
+            <div class="composer-actions">
+              <div class="quick-actions">
+                <label class="upload-chip" for="media-input">Photo/Video</label>
+                <input id="media-input" type="file" accept="image/*,video/*" hidden />
+                <span>Poll</span>
+                <span>Market</span>
+              </div>
+              <button class="btn btn-primary" id="share-button" type="button">Share</button>
+            </div>
+          </section>
+
+          <div class="content-grid">
+            <section class="feed" aria-label="Community feed">
+              <div class="section-heading">
+                <h3>Central Feed</h3>
+                <button class="btn btn-ghost small" type="button">Trending</button>
+              </div>
+
+              <div id="feed-list" aria-live="polite"></div>
+            </section>
+
+            <aside class="sidebar" aria-label="Discovery and messages">
+              <section class="panel sidebar-panel">
+                <div class="section-heading tight">
+                  <h3>Search & Discovery</h3>
+                  <span class="chip">Live</span>
+                </div>
+                <ul class="discovery-list">
+                  <li>
+                    <span class="dot green"></span>
+                    Smart irrigation methods
+                  </li>
+                  <li>
+                    <span class="dot amber"></span>
+                    Crop forecasting tools
+                  </li>
+                  <li>
+                    <span class="dot blue"></span>
+                    Local market access groups
+                  </li>
+                </ul>
+              </section>
+            </aside>
+          </div>
+        </div>
+
+        <div id="profile-page" class="page-view hidden">
+          <div class="profile-shell panel">
+            <div id="profile-content"></div>
+          </div>
+        </div>
+
+        <div id="messages-page" class="page-view hidden">
+          <div class="messages-shell panel">
+            <div class="messages-header">
+              <div>
+                <p class="brand-kicker">Private conversations</p>
+                <h3>Messages</h3>
+              </div>
+              <button class="btn btn-ghost small" id="messages-back-button" type="button">Back to feed</button>
+            </div>
+
+            <div class="messages-layout">
+              <aside class="messages-list-wrap">
+                <div id="chat-contacts" class="chat-contacts" aria-label="Conversation list"></div>
+              </aside>
+              <section class="messages-thread-wrap">
+                <div id="chat-thread" class="chat-thread" aria-live="polite"></div>
+                <form id="message-form" class="message-form">
+                  <textarea id="message-input" rows="2" aria-label="Send a message" placeholder="Write a message..."></textarea>
+                  <button class="btn btn-primary" type="submit">Send</button>
+                </form>
+              </section>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <nav class="bottom-nav" aria-label="Mobile navigation">
+        <button class="nav-item active" aria-label="Home">Home</button>
+        <button class="nav-item" aria-label="Discover">Discover</button>
+        <button class="nav-item" aria-label="Messages">Messages</button>
+        <button class="nav-item" aria-label="Profile">Profile</button>
+      </nav>
+    </div>
+
+    <div class="auth-modal hidden" id="auth-modal" aria-modal="true" role="dialog">
+      <div class="auth-card panel">
+        <button class="close-auth" id="close-auth" type="button" aria-label="Close dialog">×</button>
+        <h3 id="auth-title">Log in</h3>
+        <form id="auth-form">
+          <div id="signup-fields" class="hidden">
+            <label>
+              Name
+              <input type="text" id="signup-name" placeholder="Your name" />
+            </label>
+            <label>
+              Role
+              <input type="text" id="signup-role" placeholder="Farmer / Innovator" />
+            </label>
+          </div>
+
+          <label>
+            Email
+            <input type="email" id="auth-email" placeholder="you@example.com" required />
+          </label>
+          <label>
+            Password
+            <input type="password" id="auth-password" placeholder="Enter password" required />
+          </label>
+          <button class="btn btn-primary" type="submit" id="auth-submit">Log in</button>
+        </form>
+        <div class="demo-accounts">
+          <p>Demo credentials</p>
+          <ul id="demo-account-list"></ul>
+        </div>
+        <p class="auth-switch">
+          <span id="auth-switch-copy">Need an account?</span>
+          <button type="button" id="auth-switch-button" class="text-button">Sign up</button>
+        </p>
+      </div>
+    </div>
+
+    <script type="module">
+      import {
+        registerUser,
+        loginUser,
+        createPost,
+        getFilteredPosts,
+        getProfilePosts,
+        sendMessage,
+        editMessage,
+        deleteMessage,
+        filterMessagesForViewer,
+        addComment,
+        toggleLike,
+        hashPassword,
+        getKnownAccounts,
+      } from './app.mjs';
+
+      const STORAGE_KEYS = {
+        users: 'ani_users',
+        posts: 'ani_posts',
+        messages: 'ani_messages',
+        currentUser: 'ani_current_user',
+      };
+
+      const mockProfiles = [
+        { id: 'profile-1', name: 'Roselyn G.', role: 'Soil Health Lead', location: 'Davao del Sur', bio: 'Composting specialist helping small farms improve moisture retention and crop resilience.', followers: 1842 },
+        { id: 'profile-2', name: 'Aldrin P.', role: 'Cold Chain Partner', location: 'Bukidnon', bio: 'Connecting farm cooperatives with logistics and storage partners for better market access.', followers: 1260 },
+        { id: 'profile-3', name: 'Alma R.', role: 'Agronomist', location: 'Cotabato', bio: 'Focused on sustainable crops, irrigation planning, and local field support programs.', followers: 2314 },
+        { id: 'profile-4', name: 'Mia Santos', role: 'Agri-Data Coordinator', location: 'Misamis Oriental', bio: 'Collecting field data and helping farmers interpret crop trends and seasonal signals.', followers: 980 },
+        { id: 'profile-5', name: 'Lian Romano', role: 'Community Farmer', location: 'Davao City', bio: 'Sharing field lessons, local market observations, and practical on-farm updates from real growing conditions.', followers: 1438 },
+      ];
+
+      let authMode = 'login';
+      let anonymousPosting = false;
+      let selectedChat = 'Lian Romano';
+      let activeMedia = null;
+
+      const knownAccounts = getKnownAccounts();
+      const seedUsers = knownAccounts.map((account) => ({
+        ...account,
+        password: hashPassword(account.password),
+      }));
+
+      const seedPosts = [
+        {
+          id: 'seed-post-1',
+          text: 'Our drip irrigation trial reduced water use by 22% while keeping the rice plots healthier during the heat wave.',
+          author: 'Roselyn G.',
+          anonymous: false,
+          likes: 132,
+          likedBy: ['seed-user-1'],
+          reposts: 12,
+          comments: ['Great field data.'],
+          attachment: null,
+          createdAt: new Date().toISOString(),
+        },
+        {
+          id: 'seed-post-2',
+          text: 'Looking for a cold-storage partner for banana shipments so we can reduce spoilage during peak harvest.',
+          author: 'Aldrin P.',
+          anonymous: false,
+          likes: 96,
+          likedBy: [],
+          reposts: 7,
+          comments: ['Happy to connect.'],
+          attachment: null,
+          createdAt: new Date(Date.now() - 60000).toISOString(),
+        },
+        {
+          id: 'seed-post-3',
+          text: 'Composting rice straw is improving soil moisture retention before the onion planting window begins.',
+          author: 'Alma R.',
+          anonymous: false,
+          likes: 118,
+          likedBy: ['seed-user-2'],
+          reposts: 9,
+          comments: ['This is exactly the kind of field insight we need.'],
+          attachment: null,
+          createdAt: new Date(Date.now() - 120000).toISOString(),
+        },
+        {
+          id: 'seed-post-4',
+          text: 'Community seedling sale this weekend for farmers who want stronger starts and lower transplant stress.',
+          author: 'Lian Romano',
+          anonymous: false,
+          likes: 84,
+          likedBy: [],
+          reposts: 5,
+          comments: ['Count me in.'],
+          attachment: null,
+          createdAt: new Date(Date.now() - 180000).toISOString(),
+        },
+        {
+          id: 'seed-post-5',
+          text: 'Market access update: local cooperatives are pooling produce to reduce transport costs and improve pricing.',
+          author: 'TestAcc_Alpha',
+          anonymous: false,
+          likes: 101,
+          likedBy: ['seed-user-3'],
+          reposts: 11,
+          comments: ['This is promising for small growers.'],
+          attachment: null,
+          createdAt: new Date(Date.now() - 240000).toISOString(),
+        },
+      ];
+      const seedMessages = [
+        { id: 'msg-1', sender: 'Alma R.', recipient: 'Lian Romano', text: 'Can you share the seedling schedule?', createdAt: new Date().toISOString() },
+        { id: 'msg-2', sender: 'Lian Romano', recipient: 'Alma R.', text: 'I will send the updated map before lunch.', createdAt: new Date().toISOString() },
+      ];
+
+      function loadState(key, fallback) {
+        try {
+          const raw = localStorage.getItem(key);
+          return raw ? JSON.parse(raw) : fallback;
+        } catch {
+          return fallback;
+        }
+      }
+
+      function saveState(key, value) {
+        localStorage.setItem(key, JSON.stringify(value));
+      }
+
+      function currentUser() {
+        return loadState(STORAGE_KEYS.currentUser, null);
+      }
+
+      function setCurrentUser(user) {
+        saveState(STORAGE_KEYS.currentUser, user);
+        const label = document.getElementById('composer-user-label');
+        if (label && user) {
+          label.textContent = `${user.name || 'Farmer'}, ${user.role || 'farmer'}`;
+        }
+        renderSessionState();
+      }
+
+      function clearCurrentUser() {
+        localStorage.removeItem(STORAGE_KEYS.currentUser);
+        renderSessionState();
+      }
+
+      function getUsers() {
+        const current = loadState(STORAGE_KEYS.users, seedUsers);
+        return Array.isArray(current) && current.length ? current : seedUsers;
+      }
+
+      function getPosts() {
+        const current = loadState(STORAGE_KEYS.posts, seedPosts);
+        if (!Array.isArray(current) || current.length === 0) {
+          saveState(STORAGE_KEYS.posts, seedPosts);
+          return seedPosts;
+        }
+        return current;
+      }
+
+      function savePosts(posts) {
+        saveState(STORAGE_KEYS.posts, posts);
+      }
+
+      function getMessages() {
+        const current = loadState(STORAGE_KEYS.messages, seedMessages);
+        if (!Array.isArray(current) || current.length === 0) {
+          saveState(STORAGE_KEYS.messages, seedMessages);
+          return seedMessages;
+        }
+        return current;
+      }
+
+      function saveMessages(messages) {
+        saveState(STORAGE_KEYS.messages, messages);
+      }
+
+      function ensureSeedState() {
+        if (!localStorage.getItem(STORAGE_KEYS.users)) {
+          saveState(STORAGE_KEYS.users, seedUsers);
+        }
+        if (!localStorage.getItem(STORAGE_KEYS.posts)) {
+          saveState(STORAGE_KEYS.posts, seedPosts);
+        }
+        if (!localStorage.getItem(STORAGE_KEYS.messages)) {
+          saveState(STORAGE_KEYS.messages, seedMessages);
+        }
+      }
+
+      function renderSessionState() {
+        const user = currentUser();
+        const accountStatus = document.getElementById('account-status');
+        const statusName = document.querySelector('[data-status-name]');
+        const statusMeta = document.querySelector('[data-status-meta]');
+        const logoutButton = document.getElementById('logout-button');
+
+        if (accountStatus) {
+          accountStatus.classList.toggle('signed-in', Boolean(user));
+          accountStatus.classList.toggle('signed-out', !user);
+        }
+
+        if (statusName) {
+          statusName.textContent = user ? user.name : 'Not signed in';
+        }
+
+        if (statusMeta) {
+          statusMeta.textContent = user ? (user.role || 'Community member') : 'Use the landing page to join';
+        }
+
+        if (logoutButton) {
+          logoutButton.classList.toggle('hidden', !user);
+        }
+
+        if (user) {
+          accountStatus?.setAttribute('title', `Signed in as ${user.name}`);
+          logoutButton && (logoutButton.onclick = () => {
+            clearCurrentUser();
+            selectedChat = mockProfiles[2].name;
+            showView('auth');
+            renderMessages();
+          });
+        } else {
+          accountStatus?.setAttribute('title', 'Not signed in');
+        }
+
+        const label = document.getElementById('composer-user-label');
+        if (label) {
+          label.textContent = user ? `${user.name}, ${user.role}` : 'Lian, farmer';
+        }
+      }
+
+      function getProfileByName(name) {
+        const normalized = String(name || '').trim();
+        if (!normalized) return mockProfiles[0];
+
+        const direct = mockProfiles.find((entry) => entry.name === normalized);
+        if (direct) return direct;
+
+        const current = currentUser();
+        if (current && current.name === normalized) {
+          return { id: current.id, name: current.name, role: current.role || 'Community member', location: 'Mindanao', bio: 'A new community member sharing updates from the field.', followers: 1200 };
+        }
+
+        const saved = getUsers().find((entry) => entry.name === normalized);
+        if (saved) {
+          return { id: saved.id, name: saved.name, role: saved.role || 'Community member', location: 'Mindanao', bio: 'Agriculture community member sharing updates and field learnings.', followers: 1200 };
+        }
+
+        return mockProfiles[0];
+      }
+
+      function renderAttachment(attachment) {
+        if (!attachment || !attachment.src) return '';
+        if (attachment.type && attachment.type.startsWith('video')) {
+          return `<video class="post-media" src="${attachment.src}" controls></video>`;
+        }
+        return `<img class="post-media" src="${attachment.src}" alt="Shared media" />`;
+      }
+
+      function getMatchingProfiles(query) {
+        const q = String(query || '').trim().toLowerCase();
+        if (!q) return [];
+
+        const entries = [
+          ...mockProfiles,
+          ...getUsers().map((user) => ({
+            id: user.id,
+            name: user.name,
+            role: user.role,
+            location: 'Mindanao',
+            bio: 'Agriculture community member',
+            followers: 1200,
+          })),
+        ];
+
+        return entries.filter((profile, index, array) => {
+          const key = profile.name || '';
+          const haystack = [profile.name, profile.role, profile.location, profile.bio].filter(Boolean).join(' ').toLowerCase();
+          const isMatch = haystack.includes(q);
+          const firstIndex = array.findIndex((entry) => entry.name === key);
+          return isMatch && firstIndex === index;
+        });
+      }
+
+      function renderFeed() {
+        const feed = document.getElementById('feed-list');
+        const query = document.querySelector('.search input')?.value || '';
+        const profileMatches = getMatchingProfiles(query);
+        const posts = getFilteredPosts(getPosts(), query);
+
+        const profileMarkup = profileMatches.length ? `
+          <section class="search-profile-strip panel">
+            <div class="section-heading tight">
+              <h3>People matching “${query}”</h3>
+            </div>
+            <div class="profile-match-grid">
+              ${profileMatches.map((profile) => `
+                <button class="profile-match-card" type="button" data-profile-name="${profile.name}">
+                  <span class="avatar-bubble small">${(profile.name || 'U').charAt(0)}</span>
+                  <span>
+                    <strong>${profile.name}</strong>
+                    <small>${profile.role || 'Community member'}</small>
+                  </span>
+                </button>
+              `).join('')}
+            </div>
+          </section>
+        ` : '';
+
+        if (!posts.length) {
+          feed.innerHTML = `${profileMarkup}<article class="post-card panel"><p>No posts matched your search yet.</p></article>`;
+          return;
+        }
+
+        const currentUserId = currentUser()?.id || currentUser()?.email || currentUser()?.name || 'guest-user';
+
+        feed.innerHTML = `${profileMarkup}${posts.map((post) => {
+          const author = post.anonymous ? 'Anonymous farmer' : post.author;
+          const comments = Array.isArray(post.comments) ? post.comments : [];
+          const reposts = Number(post.reposts || 0);
+          const likes = Number(post.likes || 0);
+          const interactions = likes + comments.length + reposts;
+          const likedBy = Array.isArray(post.likedBy) ? post.likedBy : [];
+          const hasLiked = !!currentUserId && likedBy.includes(currentUserId);
+          const isOwner = !!currentUser() && (post.author === currentUser().name || post.author === 'Anonymous farmer' && currentUser().name === 'Anonymous farmer');
+
+          return `
+            <article class="post-card panel">
+              <div class="post-head">
+                <div class="user-meta">
+                  <button class="avatar-button" type="button" data-profile-name="${author}" aria-label="Open profile for ${author}">
+                    <img src="assets/avatars/farmer-${(Math.abs(author.length) % 3) + 1}.svg" alt="${author} avatar" />
+                  </button>
+                  <div>
+                    <button class="author-link" type="button" data-profile-name="${author}">${author}</button>
+                    <small>${new Date(post.createdAt).toLocaleString()} · Mindanao</small>
+                  </div>
+                </div>
+                <div class="post-menu-wrap">
+                  ${isOwner ? `
+                    <button class="post-inline-action" type="button" data-action="edit-post" data-post-id="${post.id}">Edit</button>
+                    <button class="post-inline-action danger" type="button" data-action="delete-post" data-post-id="${post.id}">Delete</button>
+                  ` : ''}
+                  <button class="post-menu" aria-label="Open more options" type="button">•••</button>
+                </div>
+              </div>
+              <p>${post.text}</p>
+              ${renderAttachment(post.attachment)}
+              <div class="engagement-summary">
+                <strong>${interactions}</strong>
+                <span>total interactions</span>
+              </div>
+              <div class="engagement-row">
+                <button class="action-btn ${hasLiked ? 'liked' : ''}" type="button" data-post-id="${post.id}" data-action="like">${hasLiked ? '♥' : '❤'} ${likes}</button>
+                <button class="action-btn" type="button" data-post-id="${post.id}" data-action="comment">💬 ${comments.length}</button>
+                <button class="action-btn" type="button" data-post-id="${post.id}" data-action="repost">↺ ${reposts}</button>
+              </div>
+              <div class="comment-list">
+                ${comments.length ? comments.map((comment) => `<div class="comment-item">${comment}</div>`).join('') : '<div class="comment-item empty">No comments yet.</div>'}
+              </div>
+              <form class="comment-form" data-post-id="${post.id}">
+                <input type="text" name="comment" placeholder="Write a comment..." aria-label="Write a comment" />
+                <button type="submit">Comment</button>
+              </form>
+            </article>
+          `;
+        }).join('')}`;
+      }
+
+      function getContactList(messages, activeUserName) {
+        const contacts = new Map();
+        messages.forEach((message) => {
+          const otherPerson = message.sender === activeUserName ? message.recipient : message.sender;
+          if (!otherPerson || otherPerson === activeUserName) return;
+          if (!contacts.has(otherPerson) || new Date(message.createdAt) > new Date(contacts.get(otherPerson).createdAt)) {
+            contacts.set(otherPerson, message);
+          }
+        });
+        return [...contacts.entries()];
+      }
+
+      function renderMessages() {
+        const list = document.getElementById('chat-contacts');
+        const thread = document.getElementById('chat-thread');
+        const messages = getMessages();
+        const activeUser = currentUser()?.name || 'TestAcc_Alpha';
+        const contacts = getContactList(messages, activeUser);
+        const visibleContacts = contacts.length ? contacts : [[mockProfiles[2].name, { sender: mockProfiles[2].name, text: 'Can you share the seedling schedule?' }]];
+
+        list.innerHTML = visibleContacts.map(([name, lastMessage]) => `
+          <button class="contact-item ${selectedChat === name ? 'selected' : ''}" type="button" data-contact="${name}">
+            <span class="avatar-bubble">${(name || 'A').charAt(0)}</span>
+            <span>
+              <strong>${name}</strong>
+              <small>${lastMessage?.text || 'New conversation'}</small>
+            </span>
+          </button>
+        `).join('');
+
+        const threadMessages = filterMessagesForViewer(messages.filter((message) => {
+          const directForCurrentUser = ((message.sender === activeUser && message.recipient === selectedChat) || (message.recipient === activeUser && message.sender === selectedChat));
+          return directForCurrentUser;
+        }), activeUser);
+
+        if (!threadMessages.length) {
+          thread.innerHTML = '<p class="empty-chat">No messages yet. Start the conversation.</p>';
+          return;
+        }
+
+        thread.innerHTML = threadMessages.map((message) => {
+          const isCurrentUser = message.sender === activeUser;
+          const canDeleteForEveryone = message.sender === activeUser || message.recipient === activeUser;
+          return `
+            <div class="message-item-wrap ${isCurrentUser ? 'self' : ''}">
+              <div class="message-item ${isCurrentUser ? 'active' : ''}">
+                <div class="avatar-bubble ${isCurrentUser ? 'alt' : ''}">${(message.sender || 'A').charAt(0)}</div>
+                <div>
+                  <strong>${isCurrentUser ? 'You' : message.sender}</strong>
+                  <small>${message.text}</small>
+                </div>
+                <div class="message-actions">
+                  ${isCurrentUser ? `<button class="text-button mini-edit" type="button" data-message-id="${message.id}">Edit</button>` : ''}
+                  <button class="text-button mini-delete" type="button" data-message-id="${message.id}" data-delete-mode="self">Delete for me</button>
+                  ${canDeleteForEveryone ? `<button class="text-button mini-delete danger" type="button" data-message-id="${message.id}" data-delete-mode="all">Delete for both</button>` : ''}
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      function openAuth(mode) {
+        authMode = mode;
+        const modal = document.getElementById('auth-modal');
+        const title = document.getElementById('auth-title');
+        const submit = document.getElementById('auth-submit');
+        const signupFields = document.getElementById('signup-fields');
+        const switchText = document.getElementById('auth-switch-copy');
+        const switchButton = document.getElementById('auth-switch-button');
+
+        renderDemoAccounts();
+        showView('auth');
+        modal.classList.remove('hidden');
+        signupFields.classList.toggle('hidden', authMode !== 'signup');
+        title.textContent = authMode === 'signup' ? 'Sign up' : 'Log in';
+        submit.textContent = authMode === 'signup' ? 'Create account' : 'Log in';
+        switchText.textContent = authMode === 'signup' ? 'Already have an account?' : 'Need an account?';
+        switchButton.textContent = authMode === 'signup' ? 'Log in' : 'Sign up';
+      }
+
+      function closeAuth() {
+        document.getElementById('auth-modal').classList.add('hidden');
+        if (currentUser()) {
+          showView('feed');
+          renderFeed();
+          return;
+        }
+        showView('auth');
+      }
+
+      function updateNavState(viewName) {
+        const navKey = {
+          auth: 'home',
+          feed: 'home',
+          discover: 'discover',
+          profile: 'profile',
+          messages: 'messages',
+        }[viewName] || 'home';
+
+        document.querySelectorAll('.nav-link').forEach((button) => {
+          const isActive = (button.dataset.nav || button.textContent?.trim().toLowerCase()) === navKey;
+          button.classList.toggle('active', isActive);
+        });
+
+        document.querySelectorAll('.nav-item').forEach((button) => {
+          const label = (button.getAttribute('aria-label') || button.textContent?.trim() || '').toLowerCase();
+          const isActive = label === navKey || (navKey === 'home' && label === 'home');
+          button.classList.toggle('active', isActive);
+        });
+      }
+
+      function showView(viewName) {
+        const normalizedView = viewName || 'feed';
+
+        document.getElementById('auth-page')?.classList.toggle('hidden', normalizedView !== 'auth');
+        document.getElementById('feed-page')?.classList.toggle('hidden', !['feed', 'discover'].includes(normalizedView));
+        document.getElementById('profile-page')?.classList.toggle('hidden', normalizedView !== 'profile');
+        document.getElementById('messages-page')?.classList.toggle('hidden', normalizedView !== 'messages');
+
+        updateNavState(normalizedView);
+      }
+
+      function closeProfile() {
+        showView('feed');
+      }
+
+      function openProfile(profileLike) {
+        const content = document.getElementById('profile-content');
+        const user = profileLike || currentUser() || mockProfiles[0];
+        const profile = user && user.email ? { ...getProfileByName(user.name), ...user, name: user.name, role: user.role || 'Community Member', location: user.location || 'Mindanao', bio: user.bio || 'Agriculture community member sharing updates and field learnings.', followers: Number(user.followers || 1200) } : { ...mockProfiles[0], ...user };
+        const profilePosts = getProfilePosts(getPosts(), profile.name);
+
+        content.innerHTML = `
+          <div class="profile-header">
+            <div class="avatar-bubble large">${(profile.name || 'U').charAt(0)}</div>
+            <div>
+              <h3>${profile.name}</h3>
+              <p>${profile.role || 'Community Member'} · ${profile.location || 'Mindanao'}</p>
+            </div>
+          </div>
+          <div class="profile-actions">
+            <button class="text-button" type="button" data-profile-action="back">Back</button>
+            <button class="btn btn-primary small" type="button" data-profile-action="message">Message</button>
+          </div>
+          <p class="profile-bio">${profile.bio || 'Agriculture community member sharing updates and field learnings.'}</p>
+          <div class="mini-stats">
+            <div><strong>${profile.followers || 1240}</strong><span>Followers</span></div>
+            <div><strong>${profilePosts.length}</strong><span>Posts</span></div>
+            <div><strong>${Math.max(2, Math.min(12, profilePosts.length + 2))}</strong><span>Connections</span></div>
+          </div>
+          <div class="profile-list">
+            ${mockProfiles.map((entry) => `
+              <button class="profile-row" type="button" data-profile-id="${entry.id}">
+                <span>${entry.name}</span>
+                <small>${entry.role}</small>
+              </button>
+            `).join('')}
+          </div>
+          <div class="profile-history">
+            <h4>Post history</h4>
+            ${profilePosts.length ? profilePosts.map((post) => `
+              <article class="profile-history-item">
+                <p>${post.text}</p>
+                <small>${new Date(post.createdAt).toLocaleString()} · ${post.likes || 0} likes · ${Array.isArray(post.comments) ? post.comments.length : 0} comments</small>
+              </article>
+            `).join('') : '<p class="empty-chat">No posts yet.</p>'}
+          </div>
+        `;
+        showView('profile');
+      }
+
+      async function handleAuthSubmit(event) {
+        event.preventDefault();
+        const email = document.getElementById('auth-email').value.trim();
+        const password = document.getElementById('auth-password').value;
+        if (!email || !password) return;
+
+        if (authMode === 'signup') {
+          const name = document.getElementById('signup-name').value.trim();
+          const role = document.getElementById('signup-role').value.trim() || 'Farmer';
+          const users = getUsers();
+          const created = registerUser({ name, email, password, role }, users);
+          saveState(STORAGE_KEYS.users, created);
+          const session = loginUser(email, password, created);
+          if (session) {
+            setCurrentUser(session.user);
+          }
+        } else {
+          const session = loginUser(email, password, getUsers());
+          if (!session) {
+            alert('Invalid email or password. Use one of the demo credentials below or sign up for a new account.');
+            return;
+          }
+          setCurrentUser(session.user);
+        }
+
+        closeAuth();
+        document.getElementById('auth-form').reset();
+        renderFeed();
+        renderMessages();
+      }
+
+      function fileToDataUrl(file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve({ name: file.name, type: file.type, src: reader.result });
+          reader.onerror = () => reject(new Error('Could not read file.'));
+          reader.readAsDataURL(file);
+        });
+      }
+
+      async function sharePost() {
+        const input = document.getElementById('post-input');
+        const text = input.value.trim();
+        if (!text && !activeMedia) return;
+
+        if (!currentUser()) {
+          openAuth('login');
+          return;
+        }
+
+        const posts = getPosts();
+        const nextPost = {
+          id: `post-${Date.now()}`,
+          text,
+          author: currentUser().name,
+          anonymous: anonymousPosting,
+          likes: 0,
+          likedBy: [],
+          reposts: 0,
+          comments: [],
+          attachment: activeMedia,
+          createdAt: new Date().toISOString(),
+        };
+
+        posts.unshift(nextPost);
+        savePosts(posts);
+        input.value = '';
+        activeMedia = null;
+        document.getElementById('media-input').value = '';
+        document.getElementById('media-preview').innerHTML = '';
+        anonymousPosting = false;
+        const toggle = document.getElementById('anonymous-toggle');
+        toggle.textContent = 'Anonymous';
+        toggle.setAttribute('aria-pressed', 'false');
+        renderFeed();
+      }
+
+      function addMessage(event) {
+        event.preventDefault();
+        const messageInput = document.getElementById('message-input');
+        const text = messageInput.value.trim();
+        if (!text) return;
+
+        const activeUser = currentUser()?.name || 'TestAcc_Alpha';
+        const messages = getMessages();
+        const result = sendMessage({ sender: activeUser, recipient: selectedChat, text, thread: messages });
+        saveMessages(result.map((item) => ({
+          id: item.id || `msg-${Date.now()}-${Math.random().toString(16).slice(2)}`,
+          sender: item.sender,
+          recipient: item.recipient,
+          text: item.text,
+          createdAt: item.createdAt || new Date().toISOString(),
+        })));
+        messageInput.value = '';
+        renderMessages();
+      }
+
+      function editMessageInThread(messageId) {
+        const messages = getMessages();
+        const target = messages.find((item) => item.id === messageId);
+        if (!target) return;
+
+        const updatedText = window.prompt('Edit your message:', target.text);
+        if (updatedText === null) return;
+
+        const nextMessages = editMessage(messages, messageId, updatedText);
+        saveMessages(nextMessages);
+        renderMessages();
+      }
+
+      function deleteMessageFromThread(messageId, mode = 'self') {
+        const actor = currentUser()?.name;
+        if (!actor) {
+          openAuth('login');
+          return;
+        }
+
+        const nextMessages = deleteMessage(getMessages(), messageId, actor, {
+          scope: mode === 'all' ? 'all' : 'self',
+        });
+        saveMessages(nextMessages);
+        renderMessages();
+      }
+
+      function handlePostAction(event) {
+        const target = event.target.closest('[data-action]');
+        if (!target) return;
+
+        const action = target.dataset.action;
+        const postId = target.dataset.postId;
+        const posts = getPosts();
+        const index = posts.findIndex((post) => post.id === postId);
+        if (index === -1) return;
+
+        if (!currentUser()) {
+          openAuth('login');
+          return;
+        }
+
+        if (action === 'like') {
+          const userId = currentUser()?.id || currentUser()?.email || currentUser()?.name || 'anonymous-user';
+          const nextPosts = toggleLike(posts, postId, userId);
+          savePosts(nextPosts);
+          renderFeed();
+          return;
+        }
+
+        if (action === 'repost') {
+          posts[index].reposts = Number(posts[index].reposts || 0) + 1;
+          savePosts(posts);
+          renderFeed();
+          return;
+        }
+
+        if (action === 'edit-post') {
+          const currentPost = posts[index];
+          const nextText = window.prompt('Edit your post:', currentPost.text);
+          if (nextText === null) return;
+          const trimmedText = nextText.trim();
+          if (!trimmedText) return;
+          posts[index] = { ...currentPost, text: trimmedText };
+          savePosts(posts);
+          renderFeed();
+          return;
+        }
+
+        if (action === 'delete-post') {
+          const shouldDelete = window.confirm('Delete this post?');
+          if (!shouldDelete) return;
+          const filteredPosts = posts.filter((post) => post.id !== postId);
+          savePosts(filteredPosts);
+          renderFeed();
+          return;
+        }
+
+        if (action === 'comment') {
+          const form = document.querySelector(`.comment-form[data-post-id="${postId}"] input`);
+          form?.focus();
+        }
+      }
+
+      document.getElementById('feed-list').addEventListener('submit', (event) => {
+        const form = event.target.closest('.comment-form');
+        if (!form) return;
+        event.preventDefault();
+
+        if (!currentUser()) {
+          openAuth('login');
+          return;
+        }
+
+        const postId = form.dataset.postId;
+        const input = form.querySelector('input');
+        const value = input?.value.trim();
+        if (!value) return;
+
+        const posts = getPosts();
+        const nextPosts = addComment(posts, postId, value, currentUser().name || 'You');
+        savePosts(nextPosts);
+        form.reset();
+        renderFeed();
+      });
+
+      document.getElementById('account-status')?.addEventListener('click', () => {
+        if (currentUser()) {
+          openProfile(currentUser());
+          return;
+        }
+        showView('auth');
+        openAuth('login');
+      });
+      document.getElementById('logout-button')?.addEventListener('click', () => {
+        clearCurrentUser();
+        selectedChat = mockProfiles[2].name;
+        showView('auth');
+        renderMessages();
+      });
+      document.getElementById('auth-page-login').addEventListener('click', () => {
+        openAuth('login');
+      });
+      document.getElementById('auth-page-signup').addEventListener('click', () => {
+        openAuth('signup');
+      });
+      document.getElementById('brand-button').addEventListener('click', () => {
+        closeAuth();
+        showView(currentUser() ? 'feed' : 'auth');
+        renderFeed();
+      });
+      document.getElementById('close-auth').addEventListener('click', closeAuth);
+      document.getElementById('auth-switch-button').addEventListener('click', () => {
+        openAuth(authMode === 'login' ? 'signup' : 'login');
+      });
+      document.getElementById('auth-form').addEventListener('submit', handleAuthSubmit);
+      document.getElementById('share-button').addEventListener('click', sharePost);
+      document.getElementById('messages-back-button')?.addEventListener('click', () => showView('feed'));
+      document.getElementById('join-community-button').addEventListener('click', () => {
+        document.getElementById('post-input').focus();
+        document.getElementById('post-input').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+      document.getElementById('explore-feed-button').addEventListener('click', () => {
+        document.getElementById('feed-list').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+      document.getElementById('anonymous-toggle').addEventListener('click', () => {
+        anonymousPosting = !anonymousPosting;
+        const toggle = document.getElementById('anonymous-toggle');
+        toggle.textContent = anonymousPosting ? 'Posting anonymously' : 'Anonymous';
+        toggle.setAttribute('aria-pressed', String(anonymousPosting));
+      });
+      const searchInput = document.querySelector('.search input');
+      searchInput.addEventListener('input', renderFeed);
+      searchInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          renderFeed();
+        }
+      });
+      document.getElementById('message-form').addEventListener('submit', addMessage);
+      document.getElementById('feed-list').addEventListener('click', (event) => {
+        const profileButton = event.target.closest('[data-profile-name]');
+        if (profileButton) {
+          const profile = getProfileByName(profileButton.dataset.profileName);
+          openProfile(profile);
+          return;
+        }
+
+        const actionButton = event.target.closest('[data-action]');
+        if (actionButton) {
+          handlePostAction(event);
+        }
+      });
+      document.getElementById('chat-contacts').addEventListener('click', (event) => {
+        const button = event.target.closest('[data-contact]');
+        if (!button) return;
+        selectedChat = button.dataset.contact;
+        renderMessages();
+      });
+      document.getElementById('chat-thread').addEventListener('click', (event) => {
+        const editButton = event.target.closest('.mini-edit');
+        if (editButton) {
+          const messageId = editButton.dataset.messageId;
+          editMessageInThread(messageId);
+          return;
+        }
+
+        const deleteButton = event.target.closest('.mini-delete');
+        if (deleteButton) {
+          const messageId = deleteButton.dataset.messageId;
+          const mode = deleteButton.dataset.deleteMode === 'all' ? 'all' : 'self';
+          deleteMessageFromThread(messageId, mode);
+        }
+      });
+      document.getElementById('profile-content').addEventListener('click', (event) => {
+        const profileActionButton = event.target.closest('[data-profile-action]');
+        if (profileActionButton) {
+          const action = profileActionButton.dataset.profileAction;
+          if (action === 'back') {
+            closeProfile();
+            return;
+          }
+          if (action === 'message') {
+            const profileName = document.querySelector('#profile-content h3')?.textContent?.trim();
+            if (profileName) {
+              selectedChat = profileName;
+              showView('messages');
+              renderMessages();
+            }
+          }
+          return;
+        }
+
+        const button = event.target.closest('[data-profile-id]');
+        if (!button) return;
+        const profile = mockProfiles.find((entry) => entry.id === button.dataset.profileId);
+        if (profile) openProfile(profile);
+      });
+      document.getElementById('media-input').addEventListener('change', async (event) => {
+        const [file] = event.target.files || [];
+        if (!file) return;
+        activeMedia = await fileToDataUrl(file);
+
+        const preview = document.getElementById('media-preview');
+        preview.innerHTML = file.type.startsWith('video')
+          ? `<video src="${activeMedia.src}" controls></video>`
+          : `<img src="${activeMedia.src}" alt="Selected media preview" />`;
+      });
+
+      function requireSignedIn(viewName = 'feed') {
+        if (!currentUser()) {
+          openAuth('login');
+          return false;
+        }
+
+        showView(viewName);
+        return true;
+      }
+
+      document.querySelectorAll('.nav-item, .nav-link').forEach((button) => {
+        button.addEventListener('click', () => {
+          const label = button.getAttribute('aria-label') || button.dataset.nav || button.textContent?.trim();
+          const key = String(label || '').toLowerCase();
+
+          if (key === 'messages') {
+            if (!requireSignedIn('messages')) return;
+            renderMessages();
+            return;
+          }
+
+          if (key === 'profile') {
+            if (!requireSignedIn('profile')) return;
+            openProfile(currentUser());
+            return;
+          }
+
+          if (key === 'discover') {
+            if (!currentUser()) {
+              openAuth('login');
+              return;
+            }
+            showView('discover');
+            document.querySelector('.search input')?.focus();
+            return;
+          }
+
+          if (key === 'home') {
+            if (!currentUser()) {
+              showView('auth');
+              return;
+            }
+            closeAuth();
+            showView('feed');
+            renderFeed();
+            return;
+          }
+        });
+      });
+
+      ensureSeedState();
+      renderDemoAccounts();
+      renderSessionState();
+      renderFeed();
+      renderMessages();
+      if (!currentUser()) {
+        showView('auth');
+      } else {
+        showView('feed');
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,18 @@
+ROLE: Solve this as a consistent, analytical, and scrutinizing web developer
+
+CONCERN:
+You only resolved the problem with the navigation bar. There is still no landing page or login confirmation. I still need to post to see the feed.
+
+
+TASK:
+1. Create a Log in and Sign up page.
+- Additional note: Half of the landing page should be a space for a photo
+2. Create log-out capabilities for logged-in users and, in the top right corner, the status of their accounts.
+3. Log me out so I can test the login features.
+4. Give me all the credentials for all the accounts on the platform.
+
+OUTCOME
+1. 'Log in or Sign up' landing page.
+2. Log out capabilities and account statuses to verify if the user is logged in or not
+3. My account: log out
+4. The credentials of all the accounts on the platform

@@ -1,0 +1,32 @@
+ROLE: Solve this as a consistent, analytical, and scrutinizing web developer
+
+
+CONCERN:
+Upon reviewing the messaging system, I realized users can't delete messages. Also, the account status says not signed in, but the profile tab gives me my full profile. I want to set up logic so that you can only access the app after logging in.
+
+I have the finalized list of requirements here:
+1. User Profiles
+2. Content Creation and Sharing (User and Anonymous)
+3. Central Feed
+4. Interactivity
+5. Messaging
+6. Search and Discovery
+7. Login and Signup
+
+And so far, you've checked 1, 2, 3, 4, and 6 at 100%. However, after realizing the Messaging problem and the persistent Login and Sign Up problem, Messaging (5) sits at 99% while Login and Sign Up (7) are at 0%.
+
+Earlier, you created a successful login and sign-up system. Where is that now? All I asked for was a landing page, not a hovering tab. Instead, the Login and Sign Up system is dysfunctional. This is why I want you to finish these tasks
+
+TASK:
+1. Create a proper Login and Sign Up landing page. Users shouldn't be able to access the app without it. Don't forget, half of the landing page should be space for a photo (left half).
+2. Allow the deletion of messages for a.) both ends, and b.) the user's end.
+
+OUTCOME:
+1. A Login or Sign Up landing page with the left space for a photo.
+2. Allowed Message deletions for a.) both ends, and b.) the user's end.
+
+CONSTRAINTS:
+The tasks you execute throughout must be:
+a.) tasks that do not upload or collect personal data;
+b.) tasks that do not involve third parties;
+c.) tasks that do not threaten the data integrity and security of the web app.
