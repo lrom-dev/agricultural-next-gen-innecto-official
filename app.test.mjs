@@ -8,6 +8,15 @@ import {
   toggleLike,
   getFilteredPosts,
   sendMessage,
+  getPostCitations,
+  computeEngagementAnalytics,
+  getDigitalMarketplaceFeed,
+  generateCsvFromPosts,
+  getPostsForOwner,
+  incrementPostCitation,
+  deleteMessage,
+  getKnownAccounts,
+  hashPassword,
 } from './app.mjs';
 
 test('registerUser stores a new user and returns it', () => {
@@ -36,6 +45,39 @@ test('loginUser authenticates a registered user', () => {
   assert.equal(session.user.email, 'another@example.com');
 });
 
+test('loginUser accepts the displayed password for hashed demo accounts', () => {
+  const accounts = getKnownAccounts().map((account) => ({
+    ...account,
+    password: hashPassword(account.password),
+  }));
+
+  assert.ok(loginUser('roselyn@example.com', 'seedpass', accounts));
+});
+
+test('all community and business demo accounts authenticate with the displayed password', () => {
+  const accounts = getKnownAccounts();
+  const storedAccounts = accounts.map((account) => ({ ...account, password: hashPassword(account.password) }));
+
+  assert.equal(new Set(accounts.map((account) => account.email)).size, accounts.length);
+  for (const account of accounts) {
+    assert.ok(loginUser(account.email, account.password, storedAccounts), `${account.email} should authenticate`);
+  }
+});
+
+test('registerUser appends to the supplied account list and keeps the password hashed', () => {
+  const existing = [{ id: 'existing', name: 'Existing user' }];
+  const users = registerUser({
+    name: 'New Farmer',
+    email: 'new@example.com',
+    password: 'new-password',
+    role: 'Farmer',
+  }, existing);
+
+  assert.equal(users.length, 2);
+  assert.equal(users[1].password, hashPassword('new-password'));
+  assert.ok(loginUser('new@example.com', 'new-password', users));
+});
+
 test('createPost adds content and supports anonymous sharing', () => {
   const posts = createPost({
     text: 'New drip irrigation trial',
@@ -57,6 +99,16 @@ test('toggleLike increases the like count', () => {
 
   const updated = toggleLike(posts, posts[0].id);
   assert.equal(updated[0].likes, 1);
+});
+
+test('toggleLike reverses the count when the same user unlikes', () => {
+  const post = { id: 'toggle-post', likes: 0, likedBy: [] };
+  const liked = toggleLike([post], post.id, 'user-1');
+  const unliked = toggleLike(liked, post.id, 'user-1');
+
+  assert.equal(liked[0].likes, 1);
+  assert.equal(unliked[0].likes, 0);
+  assert.deepEqual(unliked[0].likedBy, []);
 });
 
 test('getFilteredPosts filters by query', () => {
@@ -82,4 +134,88 @@ test('sendMessage stores a chat item', () => {
 
   assert.equal(messages.length, 2);
   assert.equal(messages[1].text, 'Can you share the seedling schedule?');
+});
+
+test('getPostCitations provides APA, MLA, Chicago, and in-text reference styles', () => {
+  const citations = getPostCitations({
+    author: 'Lian Romano',
+    title: 'Smart irrigation in upland farms',
+    createdAt: '2026-03-10T12:30:00.000Z',
+    text: 'This post examines climate-smart irrigation for Mindanao farms.',
+  });
+
+  assert.equal(citations.apa.includes('Romano, L.'), true);
+  assert.equal(citations.mla.includes('Romano, Lian'), true);
+  assert.equal(citations.chicago.includes('Romano, Lian'), true);
+  assert.equal(citations.inText.includes('(Romano'), true);
+});
+
+test('computeEngagementAnalytics summarizes the performance metrics for a post set', () => {
+  const analytics = computeEngagementAnalytics([
+    { id: 'a', likes: 12, comments: ['1', '2'], reposts: 4 },
+    { id: 'b', likes: 8, comments: ['1'], reposts: 2 },
+    { id: 'c', likes: 20, comments: [], reposts: 6 },
+  ]);
+
+  assert.equal(analytics.totalPosts, 3);
+  assert.equal(analytics.totalInteractions, 55);
+  assert.equal(analytics.meanInteractions, 18.33);
+  assert.equal(analytics.medianInteractions, 18);
+  assert.equal(analytics.maxInteractions, 26);
+  assert.equal(analytics.minInteractions, 11);
+});
+
+test('getPostsForOwner only returns the signed-in user posts', () => {
+  const posts = [
+    { id: 'mine', author: 'Lian', authorId: 'user-1' },
+    { id: 'legacy-mine', author: 'Lian' },
+    { id: 'theirs', author: 'Alma', authorId: 'user-2' },
+  ];
+
+  assert.deepEqual(getPostsForOwner(posts, { id: 'user-1', name: 'Lian' }).map((post) => post.id), ['mine']);
+  assert.deepEqual(getPostsForOwner(posts, { name: 'Lian' }).map((post) => post.id), ['legacy-mine']);
+});
+
+test('incrementPostCitation increments only the selected post counter', () => {
+  const posts = [{ id: 'a', citations: 2 }, { id: 'b', citations: 8 }];
+  const updated = incrementPostCitation(posts, 'a');
+
+  assert.equal(updated[0].citations, 3);
+  assert.equal(updated[1].citations, 8);
+});
+
+test('deleteMessage only removes a message sent by the requesting user', () => {
+  const messages = [
+    { id: 'mine', sender: 'Lian', recipient: 'Alma' },
+    { id: 'theirs', sender: 'Alma', recipient: 'Lian' },
+  ];
+
+  const updated = deleteMessage(messages, 'theirs', 'Lian');
+  assert.deepEqual(updated.map((message) => message.id), ['mine', 'theirs']);
+  assert.deepEqual(deleteMessage(messages, 'mine', 'Lian').map((message) => message.id), ['theirs']);
+});
+
+test('getDigitalMarketplaceFeed returns mock market posts with search-friendly content', () => {
+  const market = getDigitalMarketplaceFeed();
+
+  assert.ok(Array.isArray(market.posts));
+  assert.ok(Array.isArray(market.profiles));
+  assert.ok(Array.isArray(market.commodityUpdates));
+  assert.ok(market.posts.some((post) => /IoT|AI|innovation|infrastructure|governance/i.test(post.topic || post.text || '')));
+});
+
+test('generateCsvFromPosts exports a CSV with the requested headers', () => {
+  const csv = generateCsvFromPosts([
+    {
+      id: 'POST-001',
+      createdAt: '2026-03-10',
+      title: 'Smart irrigation',
+      caption: 'Soil moisture improves efficiency',
+      fileShared: 'No',
+      text: 'We piloted sensor-based irrigation in the field.',
+    },
+  ]);
+
+  assert.match(csv, /POST-OO1,DATE,TITLE,CAPTION,FILE-SHARED,CONTENT/);
+  assert.match(csv, /POST-001/);
 });
