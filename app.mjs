@@ -2,6 +2,35 @@ export const defaultUsers = [];
 export const defaultPosts = [];
 export const defaultMessages = [];
 
+export function syncProfileIdentityReferences({ profile, previousName, posts = [], marketplacePosts = [], researchPosts = [], messages = [] }) {
+  if (previousName === profile.name) return { posts, marketplacePosts, researchPosts, messages };
+
+  const updateRecords = (records) => records.map((record) => {
+    const isAuthor = record.authorId === profile.id || (!record.authorId && record.author === previousName);
+    const comments = Array.isArray(record.comments) ? record.comments.map((comment) => (
+      typeof comment === 'string' && comment.startsWith(`${previousName}:`)
+        ? `${profile.name}${comment.slice(previousName.length)}`
+        : comment
+    )) : record.comments;
+    return {
+      ...record,
+      ...(isAuthor ? { author: profile.name, authorId: profile.id, authorRole: profile.role } : {}),
+      ...(Array.isArray(record.comments) ? { comments } : {}),
+    };
+  });
+
+  return {
+    posts: updateRecords(posts),
+    marketplacePosts: updateRecords(marketplacePosts),
+    researchPosts: updateRecords(researchPosts),
+    messages: messages.map((message) => ({
+      ...message,
+      sender: message.sender === previousName ? profile.name : message.sender,
+      recipient: message.recipient === previousName ? profile.name : message.recipient,
+    })),
+  };
+}
+
 export function registerUser({ name, email, password, role }, users = defaultUsers) {
   const user = {
     id: cryptoRandomId(),

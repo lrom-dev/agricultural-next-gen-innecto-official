@@ -43,7 +43,7 @@
       Notifications: #notifications-page eyebrow/title and #mark-notifications-read.
       Messages: #messages-page eyebrow/title, #messages-back-button, #message-input placeholder, and Send button.
       Mobile navigation: each .bottom-nav .nav-item; dialog copy: #auth-title, #auth-form labels/placeholders,
-        #auth-submit, .demo-accounts, #auth-switch-copy/#auth-switch-button, and #close-auth accessible label.
+        #auth-submit, #auth-switch-copy/#auth-switch-button, and #close-auth accessible label.
       Dynamic copy source: mockProfiles, communityGroups, researchBriefs, jobOpportunities, notificationItems,
         seedPosts, and seedMessages near the start of the module script below. Edit records for sample content;
         edit renderConnections(), renderGroups(), renderResearch(), renderJobs(), renderSavedPosts(),
@@ -458,10 +458,6 @@
           </label>
           <button class="btn btn-primary" type="submit" id="auth-submit">Log in</button>
         </form>
-        <div class="demo-accounts">
-          <p>Demo credentials</p>
-          <ul id="demo-account-list"></ul>
-        </div>
         <p class="auth-switch">
           <span id="auth-switch-copy">Need an account?</span>
           <button type="button" id="auth-switch-button" class="text-button">Sign up</button>
@@ -523,6 +519,7 @@
         isProfileOwner,
         incrementPostCitation,
         toggleSavedPost,
+        syncProfileIdentityReferences,
       } from './app.mjs';
       import { applyImageAssets, avatarImage } from './image-assets.mjs';
 
@@ -693,7 +690,16 @@
       }
 
       function currentUser() {
-        return loadState(STORAGE_KEYS.currentUser, null);
+        const session = loadState(STORAGE_KEYS.currentUser, null);
+        if (!session) return null;
+        const account = getUsers().find((entry) => entry.id === session.id);
+        return account ? {
+          ...session,
+          name: account.name,
+          role: account.role || session.role,
+          profileImage: account.profileImage || '',
+          email: account.email || session.email,
+        } : session;
       }
 
       function setCurrentUser(user) {
@@ -722,6 +728,36 @@
           else users.push(savedUser);
         });
         return users;
+      }
+
+      function getSavedProfile(profile = {}) {
+        const users = getUsers();
+        return users.find((user) => profile.id && user.id === profile.id)
+          || users.find((user) => user.name === profile.name || (user.profileAliases || []).includes(profile.name));
+      }
+
+      function getSyncedProfile(profile) {
+        const savedProfile = getSavedProfile(profile);
+        return savedProfile ? {
+          ...profile,
+          ...savedProfile,
+          id: profile.id || savedProfile.id,
+          role: savedProfile.role || profile.role,
+          location: savedProfile.location || profile.location,
+          bio: savedProfile.bio || profile.bio,
+          profileImage: savedProfile.profileImage || '',
+        } : profile;
+      }
+
+      function getProfileIdentity(name, id = '') {
+        const savedProfile = getSavedProfile({ name, id });
+        return savedProfile ? { name: savedProfile.name, profileImage: savedProfile.profileImage || '' } : { name, profileImage: '' };
+      }
+
+      function avatarContent(name, profileImage = '') {
+        return profileImage
+          ? `<img src="${escapeHtml(profileImage)}" alt="" />`
+          : escapeHtml((name || 'A').charAt(0));
       }
 
       function getPosts() {
@@ -775,7 +811,7 @@
         const list = document.getElementById('connections-list');
         const query = String(document.getElementById('connections-search')?.value || '').trim().toLowerCase();
         const following = getLocalList(STORAGE_KEYS.following);
-        const profiles = mockProfiles.filter((profile) => profile.name !== currentUser()?.name).filter((profile) => {
+        const profiles = mockProfiles.map(getSyncedProfile).filter((profile) => profile.name !== currentUser()?.name).filter((profile) => {
           const searchable = [profile.name, profile.role, profile.location, profile.bio].join(' ').toLowerCase();
           return !query || searchable.includes(query);
         });
@@ -785,7 +821,7 @@
         list.innerHTML = profiles.map((profile, index) => `
           <article class="directory-card connection-card">
             <div class="directory-person">
-              <img src="${avatarImage(index)}" alt="" />
+              <img src="${escapeHtml(profile.profileImage || avatarImage(index))}" alt="${escapeHtml(profile.name)}" />
               <span class="directory-presence">Community member</span>
             </div>
             <p class="brand-kicker">${escapeHtml(profile.location)}</p>
@@ -940,13 +976,17 @@
         const count = document.getElementById('notification-count');
         count.textContent = unread.length;
         count.classList.toggle('hidden', unread.length === 0);
-        document.getElementById('notifications-list').innerHTML = notificationItems.map((item) => `
-          <article class="notification-item ${readItems.includes(item.id) ? 'read' : 'unread'}">
-            <span class="notification-avatar">${escapeHtml(item.actor.charAt(0))}</span>
-            <div><strong>${escapeHtml(item.actor)}</strong><p>${escapeHtml(item.detail)}</p><small>${escapeHtml(item.time)} · ANI community demo</small></div>
-            <button class="btn btn-ghost small" type="button" data-ui-action="notification-open" data-notification-id="${escapeHtml(item.id)}" data-target="${escapeHtml(item.target)}">Open</button>
-          </article>
-        `).join('');
+        document.getElementById('notifications-list').innerHTML = notificationItems.map((item) => {
+          const actor = getProfileIdentity(item.actor);
+          const detail = item.detail.split(item.actor).join(actor.name);
+          return `
+            <article class="notification-item ${readItems.includes(item.id) ? 'read' : 'unread'}">
+              <span class="notification-avatar">${avatarContent(actor.name, actor.profileImage)}</span>
+              <div><strong>${escapeHtml(actor.name)}</strong><p>${escapeHtml(detail)}</p><small>${escapeHtml(item.time)} · ANI community demo</small></div>
+              <button class="btn btn-ghost small" type="button" data-ui-action="notification-open" data-notification-id="${escapeHtml(item.id)}" data-target="${escapeHtml(item.target)}">Open</button>
+            </article>
+          `;
+        }).join('');
       }
 
       function applyTheme(theme) {
@@ -1032,6 +1072,8 @@
         if (label) {
           label.textContent = user ? `${user.name}, ${user.role}` : 'Lian, farmer';
         }
+        const composerAvatar = document.querySelector('[data-asset="composerAvatar"]');
+        if (composerAvatar) composerAvatar.src = user?.profileImage || avatarImage(0);
       }
 
       function getProfileByName(name) {
@@ -1040,7 +1082,7 @@
 
         const direct = mockProfiles.find((entry) => entry.name === normalized);
         const business = getDigitalMarketplaceFeed().profiles.find((entry) => entry.name === normalized);
-        const saved = getUsers().find((entry) => entry.name === normalized);
+        const saved = getUsers().find((entry) => entry.name === normalized || (entry.profileAliases || []).includes(normalized));
         if (saved) {
           return {
             ...(direct || business || {}),
@@ -1048,6 +1090,7 @@
             name: saved.name,
             role: saved.role || direct?.role || business?.role || 'Community member',
             location: saved.location || direct?.location || business?.location || 'Mindanao',
+            profileImage: saved.profileImage || '',
             bio: saved.bio || direct?.bio || business?.bio || 'Agriculture community member sharing updates and field learnings.',
             organization: saved.organization || direct?.organization || business?.organization || '',
             experience: saved.experience || '',
@@ -1091,19 +1134,12 @@
         if (!q) return [];
 
         const entries = [
-          ...mockProfiles,
-          ...getDigitalMarketplaceFeed().profiles.map((profile) => ({
+          ...mockProfiles.map(getSyncedProfile),
+          ...getDigitalMarketplaceFeed().profiles.map((profile) => getSyncedProfile({
             ...profile,
             bio: profile.bio || `${profile.role} supporting agriculture and local market connections.`,
           })),
-          ...getUsers().map((user) => ({
-            id: user.id,
-            name: user.name,
-            role: user.role,
-            location: 'Mindanao',
-            bio: 'Agriculture community member',
-            followers: 1200,
-          })),
+          ...getUsers().map((user) => getSyncedProfile({ ...user, location: user.location || 'Mindanao', bio: user.bio || 'Agriculture community member', followers: 1200 })),
         ];
 
         return entries.filter((profile, index, array) => {
@@ -1129,7 +1165,7 @@
             <div class="profile-match-grid">
               ${profileMatches.map((profile) => `
                 <button class="profile-match-card" type="button" data-profile-name="${escapeHtml(profile.name)}">
-                  <span class="avatar-bubble small">${escapeHtml((profile.name || 'U').charAt(0))}</span>
+                  <span class="avatar-bubble small">${avatarContent(profile.name, profile.profileImage)}</span>
                   <span>
                     <strong>${escapeHtml(profile.name)}</strong>
                     <small>${escapeHtml(profile.role || 'Community member')}</small>
@@ -1148,7 +1184,8 @@
         const currentUserId = currentUser()?.id || currentUser()?.email || currentUser()?.name || 'guest-user';
 
         feed.innerHTML = `${profileMarkup}${posts.map((post) => {
-          const author = post.anonymous ? 'Anonymous farmer' : post.author;
+          const authorProfile = post.anonymous ? { name: 'Anonymous farmer', profileImage: '' } : getProfileIdentity(post.author, post.authorId);
+          const author = authorProfile.name || post.author;
           const comments = Array.isArray(post.comments) ? post.comments : [];
           const reposts = Number(post.reposts || 0);
           const likes = Number(post.likes || 0);
@@ -1163,7 +1200,7 @@
               <div class="post-head">
                 <div class="user-meta">
                   <button class="avatar-button" type="button" data-profile-name="${escapeHtml(author)}" aria-label="Open profile for ${escapeHtml(author)}">
-                    <img src="${avatarImage(author.length)}" alt="${escapeHtml(author)} avatar" />
+                    <img src="${escapeHtml(authorProfile.profileImage || avatarImage(author.length))}" alt="${escapeHtml(author)} avatar" />
                   </button>
                   <div>
                     <button class="author-link" type="button" data-profile-name="${escapeHtml(author)}">${escapeHtml(author)}</button>
@@ -1383,7 +1420,9 @@
 
       function renderMarketplace() {
         const marketplace = document.getElementById('marketplace-feed');
-        const { profiles, commodityUpdates } = getDigitalMarketplaceFeed();
+        const marketFeed = getDigitalMarketplaceFeed();
+        const profiles = marketFeed.profiles.map(getSyncedProfile);
+        const { commodityUpdates } = marketFeed;
         const posts = getMarketplacePosts();
         const searchValue = document.getElementById('marketplace-search')?.value || '';
         const normalizedQuery = String(searchValue).trim().toLowerCase();
@@ -1438,7 +1477,7 @@
                 <article class="market-card profile-card-market">
                   <div class="market-card-head">
                     <button class="avatar-button" type="button" data-profile-name="${escapeHtml(profile.name)}" aria-label="Open ${escapeHtml(profile.name)} profile">
-                      <span class="avatar-bubble">${escapeHtml((profile.name || 'A').charAt(0))}</span>
+                      <span class="avatar-bubble">${avatarContent(profile.name, profile.profileImage)}</span>
                     </button>
                     <div>
                       <button class="author-link" type="button" data-profile-name="${escapeHtml(profile.name)}">${escapeHtml(profile.name)}</button>
@@ -1458,6 +1497,8 @@
             </div>
             <div class="market-post-grid">
               ${filteredPosts.map((post) => {
+                const authorProfile = getProfileIdentity(post.author, post.authorId);
+                const author = authorProfile.name || post.author;
                 const comments = Array.isArray(post.comments) ? post.comments : [];
                 const likedBy = Array.isArray(post.likedBy) ? post.likedBy : [];
                 const userId = currentUser()?.id || currentUser()?.email || currentUser()?.name || '';
@@ -1467,11 +1508,11 @@
                 return `
                 <article class="market-card market-post-card" id="post-${escapeHtml(post.id)}">
                   <div class="market-card-head">
-                    <button class="avatar-button" type="button" data-profile-name="${escapeHtml(post.author)}" aria-label="Open ${escapeHtml(post.author)} profile">
-                      <span class="avatar-bubble">${escapeHtml((post.author || 'A').charAt(0))}</span>
+                    <button class="avatar-button" type="button" data-profile-name="${escapeHtml(author)}" aria-label="Open ${escapeHtml(author)} profile">
+                      <span class="avatar-bubble">${avatarContent(author, authorProfile.profileImage)}</span>
                     </button>
                     <div>
-                      <button class="author-link" type="button" data-profile-name="${escapeHtml(post.author)}">${escapeHtml(post.author)}</button>
+                      <button class="author-link" type="button" data-profile-name="${escapeHtml(author)}">${escapeHtml(author)}</button>
                       <small>${new Date(post.createdAt).toLocaleString()}</small>
                     </div>
                     <span class="badge neutral">${escapeHtml(post.type)}</span>
@@ -1495,23 +1536,13 @@
         `;
       }
 
-      function renderDemoAccounts() {
-        const list = document.getElementById('demo-account-list');
-        if (!list) return;
-
-        const accounts = getKnownAccounts();
-        list.innerHTML = accounts.map((account) => `
-          <li><strong>${account.name}</strong> — ${account.email} / ${account.password}</li>
-        `).join('');
-      }
-
       function renderMessages() {
         const list = document.getElementById('chat-contacts');
         const thread = document.getElementById('chat-thread');
         const messages = getMessages();
         const activeUser = currentUser()?.name || 'TestAcc_Alpha';
         const contactsByName = new Map(getContactList(messages, activeUser));
-        mockProfiles.forEach((profile) => {
+        mockProfiles.map(getSyncedProfile).forEach((profile) => {
           if (profile.name !== activeUser && !contactsByName.has(profile.name)) {
             contactsByName.set(profile.name, { sender: profile.name, text: 'Start a conversation' });
           }
@@ -1524,15 +1555,18 @@
           selectedChat = visibleContacts[0]?.[0] || '';
         }
 
-        list.innerHTML = visibleContacts.map(([name, lastMessage]) => `
-          <button class="contact-item ${selectedChat === name ? 'selected' : ''}" type="button" data-contact="${escapeHtml(name)}">
-            <span class="avatar-bubble">${escapeHtml((name || 'A').charAt(0))}</span>
-            <span>
-              <strong>${escapeHtml(name)}</strong>
-              <small>${escapeHtml(lastMessage?.text || 'New conversation')}</small>
-            </span>
-          </button>
-        `).join('');
+        list.innerHTML = visibleContacts.map(([name, lastMessage]) => {
+          const contact = getProfileIdentity(name);
+          return `
+            <button class="contact-item ${selectedChat === name ? 'selected' : ''}" type="button" data-contact="${escapeHtml(name)}">
+              <span class="avatar-bubble">${avatarContent(contact.name, contact.profileImage)}</span>
+              <span>
+                <strong>${escapeHtml(contact.name)}</strong>
+                <small>${escapeHtml(lastMessage?.text || 'New conversation')}</small>
+              </span>
+            </button>
+          `;
+        }).join('');
 
         const threadMessages = filterMessagesForViewer(messages.filter((message) => {
           const directForCurrentUser = ((message.sender === activeUser && message.recipient === selectedChat) || (message.recipient === activeUser && message.sender === selectedChat));
@@ -1546,12 +1580,13 @@
 
         thread.innerHTML = threadMessages.map((message) => {
           const isCurrentUser = message.sender === activeUser;
+          const sender = getProfileIdentity(message.sender);
           return `
             <div class="message-item-wrap ${isCurrentUser ? 'self' : ''}">
               <div class="message-item ${isCurrentUser ? 'active' : ''}">
-                <div class="avatar-bubble ${isCurrentUser ? 'alt' : ''}">${escapeHtml((message.sender || 'A').charAt(0))}</div>
+                <div class="avatar-bubble ${isCurrentUser ? 'alt' : ''}">${avatarContent(sender.name, sender.profileImage)}</div>
                 <div>
-                  <strong>${isCurrentUser ? 'You' : escapeHtml(message.sender)}</strong>
+                  <strong>${isCurrentUser ? 'You' : escapeHtml(sender.name)}</strong>
                   <small>${escapeHtml(message.text)}</small>
                 </div>
                 <div class="message-actions">
@@ -1573,7 +1608,6 @@
         const switchText = document.getElementById('auth-switch-copy');
         const switchButton = document.getElementById('auth-switch-button');
 
-        renderDemoAccounts();
         showView('auth');
         modal.classList.remove('hidden');
         signupFields.classList.toggle('hidden', authMode !== 'signup');
@@ -1755,6 +1789,7 @@
           name: user.name,
           role: savedProfile?.role || user.role || baseProfile.role || 'Community Member',
           location: savedProfile?.location || user.location || baseProfile.location || 'Mindanao',
+          profileImage: savedProfile?.profileImage || user.profileImage || '',
           bio: savedProfile?.bio || user.bio || baseProfile.bio || 'Agriculture community member sharing updates and field learnings.',
           organization: savedProfile?.organization || user.organization || baseProfile.organization || '',
           experience: savedProfile?.experience || user.experience || baseProfile.experience || '',
@@ -1823,7 +1858,7 @@
         content.innerHTML = `
           <article class="resume-profile">
             <header class="resume-identity">
-              <div class="resume-avatar">${escapeHtml((profile.name || 'U').charAt(0))}</div>
+              <div class="resume-avatar">${profile.profileImage ? `<img src="${escapeHtml(profile.profileImage)}" alt="Profile photo of ${escapeHtml(profile.name)}" />` : escapeHtml((profile.name || 'U').charAt(0))}</div>
               <div class="resume-identity-copy">
                 <p class="brand-kicker">Agriculture · Innovation · Community</p>
                 <h1 data-profile-name-title>${escapeHtml(profile.name || 'Community Member')}</h1>
@@ -1840,6 +1875,8 @@
               <form id="profile-edit-form" class="profile-edit-form hidden" data-owner-id="${escapeHtml(profile.id)}" data-owner-name="${escapeHtml(profile.name)}">
                 <div class="profile-edit-heading"><div><span class="brand-kicker">Your public profile</span><h2>Edit profile</h2></div></div>
                 <div class="profile-edit-grid">
+                  <label class="profile-edit-wide">Profile picture<input id="profile-picture-input" type="file" accept="image/jpeg,image/png,image/webp" /><input type="hidden" name="profileImage" value="${escapeHtml(profile.profileImage || '')}" /></label>
+                  <label class="profile-edit-wide">Profile name<input name="name" type="text" maxlength="80" value="${escapeHtml(profile.name || '')}" required /></label>
                   <label>Professional role<input name="role" type="text" maxlength="100" value="${escapeHtml(profile.role || '')}" required /></label>
                   <label>Location<input name="location" type="text" maxlength="100" value="${escapeHtml(profile.location || '')}" required /></label>
                   <label>Organization<input name="organization" type="text" maxlength="120" value="${escapeHtml(profile.organization || '')}" /></label>
@@ -1881,6 +1918,24 @@
         showView('profile');
       }
 
+      function synchronizeProfileReferences(profile, previousName) {
+        if (previousName === profile.name) return;
+        const researchPosts = loadState(STORAGE_KEYS.researchPosts, []);
+        const synchronized = syncProfileIdentityReferences({
+          profile,
+          previousName,
+          posts: getPosts(),
+          marketplacePosts: getMarketplacePosts(),
+          researchPosts: Array.isArray(researchPosts) ? researchPosts : [],
+          messages: getMessages(),
+        });
+        savePosts(synchronized.posts);
+        saveMarketplacePosts(synchronized.marketplacePosts);
+        if (Array.isArray(researchPosts)) saveState(STORAGE_KEYS.researchPosts, synchronized.researchPosts);
+        saveMessages(synchronized.messages);
+        if (selectedChat === previousName) selectedChat = profile.name;
+      }
+
       function saveProfileEdits(event) {
         const form = event.target.closest('#profile-edit-form');
         if (!form) return;
@@ -1896,10 +1951,14 @@
         const skillsInput = form.querySelector('[data-profile-skills]')?.value || '';
         const skills = [...new Set(skillsInput.split(',').map((skill) => skill.trim()).filter(Boolean))].slice(0, 12).map((skill) => skill.slice(0, 60));
         const resumeSectionOrder = [...form.querySelectorAll('[data-resume-section]')].map((section) => section.dataset.resumeSection);
+        const formData = new FormData(form);
+        const name = String(formData.get('name') || '').trim().slice(0, 80);
         const updates = {
+          name,
           role: String(formData.get('role') || '').trim().slice(0, 100),
           location: String(formData.get('location') || '').trim().slice(0, 100),
           organization: String(formData.get('organization') || '').trim().slice(0, 120),
+          profileImage: String(formData.get('profileImage') || ''),
           bio: String(formData.get('bio') || '').trim().slice(0, 1000),
           experienceEntries: readResumeEntryRows(form, 'experience'),
           education: readResumeEntryRows(form, 'education'),
@@ -1910,7 +1969,7 @@
           skills,
           resumeSectionOrder,
         };
-        if (!updates.role || !updates.location || !updates.bio) return;
+        if (!updates.name || !updates.role || !updates.location || !updates.bio) return;
 
         const users = getUsers();
         const userIndex = users.findIndex((entry) => entry.id === viewer.id && entry.name === viewer.name);
@@ -1919,11 +1978,21 @@
           return;
         }
 
-        const updatedUser = { ...users[userIndex], ...updates };
+        const duplicateName = users.some((entry, index) => index !== userIndex
+          && [entry.name, ...(entry.profileAliases || [])].some((candidate) => String(candidate || '').toLowerCase() === updates.name.toLowerCase()));
+        if (duplicateName) {
+          document.getElementById('profile-edit-status').textContent = 'That profile name is already in use.';
+          return;
+        }
+
+        const previousName = users[userIndex].name;
+        const profileAliases = [...new Set([...(users[userIndex].profileAliases || []), previousName])].filter((alias) => alias !== updates.name);
+        const updatedUser = { ...users[userIndex], ...updates, profileAliases };
         const nextUsers = users.map((entry, index) => index === userIndex ? updatedUser : entry);
         try {
           saveState(STORAGE_KEYS.users, nextUsers);
-          setCurrentUser({ ...viewer, role: updatedUser.role });
+          synchronizeProfileReferences(updatedUser, previousName);
+          setCurrentUser({ ...viewer, name: updatedUser.name, role: updatedUser.role, profileImage: updatedUser.profileImage });
           openProfile({ ...updatedUser, email: viewer.email });
         } catch {
           document.getElementById('profile-edit-status').textContent = 'Profile changes could not be saved. Your existing profile is unchanged.';
@@ -1949,7 +2018,7 @@
         } else {
           const session = loginUser(email, password, getUsers());
           if (!session) {
-            alert('Invalid email or password. Use one of the demo credentials below or sign up for a new account.');
+            alert('Invalid email or password. Check your details or sign up for a new account.');
             return;
           }
           setCurrentUser(session.user);
@@ -1966,6 +2035,39 @@
           const reader = new FileReader();
           reader.onload = () => resolve({ name: file.name, type: file.type, src: reader.result });
           reader.onerror = () => reject(new Error('Could not read file.'));
+          reader.readAsDataURL(file);
+        });
+      }
+
+      function profileImageToDataUrl(file) {
+        const supportedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+        if (!supportedTypes.includes(file.type)) return Promise.reject(new Error('Choose a JPEG, PNG, or WebP image.'));
+        if (file.size > 10 * 1024 * 1024) return Promise.reject(new Error('Choose an image smaller than 10 MB.'));
+
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onerror = () => reject(new Error('Could not read selected image.'));
+          reader.onload = () => {
+            const image = new Image();
+            image.onerror = () => reject(new Error('Selected image could not be processed.'));
+            image.onload = () => {
+              try {
+                const scale = Math.min(1, 512 / Math.max(image.naturalWidth, image.naturalHeight));
+                const canvas = document.createElement('canvas');
+                canvas.width = Math.round(image.naturalWidth * scale);
+                canvas.height = Math.round(image.naturalHeight * scale);
+                const context = canvas.getContext('2d');
+                if (!context) throw new Error('Image processing is unavailable.');
+                context.fillStyle = '#fff';
+                context.fillRect(0, 0, canvas.width, canvas.height);
+                context.drawImage(image, 0, 0, canvas.width, canvas.height);
+                resolve(canvas.toDataURL('image/jpeg', 0.82));
+              } catch {
+                reject(new Error('Selected image could not be processed.'));
+              }
+            };
+            image.src = String(reader.result);
+          };
           reader.readAsDataURL(file);
         });
       }
@@ -2657,6 +2759,23 @@
         if (!button) return;
         openProfile(getProfileByName(button.dataset.profileName));
       });
+      document.getElementById('profile-content').addEventListener('change', async (event) => {
+        const input = event.target.closest('#profile-picture-input');
+        const [file] = input?.files || [];
+        if (!input || !file) return;
+
+        const form = input.form;
+        const status = form.querySelector('#profile-edit-status');
+        try {
+          const imageUrl = await profileImageToDataUrl(file);
+          form.querySelector('[name="profileImage"]').value = imageUrl;
+          const avatar = form.closest('.resume-profile').querySelector('.resume-avatar');
+          avatar.innerHTML = `<img src="${escapeHtml(imageUrl)}" alt="Profile photo of ${escapeHtml(form.dataset.ownerName)}" />`;
+          status.textContent = 'Photo selected. Save profile to apply it.';
+        } catch (error) {
+          status.textContent = error.message;
+        }
+      });
       document.getElementById('profile-content').addEventListener('submit', saveProfileEdits);
       document.getElementById('media-input').addEventListener('change', async (event) => {
         const [file] = event.target.files || [];
@@ -2847,7 +2966,6 @@
 
       ensureSeedState();
       applyTheme(loadState(STORAGE_KEYS.theme, 'light'));
-      renderDemoAccounts();
       renderSessionState();
       renderFeed();
       renderMessages();

@@ -21,6 +21,7 @@ import {
   toggleSavedPost,
   countImradWords,
   getMarketplaceProducts,
+  syncProfileIdentityReferences,
 } from './app.mjs';
 
 test('registerUser stores a new user and returns it', () => {
@@ -47,6 +48,32 @@ test('loginUser authenticates a registered user', () => {
   const session = loginUser('another@example.com', 'secret123', created);
   assert.ok(session);
   assert.equal(session.user.email, 'another@example.com');
+});
+
+test('syncProfileIdentityReferences updates profile names across app records', () => {
+  const profile = { id: 'user-1', name: 'New Name', role: 'Grower' };
+  const posts = [
+    { id: 'post-1', authorId: 'user-1', author: 'Old Name', comments: ['Old Name: Thanks!', 'Other: Hello'] },
+    { id: 'post-2', author: 'Other', comments: ['Old Name: Useful update'] },
+  ];
+  const researchPosts = [{ id: 'research-1', authorId: 'user-1', author: 'Old Name', authorRole: 'Farmer' }];
+  const messages = [{ id: 'message-1', sender: 'Old Name', recipient: 'Other', text: 'Hello' }];
+  const updated = syncProfileIdentityReferences({
+    profile,
+    previousName: 'Old Name',
+    posts,
+    marketplacePosts: [],
+    researchPosts,
+    messages,
+  });
+
+  assert.equal(updated.posts[0].author, 'New Name');
+  assert.deepEqual(updated.posts[0].comments, ['New Name: Thanks!', 'Other: Hello']);
+  assert.deepEqual(updated.posts[1].comments, ['New Name: Useful update']);
+  assert.equal(updated.researchPosts[0].authorRole, 'Grower');
+  assert.equal(updated.researchPosts[0].author, 'New Name');
+  assert.equal(updated.messages[0].sender, 'New Name');
+  assert.equal(posts[0].author, 'Old Name');
 });
 
 test('loginUser accepts the displayed password for hashed demo accounts', () => {
