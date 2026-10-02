@@ -13,10 +13,14 @@ import {
   getDigitalMarketplaceFeed,
   generateCsvFromPosts,
   getPostsForOwner,
+  isProfileOwner,
   incrementPostCitation,
   deleteMessage,
   getKnownAccounts,
   hashPassword,
+  toggleSavedPost,
+  countImradWords,
+  getMarketplaceProducts,
 } from './app.mjs';
 
 test('registerUser stores a new user and returns it', () => {
@@ -122,6 +126,31 @@ test('getFilteredPosts filters by query', () => {
   assert.equal(filtered[0].id, 'a');
 });
 
+test('toggleSavedPost adds and removes a post key without mutating saved state', () => {
+  const saved = ['community:post-1'];
+  const withSecond = toggleSavedPost(saved, 'marketplace:post-2');
+  const withoutFirst = toggleSavedPost(withSecond, 'community:post-1');
+
+  assert.deepEqual(saved, ['community:post-1']);
+  assert.deepEqual(withSecond, ['community:post-1', 'marketplace:post-2']);
+  assert.deepEqual(withoutFirst, ['marketplace:post-2']);
+  assert.equal(toggleSavedPost(saved, ''), saved);
+});
+
+test('countImradWords counts all abstract fields and the 250-word boundary', () => {
+  assert.equal(countImradWords({ introduction: 'Field health', methods: 'Three plots', results: 'Yield rose', discussion: 'Repeat locally' }), 8);
+  assert.equal(countImradWords({ discussion: Array(250).fill('word').join(' ') }), 250);
+  assert.equal(countImradWords({ discussion: Array(251).fill('word').join(' ') }), 251);
+});
+
+test('marketplace products map all eight supplied crop images to quote listings', () => {
+  const products = getMarketplaceProducts();
+
+  assert.equal(products.length, 8);
+  assert.deepEqual(products.map((product) => product.imageIndex), [0, 1, 2, 3, 4, 5, 6, 7]);
+  assert.ok(products.every((product) => product.price === 'Request a quote' && product.seller));
+});
+
 test('sendMessage stores a chat item', () => {
   const messages = sendMessage({
     sender: 'Lian',
@@ -174,6 +203,13 @@ test('getPostsForOwner only returns the signed-in user posts', () => {
 
   assert.deepEqual(getPostsForOwner(posts, { id: 'user-1', name: 'Lian' }).map((post) => post.id), ['mine']);
   assert.deepEqual(getPostsForOwner(posts, { name: 'Lian' }).map((post) => post.id), ['legacy-mine']);
+});
+
+test('isProfileOwner rejects different IDs, display-name collisions, and fallback profiles', () => {
+  assert.equal(isProfileOwner({ id: 'user-1', name: 'A Farmer' }, { id: 'user-1', name: 'A Farmer' }), true);
+  assert.equal(isProfileOwner({ id: 'user-2', name: 'A Farmer' }, { id: 'user-1', name: 'A Farmer' }), false);
+  assert.equal(isProfileOwner({ id: 'user-1', name: 'A Farmer' }, { id: 'user-1', name: 'Fallback profile' }), false);
+  assert.equal(isProfileOwner({ name: 'A Farmer' }, { name: 'A Farmer' }), false);
 });
 
 test('incrementPostCitation increments only the selected post counter', () => {

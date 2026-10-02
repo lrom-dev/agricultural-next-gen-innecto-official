@@ -87,6 +87,34 @@ export function getFilteredPosts(posts = defaultPosts, query = '') {
   });
 }
 
+export function toggleSavedPost(savedPostIds = [], postKey) {
+  const saved = Array.isArray(savedPostIds) ? savedPostIds : [];
+  if (!postKey) return saved;
+  return saved.includes(postKey)
+    ? saved.filter((entry) => entry !== postKey)
+    : [...saved, postKey];
+}
+
+export function countImradWords(fields = {}) {
+  return ['introduction', 'methods', 'results', 'discussion'].reduce((total, field) => {
+    const words = String(fields[field] ?? '').trim().split(/\s+/).filter(Boolean);
+    return total + words.length;
+  }, 0);
+}
+
+export function getMarketplaceProducts() {
+  return [
+    { id: 'product-coconut', name: 'Mature coconuts', category: 'Coconut', price: 'Request a quote', seller: 'Mindanao Harvest Co.', location: 'Davao del Sur', imageIndex: 0 },
+    { id: 'product-banana', name: 'Lakatan bananas', category: 'Banana', price: 'Request a quote', seller: 'Bukidnon Growers Cooperative', location: 'Bukidnon', imageIndex: 1 },
+    { id: 'product-pineapple', name: 'Fresh pineapples', category: 'Pineapple', price: 'Request a quote', seller: 'AgriNova Produce', location: 'Misamis Oriental', imageIndex: 2 },
+    { id: 'product-sugarcane', name: 'Sugarcane', category: 'Sugarcane', price: 'Request a quote', seller: 'North Cotabato Farm Network', location: 'Cotabato', imageIndex: 3 },
+    { id: 'product-rice', name: 'Milled rice', category: 'Rice', price: 'Request a quote', seller: 'Mindanao Harvest Co.', location: 'Bukidnon', imageIndex: 4 },
+    { id: 'product-corn', name: 'Sweet corn', category: 'Corn', price: 'Request a quote', seller: 'AgriNova Produce', location: 'Davao del Sur', imageIndex: 5 },
+    { id: 'product-cassava', name: 'Fresh cassava', category: 'Cassava', price: 'Request a quote', seller: 'North Cotabato Farm Network', location: 'Cotabato', imageIndex: 6 },
+    { id: 'product-durian', name: 'Durian', category: 'Durian', price: 'Request a quote', seller: 'Bukidnon Growers Cooperative', location: 'Bukidnon', imageIndex: 7 },
+  ];
+}
+
 export function sendMessage({ sender, recipient, text, thread = [] }) {
   const nextThread = [
     ...thread,
@@ -228,6 +256,12 @@ export function getPostsForOwner(posts = defaultPosts, user = {}) {
     if (ownerId) return post.authorId === ownerId;
     return Boolean(ownerName) && !post.authorId && post.author === ownerName;
   });
+}
+
+export function isProfileOwner(viewer = {}, profile = {}) {
+  return Boolean(viewer.id && profile.id
+    && String(viewer.id) === String(profile.id)
+    && String(viewer.name || '') === String(profile.name || ''));
 }
 
 export function incrementPostCitation(posts = defaultPosts, postId) {
