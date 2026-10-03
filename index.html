@@ -5,77 +5,129 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="ANI Social connects Mindanao farmers, innovators, and communities through agriculture, discovery, and collaboration."
+      content="ANI is the gateway between consumers and producers, bridging the gap between Mindanao's markets and communities alike."
     />
-    <link rel="icon" type="image/svg+xml" href="assets/brand/logo-mark.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="ANI | Agricultural Next-gen Innecto" />
+    <meta property="og:description" content="Connect Mindanao's farmers, innovators, and markets through Agricultural Next-gen Innecto." />
+    <link rel="icon" type="image/svg+xml" href="ani_custom_graphics/ani_asset_pack/(C) Lian Rich A. Romano, 2026  ani_asset-pack_1 (5).png" />
     <link rel="stylesheet" href="style.css" />
-    <title>ANI Social | Mindanao Agriculture & Connection</title>
+    <title>ANI | Agricultural Next-gen Innecto</title>
   </head>
   <body>
+    <!--
+      ANI COPY + SEO MAP
+      Search metadata: <title>, meta[name="description"], and og:title/og:description above.
+      Brand: .brand-kicker ("By Lian Rich A. Romano"), .brand-button strong (product name),
+        .rail-label/.rail-region (ANI, ALEGRE! / Navigation Pane), and .rail-note (solidarity message).
+      Primary landing copy: #feed-page .hero-copy .pill, h1, and p; #join-community-button;
+        #explore-feed-button. Proof points are the three .hero-metrics number/label pairs.
+      Main navigation: .rail-link and .bottom-nav .nav-item text; header action accessible labels/titles;
+        #account-status [data-status-name]/[data-status-meta]; #logout-button.
+      Sign-in introduction: .auth-photo-card small/strong; #auth-page .auth-page-copy .pill, h2, and p;
+        #auth-page-login, #auth-page-signup, and the three .auth-value-list items.
+      Composer: #composer-user-label, .user-meta small, #anonymous-toggle, #post-input placeholder,
+        the #media-input Photo/Video control, and #share-button.
+      Feed/discovery: .feed .section-heading h3/button (Central Feed/Trending), .sidebar-panel h3/.chip
+        (Search & Discovery/Live), and each .discovery-list li. Post/comment text is generated below.
+      Analytics: #analytics-page .brand-kicker/h3; #analytics-back-button; .analytics-catalog h3;
+        .analytics-toolbar; #download-csv-button. Post metrics and table labels come from renderAnalytics().
+      Marketplace: #marketplace-page .brand-kicker/h3; #marketplace-back-button; .live-header;
+        #marketplace-search placeholder; .marketplace-products heading/eyebrow/chip. Listings come from renderMarketplace().
+      Connections: #connections-page eyebrow/title, member/following count labels, and #connections-search placeholder.
+      Groups: #groups-page eyebrow/title, #create-group-button, #groups-search placeholder;
+        #create-group-form labels/placeholders and Create group/Cancel buttons.
+      Research: #research-page eyebrow/title/category chip and #research-search placeholder.
+      Jobs: #jobs-page eyebrow/title/opportunity chip, #jobs-search placeholder, and job type/location labels/options.
+      Saved posts: #saved-page eyebrow/title, #create-folder-button, #saved-count, and #saved-folders tab labels.
+      Notifications: #notifications-page eyebrow/title and #mark-notifications-read.
+      Messages: #messages-page eyebrow/title, #messages-back-button, #message-input placeholder, and Send button.
+      Mobile navigation: each .bottom-nav .nav-item; dialog copy: #auth-title, #auth-form labels/placeholders,
+        #auth-submit, #auth-switch-copy/#auth-switch-button, and #close-auth accessible label.
+      Dynamic copy source: mockProfiles, communityGroups, researchBriefs, jobOpportunities, notificationItems,
+        seedPosts, and seedMessages near the start of the module script below. Edit records for sample content;
+        edit renderConnections(), renderGroups(), renderResearch(), renderJobs(), renderSavedPosts(),
+        renderNotifications(), renderFeed(), renderAnalytics(), renderMarketplace(), renderMessages(),
+        renderProfile(), and renderCitationTooltip() for generated labels and empty states. User-entered content
+        is rendered from local app data and should not be treated as fixed SEO copy.
+      Text in comments is an editing index, not page content and not a ranking signal. Keep one clear h1,
+      make headings descriptive, and write image alt text for meaningful imagery rather than keyword lists.
+    -->
     <div class="page-shell">
       <header class="topbar">
         <button type="button" class="brand-button" id="brand-button" aria-label="Go to homepage">
-          <img src="assets/brand/logo-mark.svg" alt="ANI Social logo" class="brand-mark" />
+          <img src="ani_custom_graphics/ani_asset_pack/(C) Lian Rich A. Romano, 2026  ani_asset-pack_1 (6).png" alt="ANI logo" class="brand-mark" />
           <span>
-            <small class="brand-kicker">Mindanao</small>
-            <strong>ANI Social</strong>
+            <small class="brand-kicker">By Lian Rich A. Romano</small>
+            <strong>ANI: Agricultural Next-gen Innecto</strong>
           </span>
         </button>
 
-        <nav class="main-nav" aria-label="Main navigation">
-          <button class="nav-link active" data-nav="home" type="button">Home</button>
-          <button class="nav-link" data-nav="discover" type="button">Discover</button>
-          <button class="nav-link" data-nav="messages" type="button">Messages</button>
-          <button class="nav-link" data-nav="profile" type="button">Profile</button>
-        </nav>
-
-        <label class="search" aria-label="Search the community">
-          <span class="search-icon" aria-hidden="true">⌕</span>
+        <div class="search" role="search" aria-label="Search the community">
+          <button id="community-search-button" type="button" aria-label="Search community" title="Search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="m15.5 15.5 5 5"></path></svg></button>
           <input type="search" aria-label="Search" placeholder="Search farmers, crops, innovators" />
-        </label>
+        </div>
 
         <div class="top-actions" aria-label="Account actions">
-          <div id="account-status" class="account-status signed-out" aria-live="polite">
+          <button class="header-shortcut" data-nav="notifications" type="button" aria-label="Notifications" title="Notifications">♧<span class="notification-count" id="notification-count">3</span></button>
+          <button class="header-shortcut" data-nav="messages" type="button" aria-label="Messages" title="Messages">✉</button>
+          <button class="header-shortcut create-post-shortcut" id="create-post-shortcut" type="button" aria-label="Create post" title="Create post">+</button>
+          <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch theme">◐</button>
+          <button type="button" id="account-status" class="account-status signed-out" aria-live="polite">
             <span class="status-indicator"></span>
             <div class="account-status-copy">
-              <small>Account status</small>
               <strong data-status-name>Not signed in</strong>
               <span data-status-meta>Use the landing page to join</span>
             </div>
-          </div>
+          </button>
           <button class="btn btn-ghost hidden" id="logout-button" type="button">Log out</button>
         </div>
       </header>
+
+      <div class="app-workspace">
+        <aside class="app-rail" aria-label="ANI workspace">
+          <nav class="rail-nav" aria-label="Workspace navigation">
+            <button class="rail-link active" data-nav="home" type="button"><span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v12h14V9M9 21v-7h6v7" /></svg></span>Homepage</button>
+            <button class="rail-link" data-nav="analytics" type="button"><span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 3v18h18" /><rect x="7" y="12" width="3" height="6" rx="1" /><rect x="13" y="8" width="3" height="10" rx="1" /><rect x="19" y="5" width="2" height="13" rx="1" /></svg></span>ANI Analytics</button>
+            <button class="rail-link" data-nav="connections" type="button"><span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="10" cy="7" r="4" /><path d="M20 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" /></svg></span>ANI Connections</button>
+            <button class="rail-link" data-nav="groups" type="button"><span aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="1.5" /><rect x="13" y="3" width="8" height="8" rx="1.5" /><rect x="3" y="13" width="8" height="8" rx="1.5" /><rect x="13" y="13" width="8" height="8" rx="1.5" /></svg></span>ANI Groups</button>
+            <button class="rail-link" data-nav="jobs" type="button"><span aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="14" rx="2" /><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18M10 12v2h4v-2" /></svg></span>ANI Jobs</button>
+            <button class="rail-link" data-nav="marketplace" type="button"><span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 4h2l2.2 11.2a2 2 0 0 0 2 1.6h8.9a2 2 0 0 0 1.9-1.5L22 8H6" /><circle cx="10" cy="21" r="1" /><circle cx="18" cy="21" r="1" /><path d="M9 11h9M12 8v6M16 8v6" /></svg></span>ANI Markets</button>
+            <button class="rail-link" data-nav="messages" type="button"><span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H8l-6 3V6a2 2 0 0 1 2-2z" /><path d="M7 9h10M7 13h7" /></svg></span>ANI Messages</button>
+            <button class="rail-link" data-nav="research" type="button"><span aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5" /><path d="m16 16 5 5M8 10h5M8 13h3" /></svg></span>ANI Research</button>
+            <button class="rail-link" data-nav="profile" type="button"><span aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" /></svg></span>My Profile</button>
+            <button class="rail-link" data-nav="saved" type="button"><span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18l-6-4-6 4z" /></svg></span>Saved Posts</button>
+          </nav>
+        </aside>
 
       <main class="app-layout">
         <div id="auth-page" class="page-view hidden">
           <section class="auth-page-shell panel">
             <div class="auth-visual" aria-label="Community photo showcase">
               <div class="auth-photo-frame">
-                <img src="assets/illustrations/hero-illustration.svg" alt="Farmers and growers working together in a community setting" />
+                <img src="ani_custom_graphics/ani_asset_pack/ani_ui_design_pack_finalized.png" alt="Mindanao farmland with the message ANI, Alegre! Abunda, Mindanao!" />
               </div>
               <div class="auth-photo-card">
-                <small>Mindanao network</small>
-                <strong>Connect farmers, growers, and innovators.</strong>
+                <small>Connecting Mindanao</small>
+                <strong>Bringing farmers, innovators, and consumers together.</strong>
               </div>
             </div>
 
             <div class="auth-form-panel">
               <div class="auth-page-copy">
-                <span class="pill">Welcome to ANI Social</span>
-                <h2>Log in or Sign up</h2>
+                <span class="pill">By Lian Rich A. Romano</span>
+                <h2>ANI: Agricultural Next-gen Innecto</h2>
                 <p>
-                  Join the agricultural community, share updates from the field, and stay connected with farmers,
-                  innovators, and partners across Mindanao.
+                  Join Mindanao's agricultural sector in innovating, engineering, and harvesting for tomorrow. Alegre!
                 </p>
                 <div class="auth-page-actions">
                   <button class="btn btn-primary" id="auth-page-login" type="button">Log in</button>
                   <button class="btn btn-ghost" id="auth-page-signup" type="button">Sign up</button>
                 </div>
                 <div class="auth-value-list" aria-label="Community benefits">
-                  <span>Share field updates</span>
-                  <span>Discover local expertise</span>
-                  <span>Build strong market links</span>
+                  <span>Share updates</span>
+                  <span>Discover nature</span>
+                  <span>Connect with the market</span>
                 </div>
               </div>
             </div>
@@ -83,45 +135,10 @@
         </div>
 
         <div id="feed-page" class="page-view">
-          <section class="hero panel">
-            <div class="hero-copy">
-              <span class="pill">Agriculture, Innovation, Connection</span>
-              <h2>Grow smarter together across Mindanao.</h2>
-              <p>
-                Share harvest stories, discover local innovations, and build a stronger
-                agricultural network from farm gate to market.
-              </p>
-
-              <div class="cta-row">
-                <button class="btn btn-primary" id="join-community-button" type="button">Join the community</button>
-                <button class="btn btn-ghost" id="explore-feed-button" type="button">Explore feed</button>
-              </div>
-
-              <ul class="hero-metrics" aria-label="Community stats">
-                <li>
-                  <strong>18.4K</strong>
-                  <span>Farmers</span>
-                </li>
-                <li>
-                  <strong>4.9K</strong>
-                  <span>Innovators</span>
-                </li>
-                <li>
-                  <strong>96%</strong>
-                  <span>Regional reach</span>
-                </li>
-              </ul>
-            </div>
-
-            <div class="hero-art" aria-hidden="true">
-              <img src="assets/illustrations/hero-illustration.svg" alt="Agriculture community illustration" />
-            </div>
-          </section>
-
           <section class="composer panel" aria-label="Share post">
             <div class="composer-header">
               <div class="user-meta">
-                <img src="assets/avatars/farmer-1.svg" alt="User avatar" />
+                <img data-asset="composerAvatar" alt="User avatar" />
                 <div>
                   <strong id="composer-user-label">Lian, farmer</strong>
                   <small>Posting in Mindanao</small>
@@ -139,8 +156,6 @@
               <div class="quick-actions">
                 <label class="upload-chip" for="media-input">Photo/Video</label>
                 <input id="media-input" type="file" accept="image/*,video/*" hidden />
-                <span>Poll</span>
-                <span>Market</span>
               </div>
               <button class="btn btn-primary" id="share-button" type="button">Share</button>
             </div>
@@ -157,6 +172,32 @@
             </section>
 
             <aside class="sidebar" aria-label="Discovery and messages">
+              <section class="panel sidebar-panel billboard-panel">
+                <div class="rail-heading">
+                  <span class="rail-label">ANI, ALEGRE!</span>
+                  <span class="rail-region">Navigation Pane</span>
+                </div>
+                <span class="pill">Agriculture, Innovation, Connection</span>
+                <h1>Now introducing: a smarter Mindanao</h1>
+                <p>Welcome to ANI: Agricultural Next-gen Innecto. This is your key to the future.</p>
+                <div class="hero-art">
+                  <img src="ani_custom_graphics/ani_asset_pack/(C) Lian Rich A. Romano, 2026  ani_asset-pack_1 (5).png" alt="ANI agricultural illustration" />
+                </div>
+                <div class="cta-row">
+                  <button class="btn btn-primary" id="join-community-button" type="button">Join the community</button>
+                  <button class="btn btn-ghost" id="explore-feed-button" type="button">Explore feed</button>
+                </div>
+                <ul class="hero-metrics" aria-label="Community stats">
+                  <li><strong>18.4K</strong><span>Farmers</span></li>
+                  <li><strong>4.9K</strong><span>Innovators</span></li>
+                  <li><strong>96%</strong><span>Regional reach</span></li>
+                </ul>
+                <div class="rail-note">
+                  <span class="rail-note-mark" aria-hidden="true">✳</span>
+                  <strong>Stronger through solidarity.</strong>
+                  <small>Kaayuhan sa kadaghanan, para sa tanan!</small>
+                </div>
+              </section>
               <section class="panel sidebar-panel">
                 <div class="section-heading tight">
                   <h3>Search & Discovery</h3>
@@ -187,12 +228,171 @@
           </div>
         </div>
 
+        <div id="analytics-page" class="page-view hidden">
+          <div class="analytics-shell panel">
+            <div class="messages-header analytics-page-header">
+              <div>
+                <p class="brand-kicker">HOW WELL ARE YOUR POSTS DOING?</p>
+                <h3>ANI Analytics</h3>
+              </div>
+              <div class="analytics-page-actions">
+                <button class="btn btn-primary small" id="download-csv-button" type="button">Download CSV</button>
+                <button class="btn btn-ghost small" id="analytics-back-button" type="button">Back to feed</button>
+              </div>
+            </div>
+
+            <div class="analytics-layout">
+              <aside class="analytics-catalog">
+                <div class="section-heading tight">
+                  <h3>Post catalog</h3>
+                </div>
+                <div id="analytics-list" class="analytics-list" aria-live="polite"></div>
+              </aside>
+
+              <section class="analytics-detail" aria-live="polite">
+                <div class="analytics-toolbar">
+                  <strong>Performance snapshot</strong>
+                </div>
+                <div id="analytics-detail" class="analytics-detail-content"></div>
+              </section>
+            </div>
+          </div>
+        </div>
+
+        <div id="marketplace-page" class="page-view hidden">
+          <div class="marketplace-shell panel">
+            <div class="messages-header">
+              <div>
+                <p class="brand-kicker">Connecting you to the sector</p>
+                <h3>ANI Markets</h3>
+              </div>
+              <button class="btn btn-ghost small" id="marketplace-back-button" type="button">Back to feed</button>
+            </div>
+
+            <div class="marketplace-live">
+              <div class="live-header">
+                <strong>Commodity snapshot</strong>
+                <span>sample data</span>
+              </div>
+              <div id="market-live-grid" class="market-live-grid" aria-live="polite"></div>
+            </div>
+
+            <div class="marketplace-toolbar">
+              <label class="search market-search" aria-label="Search marketplace">
+                <span class="search-icon" aria-hidden="true">⌕</span>
+                <input id="marketplace-search" type="search" placeholder="Search business profiles, posts, and topics" />
+              </label>
+            </div>
+
+            <section class="marketplace-products" aria-label="Agricultural products">
+              <div class="section-heading tight">
+                <div><p class="brand-kicker">From growers across the region</p><h3>Products & produce</h3></div>
+                <span class="chip">Sample listings · enquire with sellers</span>
+              </div>
+              <div id="marketplace-products-grid" class="product-grid" aria-live="polite"></div>
+            </section>
+
+            <div class="marketplace-layout">
+              <section class="marketplace-feed" id="marketplace-feed" aria-live="polite"></section>
+            </div>
+          </div>
+        </div>
+
+        <div id="connections-page" class="page-view hidden">
+          <section class="directory-shell panel">
+            <div class="messages-header">
+              <div><p class="brand-kicker">Moving agriculture forward</p><h3>ANI Connections</h3></div>
+              <div class="connection-stats"><span><strong id="connection-member-count">0</strong> people</span><span><strong id="connection-count">0</strong> following</span></div>
+            </div>
+            <label class="search directory-search"><span class="search-icon" aria-hidden="true">⌕</span><input id="connections-search" type="search" placeholder="Search by name, role, or location" /></label>
+            <div id="connections-list" class="directory-grid" aria-live="polite"></div>
+          </section>
+        </div>
+
+        <div id="groups-page" class="page-view hidden">
+          <section class="directory-shell panel">
+            <div class="messages-header">
+              <div><p class="brand-kicker">Moving agriculture forward</p><h3>ANI Groups</h3></div>
+              <button class="btn btn-primary small" id="create-group-button" type="button">+ Create group</button>
+            </div>
+            <label class="search directory-search"><span class="search-icon" aria-hidden="true">⌕</span><input id="groups-search" type="search" placeholder="Search groups by name or focus area" /></label>
+            <form id="create-group-form" class="create-group-form hidden">
+              <label>Group name<input id="new-group-name" type="text" maxlength="60" required /></label>
+              <label>Focus area<input id="new-group-category" type="text" maxlength="40" placeholder="e.g. Soil health" required /></label>
+              <label>About the group<textarea id="new-group-description" rows="2" maxlength="240" required></textarea></label>
+              <div><button class="btn btn-primary small" type="submit">Create group</button><button class="btn btn-ghost small" id="cancel-group-button" type="button">Cancel</button></div>
+            </form>
+            <div id="groups-list" class="group-grid" aria-live="polite"></div>
+          </section>
+        </div>
+
+        <div id="research-page" class="page-view hidden">
+          <section class="directory-shell panel">
+            <div class="messages-header">
+              <div><p class="brand-kicker">Where innovation meets excellence</p><h3>ANI Research</h3></div>
+              <div class="research-page-actions"><span class="chip">Agriculture & innovation</span><button class="btn btn-primary small" id="research-compose-toggle" type="button" aria-expanded="false" aria-controls="research-form">Post Research</button></div>
+            </div>
+            <label class="search directory-search"><span class="search-icon" aria-hidden="true">⌕</span><input id="research-search" type="search" placeholder="Search topics and field briefs" /></label>
+            <form id="research-form" class="research-composer hidden">
+              <div class="research-composer-heading"><div><span class="brand-kicker">Structured abstract</span><h4>Post research</h4></div><span id="research-word-count" class="research-word-count" aria-live="polite">0 / 250 words</span></div>
+              <label class="research-title-label">Research title<input id="research-title" type="text" maxlength="160" placeholder="A concise title for your research" required /></label>
+              <div class="research-imrad-grid">
+                <label>Introduction<textarea id="research-introduction" rows="3" maxlength="4000" placeholder="Context, question, and objective" required></textarea></label>
+                <label>Methods<textarea id="research-methods" rows="3" maxlength="4000" placeholder="Study design, materials, and approach" required></textarea></label>
+                <label>Results<textarea id="research-results" rows="3" maxlength="4000" placeholder="Key observations or findings" required></textarea></label>
+                <label>Discussion<textarea id="research-discussion" rows="3" maxlength="4000" placeholder="Interpretation, limits, and implications" required></textarea></label>
+              </div>
+              <div class="research-attachment-row"><label class="upload-chip" for="research-file">Attach image or PDF</label><input id="research-file" type="file" accept="image/jpeg,image/png,image/webp,image/gif,application/pdf,.pdf" hidden /><span id="research-file-status" role="status">Optional · up to 1 MB</span></div>
+              <div id="research-attachment-preview" class="research-attachment-preview hidden"></div>
+              <div class="research-composer-footer"><span>Maximum 250 words across all four abstract fields.</span><span id="research-publish-status" role="status" aria-live="polite"></span><div><button class="btn btn-ghost small" id="research-compose-cancel" type="button">Cancel</button><button class="btn btn-primary small" id="research-submit" type="submit" disabled>Publish research</button></div></div>
+            </form>
+            <section class="community-research-section" aria-labelledby="community-research-heading">
+              <div class="section-heading tight"><h3 id="community-research-heading">Community research</h3></div>
+              <div id="research-posts" class="research-posts" aria-live="polite"></div>
+            </section>
+            <div id="research-list" class="research-list" aria-live="polite"></div>
+          </section>
+        </div>
+
+        <div id="jobs-page" class="page-view hidden">
+          <section class="directory-shell panel">
+            <div class="messages-header">
+              <div><p class="brand-kicker">Build your future in agriculture</p><h3>ANI Jobs</h3></div>
+              <span class="chip">Regional opportunities</span>
+            </div>
+            <label class="search directory-search"><span class="search-icon" aria-hidden="true">⌕</span><input id="jobs-search" type="search" placeholder="Search roles, organizations, or locations" /></label>
+            <div class="job-filters"><label>Job type<select id="jobs-type-filter"><option value="">All types</option><option>Full-time</option><option>Part-time</option><option>Contract</option></select></label><label>Location<select id="jobs-location-filter"><option value="">All locations</option><option>Bukidnon</option><option>Davao City</option><option>Davao del Sur</option><option>Misamis Oriental</option><option>Northern Mindanao</option></select></label></div>
+            <div id="jobs-list" class="jobs-list" aria-live="polite"></div>
+          </section>
+        </div>
+
+        <div id="saved-page" class="page-view hidden">
+          <section class="directory-shell panel">
+            <div class="messages-header">
+              <div><p class="brand-kicker">Keep useful knowledge close</p><h3>Saved posts</h3></div>
+              <div class="saved-heading-actions"><button class="btn btn-ghost small" id="create-folder-button" type="button">+ Create folder</button><span id="saved-count" class="chip">0 saved</span></div>
+            </div>
+            <nav class="saved-folders" id="saved-folders" aria-label="Saved post folders"></nav>
+            <div id="saved-list" class="saved-list" aria-live="polite"></div>
+          </section>
+        </div>
+
+        <div id="notifications-page" class="page-view hidden">
+          <section class="directory-shell panel">
+            <div class="messages-header">
+              <div><p class="brand-kicker">Updates from your network</p><h3>Notifications</h3></div>
+              <button class="text-button" id="mark-notifications-read" type="button">Mark all as read</button>
+            </div>
+            <div id="notifications-list" class="notifications-list" aria-live="polite"></div>
+          </section>
+        </div>
+
         <div id="messages-page" class="page-view hidden">
           <div class="messages-shell panel">
             <div class="messages-header">
               <div>
                 <p class="brand-kicker">Private conversations</p>
-                <h3>Messages</h3>
+                <h3>ANI Messages</h3>
               </div>
               <button class="btn btn-ghost small" id="messages-back-button" type="button">Back to feed</button>
             </div>
@@ -204,22 +404,33 @@
               <section class="messages-thread-wrap">
                 <div id="chat-thread" class="chat-thread" aria-live="polite"></div>
                 <form id="message-form" class="message-form">
-                  <textarea id="message-input" rows="2" aria-label="Send a message" placeholder="Write a message..."></textarea>
+                  <textarea id="message-input" rows="2" aria-label="Send a message" placeholder="Write a message..." maxlength="2000" required></textarea>
                   <button class="btn btn-primary" type="submit">Send</button>
                 </form>
+                <p id="message-status" class="message-status" role="status" aria-live="polite"></p>
               </section>
             </div>
           </div>
         </div>
       </main>
+      </div>
 
       <nav class="bottom-nav" aria-label="Mobile navigation">
-        <button class="nav-item active" aria-label="Home">Home</button>
-        <button class="nav-item" aria-label="Discover">Discover</button>
-        <button class="nav-item" aria-label="Messages">Messages</button>
-        <button class="nav-item" aria-label="Profile">Profile</button>
+        <button class="nav-item active" data-nav="home" type="button">Home</button>
+        <button class="nav-item" data-nav="connections" type="button">People</button>
+        <button class="nav-item" data-nav="groups" type="button">Groups</button>
+        <button class="nav-item" data-nav="research" type="button">Research</button>
+        <button class="nav-item" data-nav="jobs" type="button">Jobs</button>
+        <button class="nav-item" data-nav="marketplace" type="button">Market</button>
+        <button class="nav-item" data-nav="analytics" type="button">Stats</button>
+        <button class="nav-item" data-nav="saved" type="button">Saved</button>
+        <button class="nav-item" data-nav="notifications" type="button">Alerts</button>
+        <button class="nav-item" data-nav="messages" type="button">Messages</button>
+        <button class="nav-item" data-nav="profile" type="button">Profile</button>
       </nav>
     </div>
+
+    <div id="citation-tooltip" class="citation-tooltip hidden" aria-live="polite"></div>
 
     <div class="auth-modal hidden" id="auth-modal" aria-modal="true" role="dialog">
       <div class="auth-card panel">
@@ -247,10 +458,6 @@
           </label>
           <button class="btn btn-primary" type="submit" id="auth-submit">Log in</button>
         </form>
-        <div class="demo-accounts">
-          <p>Demo credentials</p>
-          <ul id="demo-account-list"></ul>
-        </div>
         <p class="auth-switch">
           <span id="auth-switch-copy">Need an account?</span>
           <button type="button" id="auth-switch-button" class="text-button">Sign up</button>
@@ -258,11 +465,41 @@
       </div>
     </div>
 
+    <dialog class="comments-dialog" id="comments-dialog" aria-labelledby="comments-title">
+      <section class="comments-dialog-shell">
+        <header class="comments-dialog-header">
+          <div><span class="brand-kicker">Community thread</span><h2 id="comments-title">Comments</h2></div>
+          <button class="comments-close" type="button" aria-label="Close comments" data-comments-close>×</button>
+        </header>
+        <p id="comments-context" class="comments-context"></p>
+        <div id="comments-thread" class="comments-thread"></div>
+        <form class="comment-form comments-dialog-form" id="comments-form">
+          <input type="text" name="comment" placeholder="Add to the conversation..." aria-label="Write a comment" required />
+          <button type="submit">Send</button>
+        </form>
+      </section>
+    </dialog>
+
+    <dialog class="save-post-dialog" id="save-post-dialog" aria-labelledby="save-post-title">
+      <form class="save-post-dialog-shell" id="save-post-form">
+        <span class="brand-kicker">Saved posts</span>
+        <h2 id="save-post-title">Choose a folder</h2>
+        <label for="save-post-folder">Save this post to</label>
+        <select id="save-post-folder" required></select>
+        <p id="save-post-status" role="status" aria-live="polite"></p>
+        <div class="save-post-dialog-actions">
+          <button class="btn btn-ghost" type="button" data-save-post-close>Cancel</button>
+          <button class="btn btn-primary" type="submit">Save post</button>
+        </div>
+      </form>
+    </dialog>
+
     <script type="module">
       import {
         registerUser,
         loginUser,
         createPost,
+        countImradWords,
         getFilteredPosts,
         getProfilePosts,
         sendMessage,
@@ -273,13 +510,46 @@
         toggleLike,
         hashPassword,
         getKnownAccounts,
+        getPostCitations,
+        computeEngagementAnalytics,
+        getDigitalMarketplaceFeed,
+        getMarketplaceProducts,
+        generateCsvFromPosts,
+        getPostsForOwner,
+        isProfileOwner,
+        incrementPostCitation,
+        toggleSavedPost,
+        syncProfileIdentityReferences,
       } from './app.mjs';
+      import { applyImageAssets, avatarImage } from './image-assets.mjs';
+
+      applyImageAssets();
 
       const STORAGE_KEYS = {
         users: 'ani_users',
         posts: 'ani_posts',
+        researchPosts: 'ani_research_posts',
         messages: 'ani_messages',
         currentUser: 'ani_current_user',
+        marketplacePosts: 'ani_marketplace_posts',
+        savedPosts: 'ani_saved_posts',
+        following: 'ani_following',
+        joinedGroups: 'ani_joined_groups',
+        jobInterests: 'ani_job_interests',
+        jobApplications: 'ani_job_applications',
+        theme: 'ani_theme',
+      };
+
+      // Set a local image path to override a product's crop from the sprite sheet.
+      const marketplaceProductImages = {
+        'product-coconut': 'ani_custom_graphics/ani_ui_design_pack_finalized (2).png',
+        'product-banana': 'ani_custom_graphics/ani_ui_design_pack_finalized (3).png',
+        'product-pineapple': 'ani_custom_graphics/ani_ui_design_pack_finalized (4).png',
+        'product-sugarcane': 'ani_custom_graphics/ani_ui_design_pack_finalized (cane).png',
+        'product-rice': 'ani_custom_graphics/ani_ui_design_pack_finalized (5).png',
+        'product-corn': 'ani_custom_graphics/ani_ui_design_pack_finalized (6).png',
+        'product-cassava': 'ani_custom_graphics/ani_ui_design_pack_finalized (7).png',
+        'product-durian': 'ani_custom_graphics/ani_ui_design_pack_finalized (8).png',
       };
 
       const mockProfiles = [
@@ -290,10 +560,44 @@
         { id: 'profile-5', name: 'Lian Romano', role: 'Community Farmer', location: 'Davao City', bio: 'Sharing field lessons, local market observations, and practical on-farm updates from real growing conditions.', followers: 1438 },
       ];
 
+      const communityGroups = [
+        { id: 'soil-health', name: 'Soil Health & Composting', category: 'Soil care', region: 'Northern Mindanao', members: 284, description: 'Share practical ways to build living soils, reduce waste, and keep moisture in the field.' },
+        { id: 'smart-farming', name: 'Smart Farming Exchange', category: 'Technology', region: 'Mindanao-wide', members: 416, description: 'Discuss useful sensors, digital tools, and technology that works at farm scale.' },
+        { id: 'market-access', name: 'Cooperative Market Access', category: 'Market links', region: 'Bukidnon & Davao', members: 193, description: 'Find partners, compare routes to market, and strengthen local grower networks.' },
+        { id: 'water-stewards', name: 'Water & Irrigation Stewards', category: 'Water systems', region: 'Northern Mindanao', members: 227, description: 'Exchange field-tested ideas for irrigation planning and responsible water use.' },
+      ];
+
+      const researchBriefs = [
+        { id: 'brief-water', title: 'Planning irrigation around field conditions', category: 'Water systems', readTime: '6 min', summary: 'A practical checklist for observing soil moisture, crop stage, and water access before adjusting irrigation schedules.', points: 'Start with regular field observations, note changes across planting areas, and pair any sensor readings with what growers see on the ground.' },
+        { id: 'brief-soil', title: 'Rice straw as a resource for healthier soil', category: 'Soil health', readTime: '5 min', summary: 'Field considerations for turning crop residues into useful organic matter while protecting the next planting window.', points: 'Plan residue handling early, keep compost inputs balanced, and share observations about moisture and decomposition with neighboring growers.' },
+        { id: 'brief-market', title: 'Reducing post-harvest loss through coordination', category: 'Market access', readTime: '7 min', summary: 'How shared timing, careful handling, and nearby storage can help small producers protect produce quality.', points: 'Coordinate harvest windows with buyers, agree on handling practices, and identify transport or storage gaps before peak harvest.' },
+        { id: 'brief-data', title: 'Keeping useful farm records without extra burden', category: 'Digital practice', readTime: '4 min', summary: 'A lightweight approach to recording the crop, date, field conditions, and outcome of a farm trial.', points: 'Choose a few consistent observations, keep the format easy to use, and review notes together before drawing conclusions.' },
+        { id: 'brief-crop-rotation', title: 'Planning crop rotation around local planting windows', category: 'Crop planning', readTime: '6 min', summary: 'A sample research brief on coordinating crop rotation with seasonal rainfall, soil recovery, and the next planting window.', points: 'Compare field histories, record planting and harvest dates, and validate rotation choices with local growers and extension guidance.' },
+        { id: 'brief-postharvest', title: 'Handling practices that protect fresh produce quality', category: 'Post-harvest', readTime: '5 min', summary: 'A mock evidence summary about reducing bruising, heat exposure, and delays between harvest and collection.', points: 'Use clean containers, shade harvested crops, and coordinate pickup times before the busiest harvest days.' },
+        { id: 'brief-farm-water', title: 'Simple field observations for water-use planning', category: 'Water systems', readTime: '4 min', summary: 'A sample note on tracking irrigation timing, soil moisture, and crop response without relying on a single measurement.', points: 'Keep observations consistent, compare more than one part of the field, and treat the summary as a starting point for local trials.' },
+      ];
+
+      const jobOpportunities = [
+        { id: 'job-field', role: 'Field Agriculture Coordinator', organization: 'Mindanao Harvest Co.', location: 'Bukidnon', type: 'Full-time', category: 'Field operations', description: 'Coordinate grower support, harvest planning, and post-harvest logistics with local partners.' },
+        { id: 'job-data', role: 'Agriculture Data Associate', organization: 'FarmGrid Labs', location: 'Davao City', type: 'Full-time', category: 'Data & technology', description: 'Help organize field data and turn community observations into clear, useful reports.' },
+        { id: 'job-irrigation', role: 'Irrigation Project Technician', organization: 'BlueRiver Irrigation', location: 'Misamis Oriental', type: 'Contract', category: 'Infrastructure', description: 'Support site assessments and installation planning for small-farm water systems.' },
+        { id: 'job-community', role: 'Community Extension Partner', organization: 'ANI Regional Network', location: 'Northern Mindanao', type: 'Part-time', category: 'Community', description: 'Connect growers with practical learning resources, peers, and regional programs.' },
+      ];
+
+      const notificationItems = [
+        { id: 'notice-comment', actor: 'Alma R.', detail: 'commented on your field update about seedling schedules.', time: 'Today', target: 'feed' },
+        { id: 'notice-follow', actor: 'Roselyn G.', detail: 'shared a new soil health update with the community.', time: 'Yesterday', target: 'feed' },
+        { id: 'notice-market', actor: 'Mindanao Harvest Co.', detail: 'added a new produce listing to the marketplace.', time: 'This week', target: 'marketplace' },
+      ];
+
       let authMode = 'login';
       let anonymousPosting = false;
       let selectedChat = 'Lian Romano';
+      let selectedGroupId = '';
       let activeMedia = null;
+      let activeResearchAttachment = null;
+      let selectedAnalyticsPostId = null;
+      let activeSavedFolder = 'All';
 
       const knownAccounts = getKnownAccounts();
       const seedUsers = knownAccounts.map((account) => ({
@@ -306,6 +610,7 @@
           id: 'seed-post-1',
           text: 'Our drip irrigation trial reduced water use by 22% while keeping the rice plots healthier during the heat wave.',
           author: 'Roselyn G.',
+          authorId: 'seed-user-1',
           anonymous: false,
           likes: 132,
           likedBy: ['seed-user-1'],
@@ -318,6 +623,7 @@
           id: 'seed-post-2',
           text: 'Looking for a cold-storage partner for banana shipments so we can reduce spoilage during peak harvest.',
           author: 'Aldrin P.',
+          authorId: 'seed-user-2',
           anonymous: false,
           likes: 96,
           likedBy: [],
@@ -330,6 +636,7 @@
           id: 'seed-post-3',
           text: 'Composting rice straw is improving soil moisture retention before the onion planting window begins.',
           author: 'Alma R.',
+          authorId: 'seed-user-3',
           anonymous: false,
           likes: 118,
           likedBy: ['seed-user-2'],
@@ -354,6 +661,7 @@
           id: 'seed-post-5',
           text: 'Market access update: local cooperatives are pooling produce to reduce transport costs and improve pricing.',
           author: 'TestAcc_Alpha',
+          authorId: 'seed-user-4',
           anonymous: false,
           likes: 101,
           likedBy: ['seed-user-3'],
@@ -382,7 +690,16 @@
       }
 
       function currentUser() {
-        return loadState(STORAGE_KEYS.currentUser, null);
+        const session = loadState(STORAGE_KEYS.currentUser, null);
+        if (!session) return null;
+        const account = getUsers().find((entry) => entry.id === session.id);
+        return account ? {
+          ...session,
+          name: account.name,
+          role: account.role || session.role,
+          profileImage: account.profileImage || '',
+          email: account.email || session.email,
+        } : session;
       }
 
       function setCurrentUser(user) {
@@ -400,8 +717,47 @@
       }
 
       function getUsers() {
-        const current = loadState(STORAGE_KEYS.users, seedUsers);
-        return Array.isArray(current) && current.length ? current : seedUsers;
+        const savedUsers = loadState(STORAGE_KEYS.users, []);
+        const users = [...seedUsers];
+        if (!Array.isArray(savedUsers)) return users;
+
+        savedUsers.forEach((savedUser) => {
+          const existingIndex = users.findIndex((user) => user.id === savedUser.id
+            || String(user.email || '').toLowerCase() === String(savedUser.email || '').toLowerCase());
+          if (existingIndex >= 0) users[existingIndex] = savedUser;
+          else users.push(savedUser);
+        });
+        return users;
+      }
+
+      function getSavedProfile(profile = {}) {
+        const users = getUsers();
+        return users.find((user) => profile.id && user.id === profile.id)
+          || users.find((user) => user.name === profile.name || (user.profileAliases || []).includes(profile.name));
+      }
+
+      function getSyncedProfile(profile) {
+        const savedProfile = getSavedProfile(profile);
+        return savedProfile ? {
+          ...profile,
+          ...savedProfile,
+          id: profile.id || savedProfile.id,
+          role: savedProfile.role || profile.role,
+          location: savedProfile.location || profile.location,
+          bio: savedProfile.bio || profile.bio,
+          profileImage: savedProfile.profileImage || '',
+        } : profile;
+      }
+
+      function getProfileIdentity(name, id = '') {
+        const savedProfile = getSavedProfile({ name, id });
+        return savedProfile ? { name: savedProfile.name, profileImage: savedProfile.profileImage || '' } : { name, profileImage: '' };
+      }
+
+      function avatarContent(name, profileImage = '') {
+        return profileImage
+          ? `<img src="${escapeHtml(profileImage)}" alt="" />`
+          : escapeHtml((name || 'A').charAt(0));
       }
 
       function getPosts() {
@@ -410,11 +766,242 @@
           saveState(STORAGE_KEYS.posts, seedPosts);
           return seedPosts;
         }
-        return current;
+
+        let changed = false;
+        const posts = current.map((post) => {
+          if (post.authorId || !post.author) return post;
+          const owner = seedUsers.find((user) => user.name === post.author);
+          if (!owner) return post;
+          changed = true;
+          return { ...post, authorId: owner.id };
+        });
+        if (changed) savePosts(posts);
+        return posts;
       }
 
       function savePosts(posts) {
         saveState(STORAGE_KEYS.posts, posts);
+      }
+
+      function getMarketplacePosts() {
+        const saved = loadState(STORAGE_KEYS.marketplacePosts, null);
+        if (Array.isArray(saved)) return saved;
+        return getDigitalMarketplaceFeed().posts;
+      }
+
+      function saveMarketplacePosts(posts) {
+        saveState(STORAGE_KEYS.marketplacePosts, posts);
+      }
+
+      function getLocalList(key) {
+        const value = loadState(userStorageKey(key), []);
+        return Array.isArray(value) ? value : [];
+      }
+
+      function saveLocalList(key, value) {
+        saveState(userStorageKey(key), value);
+      }
+
+      function userStorageKey(key) {
+        const user = currentUser();
+        return `${key}:${user?.id || user?.email || 'guest'}`;
+      }
+
+      function renderConnections() {
+        const list = document.getElementById('connections-list');
+        const query = String(document.getElementById('connections-search')?.value || '').trim().toLowerCase();
+        const following = getLocalList(STORAGE_KEYS.following);
+        const profiles = mockProfiles.map(getSyncedProfile).filter((profile) => profile.name !== currentUser()?.name).filter((profile) => {
+          const searchable = [profile.name, profile.role, profile.location, profile.bio].join(' ').toLowerCase();
+          return !query || searchable.includes(query);
+        });
+
+        document.getElementById('connection-member-count').textContent = profiles.length;
+        document.getElementById('connection-count').textContent = following.length;
+        list.innerHTML = profiles.map((profile, index) => `
+          <article class="directory-card connection-card">
+            <div class="directory-person">
+              <img src="${escapeHtml(profile.profileImage || avatarImage(index))}" alt="${escapeHtml(profile.name)}" />
+              <span class="directory-presence">Community member</span>
+            </div>
+            <p class="brand-kicker">${escapeHtml(profile.location)}</p>
+            <h4>${escapeHtml(profile.name)}</h4>
+            <strong>${escapeHtml(profile.role)}</strong>
+            <p>${escapeHtml(profile.bio)}</p>
+            <div class="directory-actions">
+              <button class="btn ${following.includes(profile.id) ? 'btn-ghost' : 'btn-primary'} small" type="button" data-ui-action="follow" data-profile-id="${escapeHtml(profile.id)}">${following.includes(profile.id) ? 'Following' : 'Connect'}</button>
+              <button class="text-button" type="button" data-ui-action="message-profile" data-profile-name="${escapeHtml(profile.name)}">Message</button>
+            </div>
+          </article>
+        `).join('') || '<p class="empty-chat">No community members match that search.</p>';
+      }
+
+      function renderGroups() {
+        const joined = getLocalList(STORAGE_KEYS.joinedGroups);
+        const customGroups = loadState(userStorageKey('ani_custom_groups'), []);
+        const groups = [...communityGroups, ...(Array.isArray(customGroups) ? customGroups : [])];
+        const selectedGroup = groups.find((group) => group.id === selectedGroupId);
+        const list = document.getElementById('groups-list');
+
+        if (selectedGroup) {
+          const isJoined = joined.includes(selectedGroup.id);
+          list.innerHTML = `
+            <article class="group-profile">
+              <header class="group-profile-header">
+                <button class="btn btn-ghost small" type="button" data-ui-action="group-back">Back to groups</button>
+                <span class="badge">${escapeHtml(selectedGroup.category)}</span>
+              </header>
+              <div class="group-profile-identity">
+                <span class="group-symbol" aria-hidden="true">✳</span>
+                <div><p class="brand-kicker">${escapeHtml(selectedGroup.region)}</p><h4>${escapeHtml(selectedGroup.name)}</h4></div>
+              </div>
+              <p class="group-profile-description">${escapeHtml(selectedGroup.description)}</p>
+              <div class="group-profile-footer">
+                <span>${selectedGroup.members + (isJoined ? 1 : 0)} members · ${isJoined ? 'You are a member' : 'Preview'}</span>
+                <div>
+                  <button class="btn btn-ghost small" type="button" data-ui-action="group-membership" data-group-id="${escapeHtml(selectedGroup.id)}">${isJoined ? 'Leave group' : 'Join group'}</button>
+                  <button class="btn btn-primary small" type="button" data-ui-action="message-group" data-group-name="${escapeHtml(selectedGroup.name)}">Message group</button>
+                </div>
+              </div>
+            </article>
+          `;
+          return;
+        }
+
+        list.innerHTML = groups.map((group, index) => `
+          <article class="group-card group-card-${index + 1}">
+            <div class="group-card-top"><span class="group-symbol" aria-hidden="true">${['◌', '⌘', '↗', '≋'][index % 4]}</span><span class="badge">${escapeHtml(group.category)}</span></div>
+            <p class="brand-kicker">${escapeHtml(group.region)}</p>
+            <h4>${escapeHtml(group.name)}</h4>
+            <p>${escapeHtml(group.description)}</p>
+            <div class="group-card-footer"><span>${group.members + (joined.includes(group.id) ? 1 : 0)} members</span><button class="btn ${joined.includes(group.id) ? 'btn-ghost' : 'btn-primary'} small" type="button" data-ui-action="join-group" data-group-id="${escapeHtml(group.id)}">${joined.includes(group.id) ? 'Open group' : 'Join & view'}</button></div>
+          </article>
+        `).join('');
+      }
+
+      function renderResearch() {
+        const list = document.getElementById('research-list');
+        const communityList = document.getElementById('research-posts');
+        const query = String(document.getElementById('research-search')?.value || '').trim().toLowerCase();
+        const storedPosts = loadState(STORAGE_KEYS.researchPosts, []);
+        const posts = (Array.isArray(storedPosts) ? storedPosts : []).filter((post) => [post.title, post.author, ...Object.values(post.abstract || {})].join(' ').toLowerCase().includes(query));
+        const briefs = researchBriefs.filter((brief) => [brief.title, brief.category, brief.summary].join(' ').toLowerCase().includes(query));
+        communityList.innerHTML = posts.map((post) => {
+          const attachment = post.attachment;
+          const isImage = attachment?.type && ['image/jpeg', 'image/png', 'image/webp', 'image/gif'].includes(attachment.type)
+            && String(attachment.src || '').startsWith('data:image/');
+          const isPdf = attachment?.type === 'application/pdf' && String(attachment.src || '').startsWith('data:application/pdf');
+          const attachmentMarkup = isImage
+            ? `<img class="research-post-image" src="${escapeHtml(attachment.src)}" alt="Attachment to ${escapeHtml(post.title || 'research post')}" loading="lazy" />`
+            : isPdf ? `<a class="research-file-link" href="${escapeHtml(attachment.src)}" download="${escapeHtml(attachment.name || 'research-document.pdf')}">Download ${escapeHtml(attachment.name || 'research document')}</a>` : '';
+
+          return `
+            <article class="research-post-card">
+              <header><div><p class="brand-kicker">${escapeHtml(post.authorRole || 'Community researcher')} · ${escapeHtml(post.author || 'Researcher')}</p><h4>${escapeHtml(post.title || 'Untitled research')}</h4></div><time>${new Date(post.createdAt).toLocaleDateString()}</time></header>
+              <div class="research-abstract-grid">${['introduction', 'methods', 'results', 'discussion'].map((section) => `<section><h5>${section}</h5><p>${escapeHtml(post.abstract?.[section] || '')}</p></section>`).join('')}</div>
+              ${attachmentMarkup}
+              <small class="research-post-word-count">${countImradWords(post.abstract || {})} words</small>
+            </article>
+          `;
+        }).join('') || '<p class="empty-chat">No community research posts match this search yet.</p>';
+        list.innerHTML = briefs.map((brief) => `
+          <details class="research-item">
+            <summary><span class="research-category">${escapeHtml(brief.category)}</span><strong>${escapeHtml(brief.title)}</strong><span class="research-read">${escapeHtml(brief.readTime)} read</span></summary>
+            <p>${escapeHtml(brief.summary)}</p>
+            <div class="research-takeaway"><strong>Field considerations</strong><p>${escapeHtml(brief.points)}</p></div>
+            <small>Sample ANI field brief · For discussion and local adaptation</small>
+          </details>
+        `).join('') || '<p class="empty-chat">No field briefs match that search.</p>';
+      }
+
+      function renderJobs() {
+        const list = document.getElementById('jobs-list');
+        const query = String(document.getElementById('jobs-search')?.value || '').trim().toLowerCase();
+        const typeFilter = document.getElementById('jobs-type-filter')?.value || '';
+        const locationFilter = document.getElementById('jobs-location-filter')?.value || '';
+        const interests = getLocalList(STORAGE_KEYS.jobInterests);
+        const applications = getLocalList(STORAGE_KEYS.jobApplications);
+        const jobs = jobOpportunities.filter((job) => [job.role, job.organization, job.location, job.category, job.description].join(' ').toLowerCase().includes(query)
+          && (!typeFilter || job.type === typeFilter)
+          && (!locationFilter || job.location === locationFilter || locationFilter === 'Northern Mindanao'));
+        list.innerHTML = jobs.map((job) => `
+          <article class="job-item">
+            <div class="job-org-mark" aria-hidden="true">${escapeHtml(job.organization.charAt(0))}</div>
+            <div class="job-copy"><div class="job-meta"><span class="badge">${escapeHtml(job.category)}</span><span>${escapeHtml(job.type)}</span></div><h4>${escapeHtml(job.role)}</h4><strong>${escapeHtml(job.organization)}</strong><small>${escapeHtml(job.location)} · Northern Mindanao</small><details class="job-description"><summary>View job description</summary><p>${escapeHtml(job.description)}</p><small>Applications are recorded locally for this demo.</small></details></div>
+            <div class="job-actions">
+              <button class="btn ${interests.includes(job.id) ? 'btn-ghost' : 'btn-primary'} small" type="button" data-ui-action="job-interest" data-job-id="${escapeHtml(job.id)}" aria-pressed="${interests.includes(job.id)}">${interests.includes(job.id) ? 'Remove saved' : 'Save interest'}</button>
+              <button class="btn ${applications.includes(job.id) ? 'btn-ghost' : 'btn-primary'} small" type="button" data-ui-action="job-apply" data-job-id="${escapeHtml(job.id)}" ${applications.includes(job.id) ? 'disabled' : ''}>${applications.includes(job.id) ? 'Applied' : 'Apply'}</button>
+            </div>
+          </article>
+        `).join('') || '<p class="empty-chat">No opportunities match that search.</p>';
+      }
+
+      function getSavedFolderNames() {
+        const customFolders = getLocalList('ani_saved_folders');
+        return [...new Set(['Watch Later', 'Projects', ...customFolders.filter((folder) => String(folder || '').trim() && !['all', 'watch later', 'projects'].includes(String(folder).trim().toLowerCase()))])];
+      }
+
+      function renderSavedPosts() {
+        const savedIds = getLocalList(STORAGE_KEYS.savedPosts);
+        const folders = ['All', ...getSavedFolderNames()];
+        const folderAssignments = loadState(userStorageKey('ani_saved_post_folders'), {}) || {};
+        const posts = [
+          ...getPosts().map((post) => ({ ...post, source: 'community' })),
+          ...getMarketplacePosts().map((post) => ({ ...post, source: 'marketplace' })),
+        ];
+        const allSaved = savedIds.map((key) => {
+          const [source, ...idParts] = String(key).split('|');
+          const id = idParts.join('|');
+          const post = posts.find((entry) => entry.id === id && entry.source === source);
+          return post ? { ...post, key, folder: folderAssignments[key] || 'Watch Later' } : null;
+        }).filter(Boolean);
+        if (!folders.includes(activeSavedFolder)) activeSavedFolder = 'All';
+        const saved = activeSavedFolder === 'All' ? allSaved : allSaved.filter((post) => post.folder === activeSavedFolder);
+
+        document.getElementById('saved-count').textContent = `${saved.length} saved`;
+        document.getElementById('saved-folders').innerHTML = folders.map((folder) => `<button class="folder-tab ${activeSavedFolder === folder ? 'active' : ''}" type="button" data-folder="${escapeHtml(folder)}">${escapeHtml(folder)}</button>`).join('');
+        document.getElementById('saved-list').innerHTML = saved.map((post) => `
+          <article class="saved-item">
+            <div class="saved-item-meta"><span class="saved-mark" aria-hidden="true">★</span><span>${escapeHtml(post.source === 'marketplace' ? 'Marketplace' : 'Central feed')}</span><span>${new Date(post.createdAt).toLocaleDateString()}</span></div>
+            <h4>${escapeHtml(post.title || post.author || 'Community post')}</h4>
+            <p>${escapeHtml(post.text || post.caption || '')}</p>
+            <div class="saved-item-footer"><span>By ${escapeHtml(post.anonymous ? 'Anonymous farmer' : post.author || 'Community member')}</span><div><label class="folder-select-label">Folder<select data-saved-folder-key="${escapeHtml(post.key)}">${folders.filter((folder) => folder !== 'All').map((folder) => `<option value="${escapeHtml(folder)}" ${post.folder === folder ? 'selected' : ''}>${escapeHtml(folder)}</option>`).join('')}</select></label><button class="text-button" type="button" data-ui-action="open-saved" data-source="${escapeHtml(post.source)}">Open in ${post.source === 'marketplace' ? 'Marketplace' : 'feed'}</button><button class="text-button danger" type="button" data-ui-action="remove-saved" data-saved-key="${escapeHtml(post.key)}">Remove</button></div></div>
+          </article>
+        `).join('') || '<div class="saved-empty"><span aria-hidden="true">☆</span><h4>No saved posts yet</h4><p>Save a useful update from the feed or marketplace and it will be collected here.</p></div>';
+      }
+
+      function renderNotifications() {
+        const readItems = getLocalList('ani_read_notifications');
+        const unread = notificationItems.filter((item) => !readItems.includes(item.id));
+        const count = document.getElementById('notification-count');
+        count.textContent = unread.length;
+        count.classList.toggle('hidden', unread.length === 0);
+        document.getElementById('notifications-list').innerHTML = notificationItems.map((item) => {
+          const actor = getProfileIdentity(item.actor);
+          const detail = item.detail.split(item.actor).join(actor.name);
+          return `
+            <article class="notification-item ${readItems.includes(item.id) ? 'read' : 'unread'}">
+              <span class="notification-avatar">${avatarContent(actor.name, actor.profileImage)}</span>
+              <div><strong>${escapeHtml(actor.name)}</strong><p>${escapeHtml(detail)}</p><small>${escapeHtml(item.time)} · ANI community demo</small></div>
+              <button class="btn btn-ghost small" type="button" data-ui-action="notification-open" data-notification-id="${escapeHtml(item.id)}" data-target="${escapeHtml(item.target)}">Open</button>
+            </article>
+          `;
+        }).join('');
+      }
+
+      function applyTheme(theme) {
+        const dark = theme === 'dark';
+        document.body.dataset.theme = dark ? 'dark' : 'light';
+        const authImage = document.getElementById('auth-hero-image');
+        if (authImage) {
+          authImage.src = `ani_custom_graphics/ani_asset_pack/ANI UI Design - ${dark ? 'Dark' : 'Light'} Mode Log In or Sign Up Intro Photo.png`;
+        }
+        const button = document.getElementById('theme-toggle');
+        if (button) {
+          button.textContent = dark ? '☼' : '◐';
+          button.setAttribute('aria-label', `Switch to ${dark ? 'light' : 'dark'} mode`);
+          button.title = `Switch to ${dark ? 'light' : 'dark'} mode`;
+        }
       }
 
       function getMessages() {
@@ -439,6 +1026,9 @@
         }
         if (!localStorage.getItem(STORAGE_KEYS.messages)) {
           saveState(STORAGE_KEYS.messages, seedMessages);
+        }
+        if (!localStorage.getItem(STORAGE_KEYS.marketplacePosts)) {
+          saveMarketplacePosts(getDigitalMarketplaceFeed().posts);
         }
       }
 
@@ -482,6 +1072,8 @@
         if (label) {
           label.textContent = user ? `${user.name}, ${user.role}` : 'Lian, farmer';
         }
+        const composerAvatar = document.querySelector('[data-asset="composerAvatar"]');
+        if (composerAvatar) composerAvatar.src = user?.profileImage || avatarImage(0);
       }
 
       function getProfileByName(name) {
@@ -489,18 +1081,33 @@
         if (!normalized) return mockProfiles[0];
 
         const direct = mockProfiles.find((entry) => entry.name === normalized);
-        if (direct) return direct;
-
-        const current = currentUser();
-        if (current && current.name === normalized) {
-          return { id: current.id, name: current.name, role: current.role || 'Community member', location: 'Mindanao', bio: 'A new community member sharing updates from the field.', followers: 1200 };
-        }
-
-        const saved = getUsers().find((entry) => entry.name === normalized);
+        const business = getDigitalMarketplaceFeed().profiles.find((entry) => entry.name === normalized);
+        const saved = getUsers().find((entry) => entry.name === normalized || (entry.profileAliases || []).includes(normalized));
         if (saved) {
-          return { id: saved.id, name: saved.name, role: saved.role || 'Community member', location: 'Mindanao', bio: 'Agriculture community member sharing updates and field learnings.', followers: 1200 };
+          return {
+            ...(direct || business || {}),
+            id: saved.id,
+            name: saved.name,
+            role: saved.role || direct?.role || business?.role || 'Community member',
+            location: saved.location || direct?.location || business?.location || 'Mindanao',
+            profileImage: saved.profileImage || '',
+            bio: saved.bio || direct?.bio || business?.bio || 'Agriculture community member sharing updates and field learnings.',
+            organization: saved.organization || direct?.organization || business?.organization || '',
+            experience: saved.experience || '',
+            experienceEntries: Array.isArray(saved.experienceEntries) ? saved.experienceEntries : [],
+            education: Array.isArray(saved.education) ? saved.education : [],
+            projects: Array.isArray(saved.projects) ? saved.projects : [],
+            certifications: Array.isArray(saved.certifications) ? saved.certifications : [],
+            activities: Array.isArray(saved.activities) ? saved.activities : [],
+            references: Array.isArray(saved.references) ? saved.references : [],
+            skills: Array.isArray(saved.skills) ? saved.skills : [],
+            resumeSectionOrder: Array.isArray(saved.resumeSectionOrder) ? saved.resumeSectionOrder : [],
+            followers: Number(saved.followers || direct?.followers || business?.followers || 1200),
+          };
         }
 
+        if (direct) return direct;
+        if (business) return { ...business, bio: business.bio || `${business.role} supporting agriculture and local market connections.` };
         return mockProfiles[0];
       }
 
@@ -512,20 +1119,27 @@
         return `<img class="post-media" src="${attachment.src}" alt="Shared media" />`;
       }
 
+      function escapeHtml(value) {
+        return String(value ?? '').replace(/[&<>"']/g, (character) => ({
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#39;',
+        })[character]);
+      }
+
       function getMatchingProfiles(query) {
         const q = String(query || '').trim().toLowerCase();
         if (!q) return [];
 
         const entries = [
-          ...mockProfiles,
-          ...getUsers().map((user) => ({
-            id: user.id,
-            name: user.name,
-            role: user.role,
-            location: 'Mindanao',
-            bio: 'Agriculture community member',
-            followers: 1200,
+          ...mockProfiles.map(getSyncedProfile),
+          ...getDigitalMarketplaceFeed().profiles.map((profile) => getSyncedProfile({
+            ...profile,
+            bio: profile.bio || `${profile.role} supporting agriculture and local market connections.`,
           })),
+          ...getUsers().map((user) => getSyncedProfile({ ...user, location: user.location || 'Mindanao', bio: user.bio || 'Agriculture community member', followers: 1200 })),
         ];
 
         return entries.filter((profile, index, array) => {
@@ -546,15 +1160,15 @@
         const profileMarkup = profileMatches.length ? `
           <section class="search-profile-strip panel">
             <div class="section-heading tight">
-              <h3>People matching “${query}”</h3>
+              <h3>People matching “${escapeHtml(query)}”</h3>
             </div>
             <div class="profile-match-grid">
               ${profileMatches.map((profile) => `
-                <button class="profile-match-card" type="button" data-profile-name="${profile.name}">
-                  <span class="avatar-bubble small">${(profile.name || 'U').charAt(0)}</span>
+                <button class="profile-match-card" type="button" data-profile-name="${escapeHtml(profile.name)}">
+                  <span class="avatar-bubble small">${avatarContent(profile.name, profile.profileImage)}</span>
                   <span>
-                    <strong>${profile.name}</strong>
-                    <small>${profile.role || 'Community member'}</small>
+                    <strong>${escapeHtml(profile.name)}</strong>
+                    <small>${escapeHtml(profile.role || 'Community member')}</small>
                   </span>
                 </button>
               `).join('')}
@@ -570,24 +1184,26 @@
         const currentUserId = currentUser()?.id || currentUser()?.email || currentUser()?.name || 'guest-user';
 
         feed.innerHTML = `${profileMarkup}${posts.map((post) => {
-          const author = post.anonymous ? 'Anonymous farmer' : post.author;
+          const authorProfile = post.anonymous ? { name: 'Anonymous farmer', profileImage: '' } : getProfileIdentity(post.author, post.authorId);
+          const author = authorProfile.name || post.author;
           const comments = Array.isArray(post.comments) ? post.comments : [];
           const reposts = Number(post.reposts || 0);
           const likes = Number(post.likes || 0);
-          const interactions = likes + comments.length + reposts;
+          const citations = Number(post.citations || 0);
+          const interactions = likes + comments.length + reposts + citations;
           const likedBy = Array.isArray(post.likedBy) ? post.likedBy : [];
           const hasLiked = !!currentUserId && likedBy.includes(currentUserId);
-          const isOwner = !!currentUser() && (post.author === currentUser().name || post.author === 'Anonymous farmer' && currentUser().name === 'Anonymous farmer');
+          const isOwner = ownsPost(post, currentUser());
 
           return `
-            <article class="post-card panel">
+            <article class="post-card panel" id="post-${escapeHtml(post.id)}">
               <div class="post-head">
                 <div class="user-meta">
-                  <button class="avatar-button" type="button" data-profile-name="${author}" aria-label="Open profile for ${author}">
-                    <img src="assets/avatars/farmer-${(Math.abs(author.length) % 3) + 1}.svg" alt="${author} avatar" />
+                  <button class="avatar-button" type="button" data-profile-name="${escapeHtml(author)}" aria-label="Open profile for ${escapeHtml(author)}">
+                    <img src="${escapeHtml(authorProfile.profileImage || avatarImage(author.length))}" alt="${escapeHtml(author)} avatar" />
                   </button>
                   <div>
-                    <button class="author-link" type="button" data-profile-name="${author}">${author}</button>
+                    <button class="author-link" type="button" data-profile-name="${escapeHtml(author)}">${escapeHtml(author)}</button>
                     <small>${new Date(post.createdAt).toLocaleString()} · Mindanao</small>
                   </div>
                 </div>
@@ -599,24 +1215,19 @@
                   <button class="post-menu" aria-label="Open more options" type="button">•••</button>
                 </div>
               </div>
-              <p>${post.text}</p>
+              <p>${escapeHtml(post.text)}</p>
               ${renderAttachment(post.attachment)}
               <div class="engagement-summary">
                 <strong>${interactions}</strong>
                 <span>total interactions</span>
               </div>
               <div class="engagement-row">
-                <button class="action-btn ${hasLiked ? 'liked' : ''}" type="button" data-post-id="${post.id}" data-action="like">${hasLiked ? '♥' : '❤'} ${likes}</button>
-                <button class="action-btn" type="button" data-post-id="${post.id}" data-action="comment">💬 ${comments.length}</button>
-                <button class="action-btn" type="button" data-post-id="${post.id}" data-action="repost">↺ ${reposts}</button>
+                <button class="action-btn ${hasLiked ? 'liked' : ''}" type="button" data-post-source="community" data-post-id="${escapeHtml(post.id)}" data-action="like">${hasLiked ? '♥ Unlike' : '♡ Like'} ${likes}</button>
+                <button class="action-btn" type="button" data-post-source="community" data-post-id="${escapeHtml(post.id)}" data-action="comment" aria-haspopup="dialog" aria-controls="comments-dialog">Comment ${comments.length}</button>
+                <button class="action-btn" type="button" data-post-source="community" data-post-id="${escapeHtml(post.id)}" data-action="repost">Repost ${reposts}</button>
+                <button class="action-btn cite-action" type="button" data-post-source="community" data-post-id="${escapeHtml(post.id)}" data-action="cite">Cite ${citations}</button>
+                <button class="action-btn save-action" type="button" data-post-source="community" data-post-id="${escapeHtml(post.id)}" data-action="save" aria-pressed="${getLocalList(STORAGE_KEYS.savedPosts).includes(`community|${post.id}`)}">${getLocalList(STORAGE_KEYS.savedPosts).includes(`community|${post.id}`) ? '★ Saved' : '☆ Save'}</button>
               </div>
-              <div class="comment-list">
-                ${comments.length ? comments.map((comment) => `<div class="comment-item">${comment}</div>`).join('') : '<div class="comment-item empty">No comments yet.</div>'}
-              </div>
-              <form class="comment-form" data-post-id="${post.id}">
-                <input type="text" name="comment" placeholder="Write a comment..." aria-label="Write a comment" />
-                <button type="submit">Comment</button>
-              </form>
             </article>
           `;
         }).join('')}`;
@@ -634,23 +1245,328 @@
         return [...contacts.entries()];
       }
 
+      function renderCitationTooltip(post, button, source = 'community') {
+        const tooltip = document.getElementById('citation-tooltip');
+        if (!tooltip || !post) return;
+
+        const citations = getPostCitations({
+          author: post.author || 'Anonymous',
+          title: post.title || post.text || 'Community post',
+          createdAt: post.createdAt || new Date().toISOString(),
+          text: post.text || '',
+        });
+
+        tooltip.innerHTML = `
+          <div class="citation-header">
+            <strong>Citation</strong>
+            <button type="button" class="close-citation">×</button>
+          </div>
+          <div class="citation-block">
+            <h4>APA 7</h4>
+            <p>${escapeHtml(citations.apa)}</p>
+            <button type="button" class="citation-copy" data-copy-style="apa">Copy APA 7</button>
+          </div>
+          <div class="citation-block">
+            <h4>MLA 9</h4>
+            <p>${escapeHtml(citations.mla)}</p>
+            <button type="button" class="citation-copy" data-copy-style="mla">Copy MLA 9</button>
+          </div>
+          <div class="citation-block">
+            <h4>Chicago 18</h4>
+            <p>${escapeHtml(citations.chicago)}</p>
+            <button type="button" class="citation-copy" data-copy-style="chicago">Copy Chicago 18</button>
+          </div>
+          <div class="citation-block">
+            <h4>In-text</h4>
+            <p>${escapeHtml(citations.inText)}</p>
+            <button type="button" class="citation-copy" data-copy-style="inText">Copy in-text citation</button>
+          </div>
+          <small class="citation-note">Counter tracks citation copies; pasted use cannot be detected.</small>
+        `;
+        tooltip.dataset.postId = post.id;
+        tooltip.dataset.postSource = source;
+
+        tooltip.classList.remove('hidden');
+        const rect = button.getBoundingClientRect();
+        tooltip.style.left = `${Math.max(12, Math.min(window.innerWidth - 340, rect.left + 28))}px`;
+        tooltip.style.top = `${Math.min(window.innerHeight - 390, Math.max(12, rect.top - 12))}px`;
+
+        tooltip.querySelector('.close-citation')?.addEventListener('click', () => {
+          tooltip.classList.add('hidden');
+        });
+      }
+
+      async function copyCitation(event) {
+        const button = event.target.closest('[data-copy-style]');
+        if (!button) return;
+
+        const tooltip = document.getElementById('citation-tooltip');
+        const source = tooltip.dataset.postSource;
+        const postId = tooltip.dataset.postId;
+        const postList = source === 'marketplace' ? getMarketplacePosts() : getPosts();
+        const post = postList.find((entry) => entry.id === postId);
+        if (!post) return;
+
+        const citations = getPostCitations(post);
+        const copied = await copyText(citations[button.dataset.copyStyle]);
+        if (!copied) {
+          button.textContent = 'Copy unavailable';
+          return;
+        }
+
+        const updated = incrementPostCitation(postList, postId);
+        if (source === 'marketplace') {
+          saveMarketplacePosts(updated);
+          renderMarketplace();
+        } else {
+          savePosts(updated);
+          renderFeed();
+        }
+        button.textContent = 'Copied';
+      }
+
+      async function copyText(value) {
+        try {
+          if (navigator.clipboard?.writeText) {
+            await navigator.clipboard.writeText(value);
+            return true;
+          }
+          const input = document.createElement('textarea');
+          input.value = value;
+          input.style.position = 'fixed';
+          input.style.opacity = '0';
+          document.body.appendChild(input);
+          input.select();
+          const copied = document.execCommand('copy');
+          input.remove();
+          return copied;
+        } catch {
+          return false;
+        }
+      }
+
+      function renderAnalytics() {
+        const list = document.getElementById('analytics-list');
+        const detail = document.getElementById('analytics-detail');
+        const posts = getPostsForOwner(getPosts(), currentUser() || {});
+
+        if (!posts.length) {
+          selectedAnalyticsPostId = null;
+          list.innerHTML = '<p class="empty-chat">You have not published any posts yet.</p>';
+          detail.innerHTML = '<p class="empty-chat">Your post analytics will appear here.</p>';
+          return;
+        }
+
+        if (!posts.some((post) => post.id === selectedAnalyticsPostId)) {
+          selectedAnalyticsPostId = posts[0].id;
+        }
+
+        list.innerHTML = posts.map((post) => {
+          const total = Number(post.likes || 0) + (Array.isArray(post.comments) ? post.comments.length : 0) + Number(post.reposts || 0) + Number(post.citations || 0);
+          return `
+            <button class="analytics-item ${selectedAnalyticsPostId === post.id ? 'selected' : ''}" type="button" data-analytics-post-id="${post.id}">
+              <strong>${escapeHtml(post.title || post.author || 'Community post')}</strong>
+              <small>${new Date(post.createdAt).toLocaleString()}</small>
+              <span>${total} interactions</span>
+            </button>
+          `;
+        }).join('');
+
+        const selectedPost = posts.find((post) => post.id === selectedAnalyticsPostId) || posts[0];
+        const comments = Array.isArray(selectedPost.comments) ? selectedPost.comments.length : 0;
+        const analytics = computeEngagementAnalytics(posts);
+        const row = {
+          title: selectedPost.title || selectedPost.text || 'Community post',
+          author: selectedPost.author || 'Anonymous',
+          likes: Number(selectedPost.likes || 0),
+          comments,
+          reposts: Number(selectedPost.reposts || 0),
+          citations: Number(selectedPost.citations || 0),
+          total: Number(selectedPost.likes || 0) + comments + Number(selectedPost.reposts || 0) + Number(selectedPost.citations || 0),
+        };
+
+        detail.innerHTML = `
+          <article class="analytics-featured-post">
+            <div class="analytics-featured-meta"><span>Featured post</span><time>${new Date(selectedPost.createdAt).toLocaleDateString()}</time></div>
+            <h4>${escapeHtml(row.title)}</h4>
+            <p>By ${escapeHtml(row.author)}</p>
+          </article>
+          <div class="analytics-kpi-grid" aria-label="Featured post metrics">
+            <div class="analytics-kpi"><span>Likes</span><strong>${row.likes}</strong></div>
+            <div class="analytics-kpi"><span>Comments</span><strong>${row.comments}</strong></div>
+            <div class="analytics-kpi"><span>Reposts</span><strong>${row.reposts}</strong></div>
+            <div class="analytics-kpi"><span>Citations</span><strong>${row.citations}</strong></div>
+            <div class="analytics-kpi total"><span>Total interactions</span><strong>${row.total}</strong></div>
+          </div>
+          <section class="analytics-chart-panel">
+            <div class="analytics-chart-heading"><strong>Post history</strong><span>Interactions by post</span></div>
+            <div class="analytics-chart" role="img" aria-label="Bar chart of interactions by post">
+              ${posts.slice(0, 8).map((post) => {
+                const total = Number(post.likes || 0) + (Array.isArray(post.comments) ? post.comments.length : 0) + Number(post.reposts || 0) + Number(post.citations || 0);
+                const height = Math.max(8, Math.round((total / Math.max(...analytics.perPost, 1)) * 100));
+                return `<div class="chart-bar-wrap" title="${escapeHtml(post.title || post.text || 'Community post')}: ${total} interactions"><span>${total}</span><div class="chart-bar" style="height:${height}%"></div><small>${new Date(post.createdAt).toLocaleDateString()}</small></div>`;
+              }).join('')}
+            </div>
+            <div class="analytics-recent-posts">${posts.slice(0, 4).map((post) => {
+              const attachment = post.attachment;
+              const imageSource = attachment?.type?.startsWith('image/') && String(attachment.src || '').startsWith('data:image/')
+                ? `<img class="post-history-thumb" src="${escapeHtml(attachment.src)}" alt="Photo attached to post" loading="lazy" />`
+                : '<span class="post-history-no-image">Text post</span>';
+              return `<article>${imageSource}<div><strong>${escapeHtml(post.title || post.text || 'Community post')}</strong><small>${new Date(post.createdAt).toLocaleDateString()} · ${Number(post.likes || 0)} likes</small></div></article>`;
+            }).join('')}</div>
+          </section>
+        `;
+      }
+
+      function renderMarketplace() {
+        const marketplace = document.getElementById('marketplace-feed');
+        const marketFeed = getDigitalMarketplaceFeed();
+        const profiles = marketFeed.profiles.map(getSyncedProfile);
+        const { commodityUpdates } = marketFeed;
+        const posts = getMarketplacePosts();
+        const searchValue = document.getElementById('marketplace-search')?.value || '';
+        const normalizedQuery = String(searchValue).trim().toLowerCase();
+        const filteredPosts = posts.filter((post) => {
+          if (!normalizedQuery) return true;
+          const haystack = [post.title, post.caption, post.topic, post.author, post.text].filter(Boolean).join(' ').toLowerCase();
+          return haystack.includes(normalizedQuery);
+        });
+        const filteredProfiles = profiles.filter((profile) => {
+          if (!normalizedQuery) return true;
+          const haystack = [profile.name, profile.role, profile.location, profile.type].filter(Boolean).join(' ').toLowerCase();
+          return haystack.includes(normalizedQuery);
+        });
+
+        const liveGrid = document.getElementById('market-live-grid');
+        liveGrid.innerHTML = commodityUpdates.map((item) => `
+          <div class="live-commodity" aria-label="Commodity ${item.symbol}">
+            <div>
+              <small>${item.symbol}</small>
+              <strong>${item.value}</strong>
+            </div>
+            <span class="trend ${item.trend.startsWith('+') ? 'up' : 'down'}">${item.icon} ${item.trend}</span>
+          </div>
+        `).join('');
+
+        const productGrid = document.getElementById('marketplace-products-grid');
+        const products = getMarketplaceProducts().filter((product) => {
+          if (!normalizedQuery) return true;
+          return [product.name, product.category, product.seller, product.location].join(' ').toLowerCase().includes(normalizedQuery);
+        });
+        productGrid.innerHTML = products.map((product) => `
+          <article class="product-card">
+            <div class="product-image product-image-${product.imageIndex}" data-product-image="${escapeHtml(product.id)}" role="img" aria-label="${escapeHtml(product.name)}"></div>
+            <div class="product-card-body"><div class="product-card-label"><span>${escapeHtml(product.category)}</span><span>${escapeHtml(product.location)}</span></div><h4>${escapeHtml(product.name)}</h4><p>${escapeHtml(product.price)}</p><small>Offered by ${escapeHtml(product.seller)}</small><button class="btn btn-primary small" type="button" data-ui-action="message-seller" data-seller="${escapeHtml(product.seller)}">Contact seller</button></div>
+          </article>
+        `).join('') || '<p class="empty-chat">No products match your search.</p>';
+        productGrid.querySelectorAll('[data-product-image]').forEach((image) => {
+          const path = marketplaceProductImages[image.dataset.productImage]?.trim();
+          if (!path) return;
+          image.style.backgroundImage = `url(${JSON.stringify(path)})`;
+          image.style.backgroundSize = 'cover';
+          image.style.backgroundPosition = 'center';
+        });
+
+        marketplace.innerHTML = `
+          <div class="marketplace-panel">
+            <div class="section-heading tight">
+              <h3>Profiles</h3>
+            </div>
+            <div class="market-profile-grid">
+              ${filteredProfiles.map((profile) => `
+                <article class="market-card profile-card-market">
+                  <div class="market-card-head">
+                    <button class="avatar-button" type="button" data-profile-name="${escapeHtml(profile.name)}" aria-label="Open ${escapeHtml(profile.name)} profile">
+                      <span class="avatar-bubble">${avatarContent(profile.name, profile.profileImage)}</span>
+                    </button>
+                    <div>
+                      <button class="author-link" type="button" data-profile-name="${escapeHtml(profile.name)}">${escapeHtml(profile.name)}</button>
+                      <small>${escapeHtml(profile.role)}</small>
+                    </div>
+                  </div>
+                  <p>${escapeHtml(profile.location)}</p>
+                  <span class="badge">${escapeHtml(profile.type)}</span>
+                </article>
+              `).join('') || '<p class="empty-chat">No matching profiles.</p>'}
+            </div>
+          </div>
+
+          <div class="marketplace-panel">
+            <div class="section-heading tight">
+              <h3>Market feed</h3>
+            </div>
+            <div class="market-post-grid">
+              ${filteredPosts.map((post) => {
+                const authorProfile = getProfileIdentity(post.author, post.authorId);
+                const author = authorProfile.name || post.author;
+                const comments = Array.isArray(post.comments) ? post.comments : [];
+                const likedBy = Array.isArray(post.likedBy) ? post.likedBy : [];
+                const userId = currentUser()?.id || currentUser()?.email || currentUser()?.name || '';
+                const hasLiked = Boolean(userId && likedBy.includes(userId));
+                const citations = Number(post.citations || 0);
+                const interactions = Number(post.likes || 0) + Number(post.reposts || 0) + comments.length + citations;
+                return `
+                <article class="market-card market-post-card" id="post-${escapeHtml(post.id)}">
+                  <div class="market-card-head">
+                    <button class="avatar-button" type="button" data-profile-name="${escapeHtml(author)}" aria-label="Open ${escapeHtml(author)} profile">
+                      <span class="avatar-bubble">${avatarContent(author, authorProfile.profileImage)}</span>
+                    </button>
+                    <div>
+                      <button class="author-link" type="button" data-profile-name="${escapeHtml(author)}">${escapeHtml(author)}</button>
+                      <small>${new Date(post.createdAt).toLocaleString()}</small>
+                    </div>
+                    <span class="badge neutral">${escapeHtml(post.type)}</span>
+                  </div>
+                  <h4>${escapeHtml(post.title)}</h4>
+                  <p>${escapeHtml(post.caption || post.text)}</p>
+                  <span class="topic-tag">${escapeHtml(post.topic)}</span>
+                  <div class="engagement-summary"><strong>${interactions}</strong><span>total interactions</span></div>
+                  <div class="market-stats">
+                    <button class="action-btn ${hasLiked ? 'liked' : ''}" type="button" data-action="like" data-post-source="marketplace" data-post-id="${escapeHtml(post.id)}">${hasLiked ? '♥ Unlike' : '♡ Like'} ${Number(post.likes || 0)}</button>
+                    <button class="action-btn" type="button" data-action="comment" data-post-source="marketplace" data-post-id="${escapeHtml(post.id)}" aria-haspopup="dialog" aria-controls="comments-dialog">Comment ${comments.length}</button>
+                    <button class="action-btn" type="button" data-action="repost" data-post-source="marketplace" data-post-id="${escapeHtml(post.id)}">Repost ${Number(post.reposts || 0)}</button>
+                    <button class="action-btn cite-action" type="button" data-action="cite" data-post-source="marketplace" data-post-id="${escapeHtml(post.id)}">Cite ${citations}</button>
+                    <button class="action-btn save-action" type="button" data-action="save" data-post-source="marketplace" data-post-id="${escapeHtml(post.id)}" aria-pressed="${getLocalList(STORAGE_KEYS.savedPosts).includes(`marketplace|${post.id}`)}">${getLocalList(STORAGE_KEYS.savedPosts).includes(`marketplace|${post.id}`) ? '★ Saved' : '☆ Save'}</button>
+                  </div>
+                </article>
+              `;
+              }).join('') || '<p class="empty-chat">No market posts match your search.</p>'}
+            </div>
+          </div>
+        `;
+      }
+
       function renderMessages() {
         const list = document.getElementById('chat-contacts');
         const thread = document.getElementById('chat-thread');
         const messages = getMessages();
         const activeUser = currentUser()?.name || 'TestAcc_Alpha';
-        const contacts = getContactList(messages, activeUser);
-        const visibleContacts = contacts.length ? contacts : [[mockProfiles[2].name, { sender: mockProfiles[2].name, text: 'Can you share the seedling schedule?' }]];
+        const contactsByName = new Map(getContactList(messages, activeUser));
+        mockProfiles.map(getSyncedProfile).forEach((profile) => {
+          if (profile.name !== activeUser && !contactsByName.has(profile.name)) {
+            contactsByName.set(profile.name, { sender: profile.name, text: 'Start a conversation' });
+          }
+        });
+        if (selectedChat && selectedChat !== activeUser && !contactsByName.has(selectedChat)) {
+          contactsByName.set(selectedChat, { sender: selectedChat, text: 'Group conversation' });
+        }
+        const visibleContacts = [...contactsByName.entries()];
+        if (!visibleContacts.some(([name]) => name === selectedChat) || selectedChat === activeUser) {
+          selectedChat = visibleContacts[0]?.[0] || '';
+        }
 
-        list.innerHTML = visibleContacts.map(([name, lastMessage]) => `
-          <button class="contact-item ${selectedChat === name ? 'selected' : ''}" type="button" data-contact="${name}">
-            <span class="avatar-bubble">${(name || 'A').charAt(0)}</span>
-            <span>
-              <strong>${name}</strong>
-              <small>${lastMessage?.text || 'New conversation'}</small>
-            </span>
-          </button>
-        `).join('');
+        list.innerHTML = visibleContacts.map(([name, lastMessage]) => {
+          const contact = getProfileIdentity(name);
+          return `
+            <button class="contact-item ${selectedChat === name ? 'selected' : ''}" type="button" data-contact="${escapeHtml(name)}">
+              <span class="avatar-bubble">${avatarContent(contact.name, contact.profileImage)}</span>
+              <span>
+                <strong>${escapeHtml(contact.name)}</strong>
+                <small>${escapeHtml(lastMessage?.text || 'New conversation')}</small>
+              </span>
+            </button>
+          `;
+        }).join('');
 
         const threadMessages = filterMessagesForViewer(messages.filter((message) => {
           const directForCurrentUser = ((message.sender === activeUser && message.recipient === selectedChat) || (message.recipient === activeUser && message.sender === selectedChat));
@@ -664,19 +1580,18 @@
 
         thread.innerHTML = threadMessages.map((message) => {
           const isCurrentUser = message.sender === activeUser;
-          const canDeleteForEveryone = message.sender === activeUser || message.recipient === activeUser;
+          const sender = getProfileIdentity(message.sender);
           return `
             <div class="message-item-wrap ${isCurrentUser ? 'self' : ''}">
               <div class="message-item ${isCurrentUser ? 'active' : ''}">
-                <div class="avatar-bubble ${isCurrentUser ? 'alt' : ''}">${(message.sender || 'A').charAt(0)}</div>
+                <div class="avatar-bubble ${isCurrentUser ? 'alt' : ''}">${avatarContent(sender.name, sender.profileImage)}</div>
                 <div>
-                  <strong>${isCurrentUser ? 'You' : message.sender}</strong>
-                  <small>${message.text}</small>
+                  <strong>${isCurrentUser ? 'You' : escapeHtml(sender.name)}</strong>
+                  <small>${escapeHtml(message.text)}</small>
                 </div>
                 <div class="message-actions">
-                  ${isCurrentUser ? `<button class="text-button mini-edit" type="button" data-message-id="${message.id}">Edit</button>` : ''}
-                  <button class="text-button mini-delete" type="button" data-message-id="${message.id}" data-delete-mode="self">Delete for me</button>
-                  ${canDeleteForEveryone ? `<button class="text-button mini-delete danger" type="button" data-message-id="${message.id}" data-delete-mode="all">Delete for both</button>` : ''}
+                  ${isCurrentUser ? `<button class="text-button mini-edit" type="button" data-message-id="${escapeHtml(message.id)}">Edit</button>` : ''}
+                  ${isCurrentUser ? `<button class="text-button mini-delete danger" type="button" data-message-id="${escapeHtml(message.id)}">Delete</button>` : ''}
                 </div>
               </div>
             </div>
@@ -693,7 +1608,6 @@
         const switchText = document.getElementById('auth-switch-copy');
         const switchButton = document.getElementById('auth-switch-button');
 
-        renderDemoAccounts();
         showView('auth');
         modal.classList.remove('hidden');
         signupFields.classList.toggle('hidden', authMode !== 'signup');
@@ -714,23 +1628,12 @@
       }
 
       function updateNavState(viewName) {
-        const navKey = {
-          auth: 'home',
-          feed: 'home',
-          discover: 'discover',
-          profile: 'profile',
-          messages: 'messages',
-        }[viewName] || 'home';
-
-        document.querySelectorAll('.nav-link').forEach((button) => {
-          const isActive = (button.dataset.nav || button.textContent?.trim().toLowerCase()) === navKey;
+        const activeKey = viewName === 'auth' || viewName === 'feed' ? 'home' : viewName;
+        document.querySelectorAll('[data-nav]').forEach((button) => {
+          const isActive = button.dataset.nav === activeKey;
           button.classList.toggle('active', isActive);
-        });
-
-        document.querySelectorAll('.nav-item').forEach((button) => {
-          const label = (button.getAttribute('aria-label') || button.textContent?.trim() || '').toLowerCase();
-          const isActive = label === navKey || (navKey === 'home' && label === 'home');
-          button.classList.toggle('active', isActive);
+          if (isActive) button.setAttribute('aria-current', 'page');
+          else button.removeAttribute('aria-current');
         });
       }
 
@@ -738,9 +1641,36 @@
         const normalizedView = viewName || 'feed';
 
         document.getElementById('auth-page')?.classList.toggle('hidden', normalizedView !== 'auth');
-        document.getElementById('feed-page')?.classList.toggle('hidden', !['feed', 'discover'].includes(normalizedView));
+        document.getElementById('feed-page')?.classList.toggle('hidden', normalizedView !== 'feed');
         document.getElementById('profile-page')?.classList.toggle('hidden', normalizedView !== 'profile');
         document.getElementById('messages-page')?.classList.toggle('hidden', normalizedView !== 'messages');
+        document.getElementById('analytics-page')?.classList.toggle('hidden', normalizedView !== 'analytics');
+        document.getElementById('marketplace-page')?.classList.toggle('hidden', normalizedView !== 'marketplace');
+        document.getElementById('connections-page')?.classList.toggle('hidden', normalizedView !== 'connections');
+        document.getElementById('groups-page')?.classList.toggle('hidden', normalizedView !== 'groups');
+        document.getElementById('research-page')?.classList.toggle('hidden', normalizedView !== 'research');
+        document.getElementById('jobs-page')?.classList.toggle('hidden', normalizedView !== 'jobs');
+        document.getElementById('saved-page')?.classList.toggle('hidden', normalizedView !== 'saved');
+        document.getElementById('notifications-page')?.classList.toggle('hidden', normalizedView !== 'notifications');
+
+        if (normalizedView === 'auth') {
+          document.getElementById('auth-modal')?.classList.add('hidden');
+        }
+
+        if (normalizedView === 'analytics') {
+          renderAnalytics();
+        }
+
+        if (normalizedView === 'marketplace') {
+          renderMarketplace();
+        }
+
+        if (normalizedView === 'connections') renderConnections();
+        if (normalizedView === 'groups') renderGroups();
+        if (normalizedView === 'research') renderResearch();
+        if (normalizedView === 'jobs') renderJobs();
+        if (normalizedView === 'saved') renderSavedPosts();
+        if (normalizedView === 'notifications') renderNotifications();
 
         updateNavState(normalizedView);
       }
@@ -749,49 +1679,324 @@
         showView('feed');
       }
 
+      function getResumeSectionDefinitions() {
+        return {
+          experience: {
+            label: 'Professional Experience',
+            fields: [
+              { key: 'position', label: 'Position' },
+              { key: 'organization', label: 'Organization' },
+              { key: 'location', label: 'Location' },
+              { key: 'dates', label: 'Dates' },
+              { key: 'description', label: 'Responsibilities and impact', multiline: true },
+            ],
+          },
+          education: {
+            label: 'Education',
+            fields: [
+              { key: 'degree', label: 'Degree or credential' },
+              { key: 'institution', label: 'Institution' },
+              { key: 'location', label: 'Location' },
+              { key: 'date', label: 'Year or period' },
+              { key: 'description', label: 'Additional details', multiline: true },
+            ],
+          },
+          projects: {
+            label: 'Projects',
+            fields: [
+              { key: 'name', label: 'Project' },
+              { key: 'role', label: 'Role' },
+              { key: 'organization', label: 'Organization' },
+              { key: 'dates', label: 'Dates' },
+              { key: 'description', label: 'Description', multiline: true },
+            ],
+          },
+          certifications: {
+            label: 'Licenses & Certifications',
+            fields: [
+              { key: 'credential', label: 'Credential' },
+              { key: 'issuer', label: 'Issuing organization' },
+              { key: 'date', label: 'Date' },
+            ],
+          },
+          activities: {
+            label: 'Activities',
+            fields: [
+              { key: 'activity', label: 'Activity' },
+              { key: 'organization', label: 'Organization' },
+              { key: 'dates', label: 'Dates' },
+              { key: 'description', label: 'Description', multiline: true },
+            ],
+          },
+          skills: {
+            label: 'Skills & Interests',
+            fields: [],
+          },
+          references: {
+            label: 'References (optional)',
+            fields: [
+              { key: 'name', label: 'Name' },
+              { key: 'role', label: 'Role' },
+              { key: 'organization', label: 'Organization' },
+              { key: 'relationship', label: 'Professional relationship' },
+            ],
+          },
+        };
+      }
+
+      function renderResumeEntryRows(section, entries) {
+        const config = getResumeSectionDefinitions()[section];
+        const rows = entries.length ? entries : [{}];
+        return rows.map((entry, index) => `
+          <fieldset class="profile-edit-entry">
+            <legend>Entry ${index + 1}<button class="text-button danger" type="button" data-profile-entry-remove="${section}" data-entry-index="${index}" aria-label="Remove entry ${index + 1}">Remove</button></legend>
+            <div class="profile-edit-entry-grid">
+              ${config.fields.map((field) => `<label>${field.label}${field.multiline ? `<textarea rows="3" data-entry-field="${field.key}" maxlength="1000">${escapeHtml(entry[field.key] || '')}</textarea>` : `<input type="text" data-entry-field="${field.key}" maxlength="160" value="${escapeHtml(entry[field.key] || '')}" />`}</label>`).join('')}
+            </div>
+          </fieldset>
+        `).join('');
+      }
+
+      function getResumeEntryRows(form, section) {
+        const list = form.querySelector(`[data-profile-entry-list="${section}"]`);
+        if (!list) return [];
+        return [...list.querySelectorAll('.profile-edit-entry')].map((row) => Object.fromEntries(
+          [...row.querySelectorAll('[data-entry-field]')].map((field) => [field.dataset.entryField, field.value.trim()]),
+        ));
+      }
+
+      function readResumeEntryRows(form, section) {
+        return getResumeEntryRows(form, section).filter((entry) => Object.values(entry).some(Boolean));
+      }
+
+      function updateResumeReorderButtons(form) {
+        const sections = [...form.querySelectorAll('[data-resume-section]')];
+        sections.forEach((section, index) => {
+          section.querySelector('[data-resume-move="up"]').disabled = index === 0;
+          section.querySelector('[data-resume-move="down"]').disabled = index === sections.length - 1;
+        });
+      }
+
       function openProfile(profileLike) {
         const content = document.getElementById('profile-content');
         const user = profileLike || currentUser() || mockProfiles[0];
-        const profile = user && user.email ? { ...getProfileByName(user.name), ...user, name: user.name, role: user.role || 'Community Member', location: user.location || 'Mindanao', bio: user.bio || 'Agriculture community member sharing updates and field learnings.', followers: Number(user.followers || 1200) } : { ...mockProfiles[0], ...user };
-        const profilePosts = getProfilePosts(getPosts(), profile.name);
+        const savedProfile = user?.id ? getUsers().find((entry) => entry.id === user.id) : null;
+        const baseProfile = getProfileByName(user.name);
+        const profile = user && user.email ? {
+          ...baseProfile,
+          ...user,
+          id: user.id,
+          name: user.name,
+          role: savedProfile?.role || user.role || baseProfile.role || 'Community Member',
+          location: savedProfile?.location || user.location || baseProfile.location || 'Mindanao',
+          profileImage: savedProfile?.profileImage || user.profileImage || '',
+          bio: savedProfile?.bio || user.bio || baseProfile.bio || 'Agriculture community member sharing updates and field learnings.',
+          organization: savedProfile?.organization || user.organization || baseProfile.organization || '',
+          experience: savedProfile?.experience || user.experience || baseProfile.experience || '',
+          experienceEntries: Array.isArray(savedProfile?.experienceEntries) ? savedProfile.experienceEntries : (Array.isArray(baseProfile.experienceEntries) ? baseProfile.experienceEntries : []),
+          education: Array.isArray(savedProfile?.education) ? savedProfile.education : (Array.isArray(baseProfile.education) ? baseProfile.education : []),
+          projects: Array.isArray(savedProfile?.projects) ? savedProfile.projects : (Array.isArray(baseProfile.projects) ? baseProfile.projects : []),
+          certifications: Array.isArray(savedProfile?.certifications) ? savedProfile.certifications : (Array.isArray(baseProfile.certifications) ? baseProfile.certifications : []),
+          activities: Array.isArray(savedProfile?.activities) ? savedProfile.activities : (Array.isArray(baseProfile.activities) ? baseProfile.activities : []),
+          references: Array.isArray(savedProfile?.references) ? savedProfile.references : (Array.isArray(baseProfile.references) ? baseProfile.references : []),
+          skills: Array.isArray(savedProfile?.skills) ? savedProfile.skills : (Array.isArray(baseProfile.skills) ? baseProfile.skills : []),
+          resumeSectionOrder: Array.isArray(savedProfile?.resumeSectionOrder) ? savedProfile.resumeSectionOrder : (Array.isArray(baseProfile.resumeSectionOrder) ? baseProfile.resumeSectionOrder : []),
+          followers: Number(savedProfile?.followers || user.followers || baseProfile.followers || 1200),
+        } : { ...mockProfiles[0], ...user };
+        const viewer = currentUser();
+        const isOwner = isProfileOwner(viewer, profile);
+        const profilePosts = [
+          ...getProfilePosts(getPosts(), profile.name),
+          ...getProfilePosts(getMarketplacePosts(), profile.name),
+        ].filter((post) => !post.anonymous).sort((first, second) => new Date(second.createdAt) - new Date(first.createdAt));
+        const featuredPosts = profilePosts.slice(0, 3);
+        const following = isOwner ? getLocalList(STORAGE_KEYS.following) : [];
+        const connections = isOwner ? [...mockProfiles, ...getDigitalMarketplaceFeed().profiles]
+          .filter((entry, index, entries) => following.includes(entry.id) && entries.findIndex((candidate) => candidate.id === entry.id) === index) : [];
+        const featuredMedia = (post) => {
+          const attachment = post.attachment;
+          if (attachment?.type?.startsWith('image/') && String(attachment.src || '').startsWith('data:image/')) {
+            return `<img class="resume-featured-image" src="${escapeHtml(attachment.src)}" alt="Attachment to ${escapeHtml(post.title || 'featured post')}" loading="lazy" />`;
+          }
+          return '';
+        };
+        const oldExperience = typeof profile.experience === 'string' && profile.experience.trim()
+          ? [{ position: profile.role || 'Community contributor', organization: profile.organization || '', location: profile.location || '', dates: '', description: profile.experience }]
+          : [];
+        const resumeData = {
+          experience: Array.isArray(profile.experienceEntries) ? profile.experienceEntries : oldExperience,
+          education: Array.isArray(profile.education) ? profile.education : [],
+          projects: Array.isArray(profile.projects) ? profile.projects : [],
+          certifications: Array.isArray(profile.certifications) ? profile.certifications : [],
+          activities: Array.isArray(profile.activities) ? profile.activities : [],
+          references: Array.isArray(profile.references) ? profile.references : [],
+          skills: Array.isArray(profile.skills) ? profile.skills : [],
+        };
+        const defaultSectionOrder = ['experience', 'education', 'projects', 'certifications', 'activities', 'skills', 'references'];
+        const requestedOrder = Array.isArray(profile.resumeSectionOrder) ? profile.resumeSectionOrder : [];
+        const resumeSectionOrder = [...new Set([...requestedOrder.filter((section) => defaultSectionOrder.includes(section)), ...defaultSectionOrder])];
+        const renderEntrySection = (heading, entries, primaryFields, metadataFields, descriptionField = 'description') => `
+          <section class="resume-section">
+            <h2>${heading}</h2>
+            ${entries.length ? entries.map((entry) => {
+              const primary = primaryFields.map((field) => entry[field]).find((value) => String(value || '').trim());
+              const metadata = metadataFields.map((field) => entry[field]).filter((value) => String(value || '').trim());
+              return `<article class="resume-entry">${primary ? `<strong>${escapeHtml(primary)}</strong>` : ''}${metadata.length ? `<div class="resume-entry-meta">${metadata.map((value) => `<span>${escapeHtml(value)}</span>`).join('')}</div>` : ''}${entry[descriptionField] ? `<p>${escapeHtml(entry[descriptionField])}</p>` : ''}</article>`;
+            }).join('') : '<p class="empty-chat">No entries listed.</p>'}
+          </section>
+        `;
+        const resumeSectionContent = {
+          experience: renderEntrySection('Professional Experience', resumeData.experience, ['position', 'title'], ['organization', 'location', 'dates']),
+          education: renderEntrySection('Education', resumeData.education, ['degree', 'title'], ['institution', 'location', 'date', 'dates'], 'description'),
+          projects: renderEntrySection('Projects', resumeData.projects, ['name', 'title'], ['role', 'organization', 'dates']),
+          certifications: renderEntrySection('Licenses & Certifications', resumeData.certifications, ['credential', 'name', 'title'], ['issuer', 'date', 'dates']),
+          activities: renderEntrySection('Activities', resumeData.activities, ['activity', 'name', 'title'], ['organization', 'dates']),
+          skills: `<section class="resume-section"><h2>Skills & Interests</h2>${resumeData.skills.length ? `<ul class="resume-skills">${resumeData.skills.map((skill) => `<li>${escapeHtml(skill)}</li>`).join('')}</ul>` : '<p class="empty-chat">No skills listed.</p>'}</section>`,
+          references: resumeData.references.length ? renderEntrySection('References', resumeData.references, ['name'], ['role', 'organization', 'relationship']) : '',
+        };
 
         content.innerHTML = `
-          <div class="profile-header">
-            <div class="avatar-bubble large">${(profile.name || 'U').charAt(0)}</div>
-            <div>
-              <h3>${profile.name}</h3>
-              <p>${profile.role || 'Community Member'} · ${profile.location || 'Mindanao'}</p>
-            </div>
-          </div>
-          <div class="profile-actions">
-            <button class="text-button" type="button" data-profile-action="back">Back</button>
-            <button class="btn btn-primary small" type="button" data-profile-action="message">Message</button>
-          </div>
-          <p class="profile-bio">${profile.bio || 'Agriculture community member sharing updates and field learnings.'}</p>
-          <div class="mini-stats">
-            <div><strong>${profile.followers || 1240}</strong><span>Followers</span></div>
-            <div><strong>${profilePosts.length}</strong><span>Posts</span></div>
-            <div><strong>${Math.max(2, Math.min(12, profilePosts.length + 2))}</strong><span>Connections</span></div>
-          </div>
-          <div class="profile-list">
-            ${mockProfiles.map((entry) => `
-              <button class="profile-row" type="button" data-profile-id="${entry.id}">
-                <span>${entry.name}</span>
-                <small>${entry.role}</small>
-              </button>
-            `).join('')}
-          </div>
-          <div class="profile-history">
-            <h4>Post history</h4>
-            ${profilePosts.length ? profilePosts.map((post) => `
-              <article class="profile-history-item">
-                <p>${post.text}</p>
-                <small>${new Date(post.createdAt).toLocaleString()} · ${post.likes || 0} likes · ${Array.isArray(post.comments) ? post.comments.length : 0} comments</small>
-              </article>
-            `).join('') : '<p class="empty-chat">No posts yet.</p>'}
-          </div>
+          <article class="resume-profile">
+            <header class="resume-identity">
+              <div class="resume-avatar">${profile.profileImage ? `<img src="${escapeHtml(profile.profileImage)}" alt="Profile photo of ${escapeHtml(profile.name)}" />` : escapeHtml((profile.name || 'U').charAt(0))}</div>
+              <div class="resume-identity-copy">
+                <p class="brand-kicker">Agriculture · Innovation · Community</p>
+                <h1 data-profile-name-title>${escapeHtml(profile.name || 'Community Member')}</h1>
+                <p class="resume-role">${escapeHtml(profile.role || 'Community Member')}</p>
+                <div class="resume-metadata"><span>${escapeHtml(profile.location || 'Mindanao')}</span>${profile.organization ? `<span>${escapeHtml(profile.organization)}</span>` : ''}</div>
+              </div>
+              <div class="resume-identity-actions">
+                ${isOwner ? '<button class="btn btn-ghost small" type="button" data-profile-action="edit">Edit profile</button>' : ''}
+                <button class="btn btn-primary small" type="button" data-profile-action="message">Message</button>
+              </div>
+            </header>
+            <nav class="resume-profile-actions" aria-label="Profile actions"><button class="text-button" type="button" data-profile-action="back">Back to feed</button></nav>
+            ${isOwner ? `
+              <form id="profile-edit-form" class="profile-edit-form hidden" data-owner-id="${escapeHtml(profile.id)}" data-owner-name="${escapeHtml(profile.name)}">
+                <div class="profile-edit-heading"><div><span class="brand-kicker">Your public profile</span><h2>Edit profile</h2></div></div>
+                <div class="profile-edit-grid">
+                  <label class="profile-edit-wide">Profile picture<input id="profile-picture-input" type="file" accept="image/jpeg,image/png,image/webp" /><input type="hidden" name="profileImage" value="${escapeHtml(profile.profileImage || '')}" /></label>
+                  <label class="profile-edit-wide">Profile name<input name="name" type="text" maxlength="80" value="${escapeHtml(profile.name || '')}" required /></label>
+                  <label>Professional role<input name="role" type="text" maxlength="100" value="${escapeHtml(profile.role || '')}" required /></label>
+                  <label>Location<input name="location" type="text" maxlength="100" value="${escapeHtml(profile.location || '')}" required /></label>
+                  <label>Organization<input name="organization" type="text" maxlength="120" value="${escapeHtml(profile.organization || '')}" /></label>
+                  <label class="profile-edit-wide">Professional summary<textarea name="bio" rows="4" maxlength="1000" required>${escapeHtml(profile.bio || '')}</textarea></label>
+                </div>
+                <p class="profile-edit-order-hint">Reorder résumé sections with the arrows. Summary and Featured Posts stay at the top.</p>
+                <div id="profile-edit-sections" class="profile-edit-sections">
+                  ${resumeSectionOrder.map((section, index) => {
+                    const config = getResumeSectionDefinitions()[section];
+                    const sectionBody = section === 'skills'
+                      ? `<label class="profile-edit-wide">Skills & interests<input data-profile-skills type="text" maxlength="500" placeholder="Separate skills with commas" value="${escapeHtml(resumeData.skills.join(', '))}" /></label>`
+                      : `<div class="profile-edit-entry-list" data-profile-entry-list="${section}">${renderResumeEntryRows(section, resumeData[section] || [])}</div><button class="btn btn-ghost small profile-add-entry" type="button" data-profile-entry-add="${section}">Add ${config.label.toLowerCase()} entry</button>`;
+                    return `<section class="profile-edit-section" data-resume-section="${section}"><header><h3>${config.label}</h3><div><button class="text-button" type="button" data-resume-move="up" data-section="${section}" aria-label="Move ${config.label} up" ${index === 0 ? 'disabled' : ''}>↑</button><button class="text-button" type="button" data-resume-move="down" data-section="${section}" aria-label="Move ${config.label} down" ${index === resumeSectionOrder.length - 1 ? 'disabled' : ''}>↓</button></div></header>${sectionBody}</section>`;
+                  }).join('')}
+                </div>
+                <p id="profile-edit-status" class="profile-edit-status" role="status" aria-live="polite"></p>
+                <div class="profile-edit-actions"><button class="btn btn-ghost small" type="button" data-profile-action="cancel-edit">Cancel</button><button class="btn btn-primary small" type="submit">Save profile</button></div>
+              </form>
+            ` : ''}
+            <section class="resume-section resume-summary">
+              <h2>Professional Summary</h2>
+              <p>${escapeHtml(profile.bio || `${profile.role || 'Community member'} contributing to agriculture in ${profile.location || 'Mindanao'}.`)}</p>
+            </section>
+            <section class="resume-section resume-featured-section">
+              <div class="resume-section-heading"><h2>Featured Posts</h2><span>Selected public contributions</span></div>
+              <div class="resume-featured-grid">
+                ${featuredPosts.length ? featuredPosts.map((post) => `
+                  <article class="resume-featured-card">
+                    ${featuredMedia(post)}
+                    <div><small>${new Date(post.createdAt).toLocaleDateString()} · ${Number(post.likes || 0)} likes</small><h3>${escapeHtml(post.title || post.text || 'Community update')}</h3><p>${escapeHtml(post.text || post.caption || '')}</p></div>
+                  </article>
+                `).join('') : '<p class="empty-chat">No public posts to feature yet.</p>'}
+              </div>
+            </section>
+            <div class="resume-sections">${resumeSectionOrder.map((section) => resumeSectionContent[section]).join('')}</div>
+            ${isOwner ? `<section class="resume-section private-connections"><div class="resume-section-heading"><h2>Friends</h2><span>Private · visible only to you</span></div>${connections.length ? connections.map((entry) => `<button class="private-connection" type="button" data-profile-name="${escapeHtml(entry.name)}"><strong>${escapeHtml(entry.name)}</strong><small>${escapeHtml(entry.role || 'Community member')}</small></button>`).join('') : '<p class="empty-chat">Your friends list is empty.</p>'}</section>` : ''}
+          </article>
         `;
         showView('profile');
+      }
+
+      function synchronizeProfileReferences(profile, previousName) {
+        if (previousName === profile.name) return;
+        const researchPosts = loadState(STORAGE_KEYS.researchPosts, []);
+        const synchronized = syncProfileIdentityReferences({
+          profile,
+          previousName,
+          posts: getPosts(),
+          marketplacePosts: getMarketplacePosts(),
+          researchPosts: Array.isArray(researchPosts) ? researchPosts : [],
+          messages: getMessages(),
+        });
+        savePosts(synchronized.posts);
+        saveMarketplacePosts(synchronized.marketplacePosts);
+        if (Array.isArray(researchPosts)) saveState(STORAGE_KEYS.researchPosts, synchronized.researchPosts);
+        saveMessages(synchronized.messages);
+        if (selectedChat === previousName) selectedChat = profile.name;
+      }
+
+      function saveProfileEdits(event) {
+        const form = event.target.closest('#profile-edit-form');
+        if (!form) return;
+        event.preventDefault();
+
+        const viewer = currentUser();
+        const target = { id: form.dataset.ownerId, name: form.dataset.ownerName };
+        if (!isProfileOwner(viewer, target)) {
+          form.remove();
+          return;
+        }
+
+        const skillsInput = form.querySelector('[data-profile-skills]')?.value || '';
+        const skills = [...new Set(skillsInput.split(',').map((skill) => skill.trim()).filter(Boolean))].slice(0, 12).map((skill) => skill.slice(0, 60));
+        const resumeSectionOrder = [...form.querySelectorAll('[data-resume-section]')].map((section) => section.dataset.resumeSection);
+        const formData = new FormData(form);
+        const name = String(formData.get('name') || '').trim().slice(0, 80);
+        const updates = {
+          name,
+          role: String(formData.get('role') || '').trim().slice(0, 100),
+          location: String(formData.get('location') || '').trim().slice(0, 100),
+          organization: String(formData.get('organization') || '').trim().slice(0, 120),
+          profileImage: String(formData.get('profileImage') || ''),
+          bio: String(formData.get('bio') || '').trim().slice(0, 1000),
+          experienceEntries: readResumeEntryRows(form, 'experience'),
+          education: readResumeEntryRows(form, 'education'),
+          projects: readResumeEntryRows(form, 'projects'),
+          certifications: readResumeEntryRows(form, 'certifications'),
+          activities: readResumeEntryRows(form, 'activities'),
+          references: readResumeEntryRows(form, 'references'),
+          skills,
+          resumeSectionOrder,
+        };
+        if (!updates.name || !updates.role || !updates.location || !updates.bio) return;
+
+        const users = getUsers();
+        const userIndex = users.findIndex((entry) => entry.id === viewer.id && entry.name === viewer.name);
+        if (userIndex === -1) {
+          document.getElementById('profile-edit-status').textContent = 'Profile could not be matched to your account.';
+          return;
+        }
+
+        const duplicateName = users.some((entry, index) => index !== userIndex
+          && [entry.name, ...(entry.profileAliases || [])].some((candidate) => String(candidate || '').toLowerCase() === updates.name.toLowerCase()));
+        if (duplicateName) {
+          document.getElementById('profile-edit-status').textContent = 'That profile name is already in use.';
+          return;
+        }
+
+        const previousName = users[userIndex].name;
+        const profileAliases = [...new Set([...(users[userIndex].profileAliases || []), previousName])].filter((alias) => alias !== updates.name);
+        const updatedUser = { ...users[userIndex], ...updates, profileAliases };
+        const nextUsers = users.map((entry, index) => index === userIndex ? updatedUser : entry);
+        try {
+          saveState(STORAGE_KEYS.users, nextUsers);
+          synchronizeProfileReferences(updatedUser, previousName);
+          setCurrentUser({ ...viewer, name: updatedUser.name, role: updatedUser.role, profileImage: updatedUser.profileImage });
+          openProfile({ ...updatedUser, email: viewer.email });
+        } catch {
+          document.getElementById('profile-edit-status').textContent = 'Profile changes could not be saved. Your existing profile is unchanged.';
+        }
       }
 
       async function handleAuthSubmit(event) {
@@ -813,7 +2018,7 @@
         } else {
           const session = loginUser(email, password, getUsers());
           if (!session) {
-            alert('Invalid email or password. Use one of the demo credentials below or sign up for a new account.');
+            alert('Invalid email or password. Check your details or sign up for a new account.');
             return;
           }
           setCurrentUser(session.user);
@@ -834,6 +2039,144 @@
         });
       }
 
+      function profileImageToDataUrl(file) {
+        const supportedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+        if (!supportedTypes.includes(file.type)) return Promise.reject(new Error('Choose a JPEG, PNG, or WebP image.'));
+        if (file.size > 10 * 1024 * 1024) return Promise.reject(new Error('Choose an image smaller than 10 MB.'));
+
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onerror = () => reject(new Error('Could not read selected image.'));
+          reader.onload = () => {
+            const image = new Image();
+            image.onerror = () => reject(new Error('Selected image could not be processed.'));
+            image.onload = () => {
+              try {
+                const scale = Math.min(1, 512 / Math.max(image.naturalWidth, image.naturalHeight));
+                const canvas = document.createElement('canvas');
+                canvas.width = Math.round(image.naturalWidth * scale);
+                canvas.height = Math.round(image.naturalHeight * scale);
+                const context = canvas.getContext('2d');
+                if (!context) throw new Error('Image processing is unavailable.');
+                context.fillStyle = '#fff';
+                context.fillRect(0, 0, canvas.width, canvas.height);
+                context.drawImage(image, 0, 0, canvas.width, canvas.height);
+                resolve(canvas.toDataURL('image/jpeg', 0.82));
+              } catch {
+                reject(new Error('Selected image could not be processed.'));
+              }
+            };
+            image.src = String(reader.result);
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+
+      function getResearchAbstractFields() {
+        return {
+          introduction: document.getElementById('research-introduction').value,
+          methods: document.getElementById('research-methods').value,
+          results: document.getElementById('research-results').value,
+          discussion: document.getElementById('research-discussion').value,
+        };
+      }
+
+      function updateResearchWordCount() {
+        const fields = getResearchAbstractFields();
+        const count = countImradWords(fields);
+        const complete = Object.values(fields).every((field) => field.trim());
+        const titleComplete = document.getElementById('research-title').value.trim();
+        const counter = document.getElementById('research-word-count');
+        counter.textContent = `${count} / 250 words`;
+        counter.classList.toggle('over-limit', count > 250);
+        document.getElementById('research-submit').disabled = !titleComplete || !complete || count === 0 || count > 250;
+        return count;
+      }
+
+      async function handleResearchFile(event) {
+        const [file] = event.target.files || [];
+        const status = document.getElementById('research-file-status');
+        const preview = document.getElementById('research-attachment-preview');
+        activeResearchAttachment = null;
+        preview.replaceChildren();
+        preview.classList.add('hidden');
+        if (!file) {
+          status.textContent = 'Optional · up to 1 MB';
+          return;
+        }
+
+        const isPdf = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
+        const isImage = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'].includes(file.type);
+        if (file.size > 1024 * 1024 || (!isPdf && !isImage)) {
+          status.textContent = 'Choose a JPEG, PNG, WebP, GIF, or PDF up to 1 MB.';
+          event.target.value = '';
+          return;
+        }
+
+        try {
+          activeResearchAttachment = await fileToDataUrl(file);
+          if (isPdf) activeResearchAttachment.type = 'application/pdf';
+          status.textContent = file.name;
+          preview.classList.remove('hidden');
+          if (isPdf) {
+            const label = document.createElement('span');
+            label.textContent = `PDF ready: ${file.name}`;
+            preview.append(label);
+          } else {
+            const image = document.createElement('img');
+            image.src = activeResearchAttachment.src;
+            image.alt = `Research attachment: ${file.name}`;
+            preview.append(image);
+          }
+        } catch {
+          status.textContent = 'The selected file could not be read.';
+          event.target.value = '';
+        }
+      }
+
+      function submitResearch(event) {
+        event.preventDefault();
+        const user = currentUser();
+        if (!user) {
+          openAuth('login');
+          return;
+        }
+
+        const title = document.getElementById('research-title').value.trim();
+        const abstract = getResearchAbstractFields();
+        const count = countImradWords(abstract);
+        if (!title || Object.values(abstract).some((field) => !field.trim()) || count === 0 || count > 250) {
+          updateResearchWordCount();
+          return;
+        }
+
+        const post = {
+          id: `research-${Date.now()}-${Math.random().toString(16).slice(2)}`,
+          title,
+          abstract,
+          author: user.name,
+          authorRole: user.role || 'Community researcher',
+          authorId: user.id,
+          attachment: activeResearchAttachment,
+          createdAt: new Date().toISOString(),
+        };
+        const existing = loadState(STORAGE_KEYS.researchPosts, []);
+        const posts = Array.isArray(existing) ? existing : [];
+        try {
+          saveState(STORAGE_KEYS.researchPosts, [post, ...posts]);
+          event.currentTarget.reset();
+          activeResearchAttachment = null;
+          document.getElementById('research-file-status').textContent = 'Optional · up to 1 MB';
+          document.getElementById('research-attachment-preview').replaceChildren();
+          document.getElementById('research-attachment-preview').classList.add('hidden');
+          document.getElementById('research-publish-status').textContent = 'Research published.';
+          updateResearchWordCount();
+          renderResearch();
+        } catch {
+          document.getElementById('research-publish-status').textContent = 'Research could not be saved. Your existing submissions are unchanged.';
+        }
+      }
+
       async function sharePost() {
         const input = document.getElementById('post-input');
         const text = input.value.trim();
@@ -849,6 +2192,7 @@
           id: `post-${Date.now()}`,
           text,
           author: currentUser().name,
+          authorId: currentUser().id,
           anonymous: anonymousPosting,
           likes: 0,
           likedBy: [],
@@ -874,27 +2218,48 @@
       function addMessage(event) {
         event.preventDefault();
         const messageInput = document.getElementById('message-input');
+        const status = document.getElementById('message-status');
         const text = messageInput.value.trim();
         if (!text) return;
 
-        const activeUser = currentUser()?.name || 'TestAcc_Alpha';
-        const messages = getMessages();
-        const result = sendMessage({ sender: activeUser, recipient: selectedChat, text, thread: messages });
-        saveMessages(result.map((item) => ({
-          id: item.id || `msg-${Date.now()}-${Math.random().toString(16).slice(2)}`,
-          sender: item.sender,
-          recipient: item.recipient,
-          text: item.text,
-          createdAt: item.createdAt || new Date().toISOString(),
-        })));
-        messageInput.value = '';
-        renderMessages();
+        const user = currentUser();
+        if (!user) {
+          openAuth('login');
+          return;
+        }
+
+        const activeUser = user.name;
+        const recipient = String(selectedChat || '').trim();
+        if (!recipient || recipient === activeUser) {
+          status.textContent = 'Choose another community member to start a conversation.';
+          renderMessages();
+          return;
+        }
+
+        try {
+          const messages = getMessages();
+          const result = sendMessage({ sender: activeUser, recipient, text, thread: messages });
+          saveMessages(result.map((item) => ({
+            id: item.id || `msg-${Date.now()}-${Math.random().toString(16).slice(2)}`,
+            sender: item.sender,
+            recipient: item.recipient,
+            text: item.text,
+            createdAt: item.createdAt || new Date().toISOString(),
+          })));
+          messageInput.value = '';
+          status.textContent = 'Message sent.';
+          renderMessages();
+          const thread = document.getElementById('chat-thread');
+          thread.scrollTop = thread.scrollHeight;
+        } catch {
+          status.textContent = 'Message could not be saved. Your existing conversations are unchanged.';
+        }
       }
 
       function editMessageInThread(messageId) {
         const messages = getMessages();
         const target = messages.find((item) => item.id === messageId);
-        if (!target) return;
+        if (!target || target.sender !== currentUser()?.name) return;
 
         const updatedText = window.prompt('Edit your message:', target.text);
         if (updatedText === null) return;
@@ -904,16 +2269,14 @@
         renderMessages();
       }
 
-      function deleteMessageFromThread(messageId, mode = 'self') {
+      function deleteMessageFromThread(messageId) {
         const actor = currentUser()?.name;
         if (!actor) {
           openAuth('login');
           return;
         }
 
-        const nextMessages = deleteMessage(getMessages(), messageId, actor, {
-          scope: mode === 'all' ? 'all' : 'self',
-        });
+        const nextMessages = deleteMessage(getMessages(), messageId, actor);
         saveMessages(nextMessages);
         renderMessages();
       }
@@ -923,8 +2286,9 @@
         if (!target) return;
 
         const action = target.dataset.action;
+        const source = target.dataset.postSource || 'community';
         const postId = target.dataset.postId;
-        const posts = getPosts();
+        const posts = source === 'marketplace' ? getMarketplacePosts() : getPosts();
         const index = posts.findIndex((post) => post.id === postId);
         if (index === -1) return;
 
@@ -933,23 +2297,51 @@
           return;
         }
 
-        if (action === 'like') {
-          const userId = currentUser()?.id || currentUser()?.email || currentUser()?.name || 'anonymous-user';
-          const nextPosts = toggleLike(posts, postId, userId);
-          savePosts(nextPosts);
-          renderFeed();
+        if (action === 'save') {
+          const key = `${source}|${postId}`;
+          const savedPosts = getLocalList(STORAGE_KEYS.savedPosts);
+          if (savedPosts.includes(key)) {
+            saveLocalList(STORAGE_KEYS.savedPosts, toggleSavedPost(savedPosts, key));
+            if (source === 'marketplace') renderMarketplace();
+            else renderFeed();
+            return;
+          }
+          openSavePostDialog(source, postId);
           return;
         }
 
+        if (action === 'like') {
+          const userId = currentUser()?.id || currentUser()?.email || currentUser()?.name;
+          const nextPosts = toggleLike(posts, postId, userId);
+          if (source === 'marketplace') {
+            saveMarketplacePosts(nextPosts);
+            renderMarketplace();
+          } else {
+            savePosts(nextPosts);
+            renderFeed();
+          }
+          return;
+        }
         if (action === 'repost') {
           posts[index].reposts = Number(posts[index].reposts || 0) + 1;
-          savePosts(posts);
-          renderFeed();
+          if (source === 'marketplace') {
+            saveMarketplacePosts(posts);
+            renderMarketplace();
+          } else {
+            savePosts(posts);
+            renderFeed();
+          }
+          return;
+        }
+
+        if (action === 'cite') {
+          renderCitationTooltip(posts[index], target, source);
           return;
         }
 
         if (action === 'edit-post') {
           const currentPost = posts[index];
+          if (source !== 'community' || !ownsPost(currentPost, currentUser())) return;
           const nextText = window.prompt('Edit your post:', currentPost.text);
           if (nextText === null) return;
           const trimmedText = nextText.trim();
@@ -961,6 +2353,7 @@
         }
 
         if (action === 'delete-post') {
+          if (source !== 'community' || !ownsPost(posts[index], currentUser())) return;
           const shouldDelete = window.confirm('Delete this post?');
           if (!shouldDelete) return;
           const filteredPosts = posts.filter((post) => post.id !== postId);
@@ -970,12 +2363,172 @@
         }
 
         if (action === 'comment') {
-          const form = document.querySelector(`.comment-form[data-post-id="${postId}"] input`);
-          form?.focus();
+          openCommentsDialog(source, postId);
         }
       }
 
-      document.getElementById('feed-list').addEventListener('submit', (event) => {
+      function openSavePostDialog(source, postId) {
+        const form = document.getElementById('save-post-form');
+        const select = document.getElementById('save-post-folder');
+        const dialog = document.getElementById('save-post-dialog');
+        form.dataset.postSource = source;
+        form.dataset.postId = postId;
+        select.innerHTML = getSavedFolderNames().map((folder) => `<option value="${escapeHtml(folder)}">${escapeHtml(folder)}</option>`).join('');
+        document.getElementById('save-post-status').textContent = '';
+        if (!dialog.open) dialog.showModal();
+      }
+
+      function submitSavePost(event) {
+        event.preventDefault();
+        const form = event.currentTarget;
+        const source = form.dataset.postSource;
+        const postId = form.dataset.postId;
+        const folder = document.getElementById('save-post-folder').value;
+        const posts = source === 'marketplace' ? getMarketplacePosts() : getPosts();
+        if (!['community', 'marketplace'].includes(source) || !posts.some((post) => post.id === postId) || !getSavedFolderNames().includes(folder)) return;
+
+        const key = `${source}|${postId}`;
+        const storageKey = userStorageKey('ani_saved_post_folders');
+        const loadedAssignments = loadState(storageKey, {});
+        const assignments = loadedAssignments && typeof loadedAssignments === 'object' && !Array.isArray(loadedAssignments)
+          ? loadedAssignments
+          : {};
+
+        try {
+          assignments[key] = folder;
+          saveState(storageKey, assignments);
+          const savedPosts = getLocalList(STORAGE_KEYS.savedPosts);
+          if (!savedPosts.includes(key)) saveLocalList(STORAGE_KEYS.savedPosts, [...savedPosts, key]);
+          document.getElementById('save-post-dialog').close();
+          if (source === 'marketplace') renderMarketplace();
+          else renderFeed();
+        } catch {
+          document.getElementById('save-post-status').textContent = 'Could not save this post. Your existing saved posts are unchanged.';
+        }
+      }
+
+      function openCommentsDialog(source, postId) {
+        const posts = source === 'marketplace' ? getMarketplacePosts() : getPosts();
+        const post = posts.find((entry) => entry.id === postId);
+        if (!post) return;
+
+        const comments = Array.isArray(post.comments) ? post.comments : [];
+        const form = document.getElementById('comments-form');
+        form.dataset.postSource = source;
+        form.dataset.postId = postId;
+        const author = post.anonymous ? 'Anonymous farmer' : post.author || 'Community member';
+        document.getElementById('comments-context').textContent = `${author}: ${post.title || post.caption || post.text || ''}`;
+        document.getElementById('comments-title').textContent = `${comments.length} ${comments.length === 1 ? 'comment' : 'comments'}`;
+        document.getElementById('comments-thread').innerHTML = comments.length ? comments.map((comment) => {
+          const value = String(comment);
+          const separator = value.indexOf(': ');
+          const commentAuthor = separator > 0 ? value.slice(0, separator) : 'Community member';
+          const text = separator > 0 ? value.slice(separator + 2) : value;
+          return `<article class="thread-comment"><span class="thread-comment-avatar" aria-hidden="true">${escapeHtml(commentAuthor.charAt(0))}</span><div><strong>${escapeHtml(commentAuthor)}</strong><p>${escapeHtml(text)}</p></div></article>`;
+        }).join('') : '<p class="thread-empty">No comments yet. Start the conversation.</p>';
+
+        const dialog = document.getElementById('comments-dialog');
+        if (!dialog.open) dialog.showModal();
+        form.querySelector('input')?.focus();
+      }
+
+      function handleWorkspaceAction(event) {
+        const button = event.target.closest('[data-ui-action]');
+        if (!button) return;
+        const action = button.dataset.uiAction;
+
+        if (action === 'follow') {
+          const id = button.dataset.profileId;
+          const following = getLocalList(STORAGE_KEYS.following);
+          saveLocalList(STORAGE_KEYS.following, following.includes(id) ? following.filter((entry) => entry !== id) : [...following, id]);
+          renderConnections();
+          return;
+        }
+
+        if (action === 'join-group') {
+          const id = button.dataset.groupId;
+          const joined = getLocalList(STORAGE_KEYS.joinedGroups);
+          if (!joined.includes(id)) saveLocalList(STORAGE_KEYS.joinedGroups, [...joined, id]);
+          selectedGroupId = id;
+          renderGroups();
+          return;
+        }
+
+        if (action === 'group-back') {
+          selectedGroupId = '';
+          renderGroups();
+          return;
+        }
+
+        if (action === 'group-membership') {
+          const id = button.dataset.groupId;
+          const joined = getLocalList(STORAGE_KEYS.joinedGroups);
+          saveLocalList(STORAGE_KEYS.joinedGroups, joined.includes(id) ? joined.filter((entry) => entry !== id) : [...joined, id]);
+          renderGroups();
+          return;
+        }
+
+        if (action === 'message-group') {
+          selectedChat = button.dataset.groupName;
+          showView('messages');
+          renderMessages();
+          document.getElementById('message-input')?.focus();
+          return;
+        }
+
+        if (action === 'job-interest') {
+          const id = button.dataset.jobId;
+          const interests = getLocalList(STORAGE_KEYS.jobInterests);
+          saveLocalList(STORAGE_KEYS.jobInterests, interests.includes(id) ? interests.filter((entry) => entry !== id) : [...interests, id]);
+          renderJobs();
+          return;
+        }
+
+        if (action === 'job-apply') {
+          const id = button.dataset.jobId;
+          const applications = getLocalList(STORAGE_KEYS.jobApplications);
+          if (!applications.includes(id) && jobOpportunities.some((job) => job.id === id)) {
+            saveLocalList(STORAGE_KEYS.jobApplications, [...applications, id]);
+          }
+          renderJobs();
+          return;
+        }
+
+        if (action === 'message-profile' || action === 'message-seller') {
+          selectedChat = button.dataset.profileName || button.dataset.seller;
+          showView('messages');
+          renderMessages();
+          return;
+        }
+
+        if (action === 'remove-saved') {
+          saveLocalList(STORAGE_KEYS.savedPosts, toggleSavedPost(getLocalList(STORAGE_KEYS.savedPosts), button.dataset.savedKey));
+          renderSavedPosts();
+          return;
+        }
+
+        if (action === 'open-saved') {
+          const source = button.dataset.source;
+          showView(source === 'marketplace' ? 'marketplace' : 'feed');
+          return;
+        }
+
+        if (action === 'notification-open') {
+          const id = button.dataset.notificationId;
+          const read = getLocalList('ani_read_notifications');
+          if (!read.includes(id)) saveLocalList('ani_read_notifications', [...read, id]);
+          renderNotifications();
+          showView(button.dataset.target || 'feed');
+        }
+      }
+
+      function ownsPost(post, user) {
+        if (!post || !user) return false;
+        if (post.authorId) return post.authorId === user.id;
+        return post.author === user.name;
+      }
+
+      function submitPostComment(event) {
         const form = event.target.closest('.comment-form');
         if (!form) return;
         event.preventDefault();
@@ -990,11 +2543,27 @@
         const value = input?.value.trim();
         if (!value) return;
 
-        const posts = getPosts();
+        const source = form.dataset.postSource || 'community';
+        const posts = source === 'marketplace' ? getMarketplacePosts() : getPosts();
         const nextPosts = addComment(posts, postId, value, currentUser().name || 'You');
-        savePosts(nextPosts);
+        if (source === 'marketplace') {
+          saveMarketplacePosts(nextPosts);
+        } else {
+          savePosts(nextPosts);
+        }
         form.reset();
-        renderFeed();
+        if (source === 'marketplace') renderMarketplace();
+        else renderFeed();
+        openCommentsDialog(source, postId);
+      }
+
+      document.getElementById('comments-form').addEventListener('submit', submitPostComment);
+      document.getElementById('comments-dialog').addEventListener('click', (event) => {
+        if (event.target === event.currentTarget || event.target.closest('[data-comments-close]')) event.currentTarget.close();
+      });
+      document.getElementById('save-post-form').addEventListener('submit', submitSavePost);
+      document.getElementById('save-post-dialog').addEventListener('click', (event) => {
+        if (event.target === event.currentTarget || event.target.closest('[data-save-post-close]')) event.currentTarget.close();
       });
 
       document.getElementById('account-status')?.addEventListener('click', () => {
@@ -1029,6 +2598,20 @@
       document.getElementById('auth-form').addEventListener('submit', handleAuthSubmit);
       document.getElementById('share-button').addEventListener('click', sharePost);
       document.getElementById('messages-back-button')?.addEventListener('click', () => showView('feed'));
+      document.getElementById('analytics-back-button')?.addEventListener('click', () => showView('feed'));
+      document.getElementById('marketplace-back-button')?.addEventListener('click', () => showView('feed'));
+      document.getElementById('download-csv-button')?.addEventListener('click', () => {
+        const csv = generateCsvFromPosts(getPostsForOwner(getPosts(), currentUser() || {}));
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'ani-engagement-analytics.csv';
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+      });
       document.getElementById('join-community-button').addEventListener('click', () => {
         document.getElementById('post-input').focus();
         document.getElementById('post-input').scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -1047,8 +2630,21 @@
       searchInput.addEventListener('keydown', (event) => {
         if (event.key === 'Enter') {
           event.preventDefault();
+          if (!currentUser()) {
+            openAuth('login');
+            return;
+          }
+          showView('feed');
           renderFeed();
         }
+      });
+      document.getElementById('community-search-button').addEventListener('click', () => {
+        if (!currentUser()) {
+          openAuth('login');
+          return;
+        }
+        showView('feed');
+        renderFeed();
       });
       document.getElementById('message-form').addEventListener('submit', addMessage);
       document.getElementById('feed-list').addEventListener('click', (event) => {
@@ -1060,14 +2656,21 @@
         }
 
         const actionButton = event.target.closest('[data-action]');
-        if (actionButton) {
-          handlePostAction(event);
+        if (actionButton) handlePostAction(event);
+      });
+      document.getElementById('marketplace-feed').addEventListener('click', (event) => {
+        const profileButton = event.target.closest('[data-profile-name]');
+        if (profileButton) {
+          openProfile(getProfileByName(profileButton.dataset.profileName));
+          return;
         }
+        if (event.target.closest('[data-action]')) handlePostAction(event);
       });
       document.getElementById('chat-contacts').addEventListener('click', (event) => {
         const button = event.target.closest('[data-contact]');
         if (!button) return;
         selectedChat = button.dataset.contact;
+        document.getElementById('message-status').textContent = '';
         renderMessages();
       });
       document.getElementById('chat-thread').addEventListener('click', (event) => {
@@ -1081,8 +2684,7 @@
         const deleteButton = event.target.closest('.mini-delete');
         if (deleteButton) {
           const messageId = deleteButton.dataset.messageId;
-          const mode = deleteButton.dataset.deleteMode === 'all' ? 'all' : 'self';
-          deleteMessageFromThread(messageId, mode);
+          deleteMessageFromThread(messageId);
         }
       });
       document.getElementById('profile-content').addEventListener('click', (event) => {
@@ -1093,8 +2695,19 @@
             closeProfile();
             return;
           }
+          if (action === 'edit') {
+            const editForm = document.getElementById('profile-edit-form');
+            if (!editForm) return;
+            editForm.classList.remove('hidden');
+            editForm.querySelector('[name="role"]')?.focus();
+            return;
+          }
+          if (action === 'cancel-edit') {
+            openProfile(currentUser());
+            return;
+          }
           if (action === 'message') {
-            const profileName = document.querySelector('#profile-content h3')?.textContent?.trim();
+            const profileName = document.querySelector('#profile-content [data-profile-name-title]')?.textContent?.trim();
             if (profileName) {
               selectedChat = profileName;
               showView('messages');
@@ -1104,11 +2717,66 @@
           return;
         }
 
-        const button = event.target.closest('[data-profile-id]');
+        const editForm = event.target.closest('#profile-edit-form');
+        if (editForm && !isProfileOwner(currentUser(), { id: editForm.dataset.ownerId, name: editForm.dataset.ownerName })) return;
+
+        const addEntryButton = event.target.closest('[data-profile-entry-add]');
+        if (addEntryButton && editForm) {
+          const section = addEntryButton.dataset.profileEntryAdd;
+          const entries = getResumeEntryRows(editForm, section);
+          if (entries.length >= 10) {
+            document.getElementById('profile-edit-status').textContent = 'Each section can contain up to 10 entries.';
+            return;
+          }
+          entries.push({});
+          editForm.querySelector(`[data-profile-entry-list="${section}"]`).innerHTML = renderResumeEntryRows(section, entries);
+          return;
+        }
+
+        const removeEntryButton = event.target.closest('[data-profile-entry-remove]');
+        if (removeEntryButton && editForm) {
+          const section = removeEntryButton.dataset.profileEntryRemove;
+          const entries = getResumeEntryRows(editForm, section);
+          entries.splice(Number(removeEntryButton.dataset.entryIndex), 1);
+          if (!entries.length) entries.push({});
+          editForm.querySelector(`[data-profile-entry-list="${section}"]`).innerHTML = renderResumeEntryRows(section, entries);
+          return;
+        }
+
+        const moveSectionButton = event.target.closest('[data-resume-move]');
+        if (moveSectionButton && editForm) {
+          const section = editForm.querySelector(`[data-resume-section="${moveSectionButton.dataset.section}"]`);
+          const sibling = moveSectionButton.dataset.resumeMove === 'up' ? section?.previousElementSibling : section?.nextElementSibling;
+          if (section && sibling) {
+            if (moveSectionButton.dataset.resumeMove === 'up') sibling.before(section);
+            else sibling.after(section);
+            updateResumeReorderButtons(editForm);
+          }
+          return;
+        }
+
+        const button = event.target.closest('[data-profile-name]');
         if (!button) return;
-        const profile = mockProfiles.find((entry) => entry.id === button.dataset.profileId);
-        if (profile) openProfile(profile);
+        openProfile(getProfileByName(button.dataset.profileName));
       });
+      document.getElementById('profile-content').addEventListener('change', async (event) => {
+        const input = event.target.closest('#profile-picture-input');
+        const [file] = input?.files || [];
+        if (!input || !file) return;
+
+        const form = input.form;
+        const status = form.querySelector('#profile-edit-status');
+        try {
+          const imageUrl = await profileImageToDataUrl(file);
+          form.querySelector('[name="profileImage"]').value = imageUrl;
+          const avatar = form.closest('.resume-profile').querySelector('.resume-avatar');
+          avatar.innerHTML = `<img src="${escapeHtml(imageUrl)}" alt="Profile photo of ${escapeHtml(form.dataset.ownerName)}" />`;
+          status.textContent = 'Photo selected. Save profile to apply it.';
+        } catch (error) {
+          status.textContent = error.message;
+        }
+      });
+      document.getElementById('profile-content').addEventListener('submit', saveProfileEdits);
       document.getElementById('media-input').addEventListener('change', async (event) => {
         const [file] = event.target.files || [];
         if (!file) return;
@@ -1130,10 +2798,9 @@
         return true;
       }
 
-      document.querySelectorAll('.nav-item, .nav-link').forEach((button) => {
+      document.querySelectorAll('[data-nav]').forEach((button) => {
         button.addEventListener('click', () => {
-          const label = button.getAttribute('aria-label') || button.dataset.nav || button.textContent?.trim();
-          const key = String(label || '').toLowerCase();
+          const key = button.dataset.nav;
 
           if (key === 'messages') {
             if (!requireSignedIn('messages')) return;
@@ -1147,13 +2814,25 @@
             return;
           }
 
-          if (key === 'discover') {
-            if (!currentUser()) {
-              openAuth('login');
-              return;
-            }
-            showView('discover');
-            document.querySelector('.search input')?.focus();
+          if (key === 'analytics') {
+            if (!requireSignedIn('analytics')) return;
+            renderAnalytics();
+            return;
+          }
+
+          if (key === 'marketplace') {
+            if (!requireSignedIn('marketplace')) return;
+            renderMarketplace();
+            return;
+          }
+
+          if (['connections', 'groups', 'research', 'jobs', 'saved'].includes(key)) {
+            if (!requireSignedIn(key)) return;
+            return;
+          }
+
+          if (key === 'notifications') {
+            if (!requireSignedIn('notifications')) return;
             return;
           }
 
@@ -1165,18 +2844,137 @@
             closeAuth();
             showView('feed');
             renderFeed();
+            document.querySelector('.search input')?.focus();
             return;
           }
         });
       });
 
+      document.querySelector('.app-workspace')?.addEventListener('click', handleWorkspaceAction);
+      document.getElementById('saved-folders')?.addEventListener('click', (event) => {
+        const button = event.target.closest('[data-folder]');
+        if (!button) return;
+        activeSavedFolder = button.dataset.folder;
+        renderSavedPosts();
+      });
+      document.getElementById('saved-list')?.addEventListener('change', (event) => {
+        const select = event.target.closest('[data-saved-folder-key]');
+        if (!select) return;
+        const assignments = loadState(userStorageKey('ani_saved_post_folders'), {}) || {};
+        assignments[select.dataset.savedFolderKey] = select.value;
+        saveState(userStorageKey('ani_saved_post_folders'), assignments);
+        renderSavedPosts();
+      });
+      document.getElementById('create-folder-button')?.addEventListener('click', () => {
+        const name = window.prompt('Name this saved-post folder:')?.trim();
+        if (!name || name.length > 30) return;
+        const folders = getLocalList('ani_saved_folders');
+        if (['all', 'watch later', 'projects'].includes(name.toLowerCase()) || folders.some((folder) => folder.toLowerCase() === name.toLowerCase())) return;
+        saveLocalList('ani_saved_folders', [...folders, name]);
+        activeSavedFolder = name;
+        renderSavedPosts();
+      });
+      document.getElementById('create-group-button')?.addEventListener('click', () => {
+        document.getElementById('create-group-form').classList.remove('hidden');
+        document.getElementById('new-group-name').focus();
+      });
+      document.getElementById('cancel-group-button')?.addEventListener('click', () => {
+        document.getElementById('create-group-form').reset();
+        document.getElementById('create-group-form').classList.add('hidden');
+      });
+      document.getElementById('create-group-form')?.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const name = document.getElementById('new-group-name').value.trim();
+        const category = document.getElementById('new-group-category').value.trim();
+        const description = document.getElementById('new-group-description').value.trim();
+        if (!name || !category || !description) return;
+        const key = userStorageKey('ani_custom_groups');
+        const groups = loadState(key, []);
+        groups.unshift({ id: `group-${Date.now()}`, name, category, description, region: 'Northern Mindanao', members: 1 });
+        saveState(key, groups);
+        document.getElementById('create-group-form').reset();
+        document.getElementById('create-group-form').classList.add('hidden');
+        renderGroups();
+      });
+      document.getElementById('mark-notifications-read')?.addEventListener('click', () => {
+        saveLocalList('ani_read_notifications', notificationItems.map((item) => item.id));
+        renderNotifications();
+      });
+      document.getElementById('create-post-shortcut')?.addEventListener('click', () => {
+        if (!requireSignedIn('feed')) return;
+        document.getElementById('post-input').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.getElementById('post-input').focus();
+      });
+      document.getElementById('theme-toggle')?.addEventListener('click', () => {
+        const nextTheme = document.body.dataset.theme === 'dark' ? 'light' : 'dark';
+        saveState(STORAGE_KEYS.theme, nextTheme);
+        applyTheme(nextTheme);
+      });
+
+      document.getElementById('analytics-list')?.addEventListener('click', (event) => {
+        const item = event.target.closest('[data-analytics-post-id]');
+        if (!item) return;
+        selectedAnalyticsPostId = item.dataset.analyticsPostId;
+        renderAnalytics();
+      });
+
+      document.getElementById('marketplace-search')?.addEventListener('input', renderMarketplace);
+      document.getElementById('connections-search')?.addEventListener('input', renderConnections);
+      document.getElementById('research-search')?.addEventListener('input', renderResearch);
+      document.getElementById('research-compose-toggle')?.addEventListener('click', (event) => {
+        if (!currentUser()) {
+          openAuth('login');
+          return;
+        }
+        const form = document.getElementById('research-form');
+        const isOpen = form.classList.toggle('hidden') === false;
+        event.currentTarget.setAttribute('aria-expanded', String(isOpen));
+        event.currentTarget.textContent = isOpen ? 'Close form' : 'Post Research';
+        document.getElementById('research-publish-status').textContent = '';
+        if (isOpen) document.getElementById('research-title').focus();
+      });
+      document.getElementById('research-compose-cancel')?.addEventListener('click', () => {
+        const form = document.getElementById('research-form');
+        form.reset();
+        activeResearchAttachment = null;
+        document.getElementById('research-file-status').textContent = 'Optional · up to 1 MB';
+        document.getElementById('research-attachment-preview').replaceChildren();
+        document.getElementById('research-attachment-preview').classList.add('hidden');
+        document.getElementById('research-publish-status').textContent = '';
+        document.getElementById('research-compose-toggle').setAttribute('aria-expanded', 'false');
+        document.getElementById('research-compose-toggle').textContent = 'Post Research';
+        form.classList.add('hidden');
+        updateResearchWordCount();
+      });
+      document.getElementById('research-form')?.addEventListener('submit', submitResearch);
+      ['research-title', 'research-introduction', 'research-methods', 'research-results', 'research-discussion'].forEach((id) => {
+        document.getElementById(id)?.addEventListener('input', updateResearchWordCount);
+      });
+      document.getElementById('research-file')?.addEventListener('change', handleResearchFile);
+      document.getElementById('jobs-search')?.addEventListener('input', renderJobs);
+      document.getElementById('jobs-type-filter')?.addEventListener('change', renderJobs);
+      document.getElementById('jobs-location-filter')?.addEventListener('change', renderJobs);
+      document.getElementById('citation-tooltip')?.addEventListener('click', copyCitation);
+
+      document.addEventListener('click', (event) => {
+        const tooltip = document.getElementById('citation-tooltip');
+        if (!tooltip || tooltip.classList.contains('hidden')) return;
+        if (!event.target.closest('.citation-tooltip') && !event.target.closest('[data-action="cite"]')) {
+          tooltip.classList.add('hidden');
+        }
+      });
+
       ensureSeedState();
-      renderDemoAccounts();
+      applyTheme(loadState(STORAGE_KEYS.theme, 'light'));
       renderSessionState();
       renderFeed();
       renderMessages();
+      renderAnalytics();
+      renderMarketplace();
+      renderNotifications();
       if (!currentUser()) {
         showView('auth');
+        document.getElementById('feed-page')?.classList.add('hidden');
       } else {
         showView('feed');
       }
